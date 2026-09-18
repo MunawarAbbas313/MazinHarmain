@@ -1,0 +1,30 @@
+# Generated output — built by `npm run build` / `npm run preview`
+dist/
+preview/
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Local working notes, not part of the site
+NOTES.md
+CLAUDE-HANDOFF.md
+
+# Source documents and briefs
+*.docx
+*.doc
+*.pdf
+~$*
+
+# Environment and secrets
+.env
+.env.*
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini

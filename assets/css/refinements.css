@@ -1,0 +1,923 @@
+/* ==========================================================================
+   MAZIN HARAMAIN — layout refinements + the homepage as designed
+   --------------------------------------------------------------------------
+   Loaded AFTER styles.css. Two jobs:
+     1. Global refinements (typography scale, touch targets, nav breakpoint)
+     2. The homepage sections, built to match the client's approved mockup
+        section for section: full-bleed hero with overlay, overlapping
+        inquiry card, 4x2 services, Umrah panel flanked by photography,
+        visa flags, destination row, dark corporate band, why-us row,
+        trust badges, reviews, guides, CTA band.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Global refinements
+   -------------------------------------------------------------------------- */
+:root {
+  --green-900: #072f26;
+  --green-800: #0a4434;
+  --green-700: #0f5540;
+  --gold-700: #8a6a1f;
+  --gold-600: #a8822c;
+  --gold-500: #c79a3e;
+  --gold-400: #ddb865;
+  --cream: #faf8f3;
+  --cream-2: #f3f1e9;
+  --container: 1280px;
+  --header-h: 82px;
+}
+
+body { overflow-wrap: break-word; }
+button, input, select, textarea { font: inherit; }
+
+/* Accessible target sizes throughout */
+.btn { min-height: 46px; white-space: normal; }
+.btn--sm { min-height: 42px; }
+.btn:disabled { cursor: wait; opacity: .7; transform: none; }
+.link-arrow { min-height: 40px; }
+.pill { min-height: 42px; }
+.input, .select, .textarea { min-height: 48px; font-size: 1rem; }
+.checkbox input { margin-top: 5px; }
+.dropdown a { min-height: 42px; display: flex; align-items: center; }
+.m-toggle { min-height: 52px; }
+.mobile-bar a { min-height: 60px; }
+
+/* Fluid type */
+.section { padding-block: clamp(3.25rem, 5.5vw, 5.5rem); }
+.section--tight { padding-block: clamp(2.5rem, 4vw, 4rem); }
+.section-head h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -.022em; }
+.section-head p { max-width: 64ch; line-height: 1.75; }
+.section-head--center p { margin-inline: auto; }
+.eyebrow { color: var(--gold-700); letter-spacing: .15em; }
+.divider-gold { width: 40px; height: 2px; }
+
+.grid > *, .split > *, .with-sidebar > * { min-width: 0; }
+.prose { line-height: 1.82; }
+
+/* Interior page hero gets a gold rule, matching the mockup's section edges */
+.page-hero { border-bottom: 3px solid var(--gold-500); }
+.page-hero h1 { font-size: clamp(1.9rem, 3.6vw, 3.1rem); letter-spacing: -.022em; }
+.page-hero p { color: #d2e2d9; }
+.page-hero .eyebrow { color: var(--gold-400); }
+
+/* Empty social containers collapse rather than leaving a gap */
+.topbar__socials:empty, .footer__socials:empty { display: none; }
+
+/* Navigation needs more room than 992px once every menu item is present */
+.logo__name { font-size: 1.05rem; letter-spacing: .02em; }
+.logo__sub { font-size: .6875rem; letter-spacing: .2em; margin-top: 3px; }
+.logo__mark { width: 42px; height: 42px; }
+.nav__list { gap: 0; }
+.nav__link { padding-inline: .6rem; font-size: .8125rem; }
+.dropdown { max-height: calc(100vh - 140px); overflow-y: auto; }
+.mobile-nav { visibility: hidden; }
+.mobile-nav.is-open { visibility: visible; }
+.accordion__panel { visibility: hidden; }
+.accordion__panel.is-open { visibility: visible; }
+.accordion__btn { padding-block: 1.2rem; line-height: 1.5; }
+
+@media (min-width: 1200px) { .nav { display: block; } .nav-toggle { display: none; } }
+@media (max-width: 1199px) {
+  .nav { display: none; }
+  .nav-toggle { display: inline-flex; }
+  .header__actions .btn { display: inline-flex; }
+}
+
+/* --------------------------------------------------------------------------
+   2. HERO — full-bleed photograph, dark overlay weighted to the left
+   -------------------------------------------------------------------------- */
+.hero { position: relative; background: var(--green-900); isolation: isolate; }
+.hero__media { position: absolute; inset: 0; z-index: -2; }
+.hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 46%; }
+.hero__media::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(96deg,
+      rgba(5, 32, 25, .97) 0%,
+      rgba(6, 40, 31, .94) 30%,
+      rgba(7, 47, 38, .72) 52%,
+      rgba(7, 47, 38, .34) 72%,
+      rgba(7, 47, 38, .22) 100%);
+}
+.hero__inner { position: relative; padding-block: clamp(3rem, 6vw, 5.25rem) 0; }
+.hero__content { max-width: 620px; }
+.hero__eyebrow {
+  display: block; color: var(--gold-400); font-size: .75rem; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase; margin-bottom: 1.15rem;
+}
+.hero h1 {
+  color: #fff; font-size: clamp(2.35rem, 4.4vw, 3.75rem);
+  line-height: 1.1; letter-spacing: -.03em; margin-bottom: 1.15rem;
+}
+.hero h1 .accent { display: block; color: var(--gold-400); }
+.hero__text {
+  color: #cfe0d7; font-size: clamp(.9375rem, 1.1vw, 1.0625rem);
+  line-height: 1.75; max-width: 34em; margin-bottom: 1.85rem;
+}
+.hero .btn-row { gap: .75rem; }
+
+/* Trust strip along the bottom of the hero */
+.hero__trustbar {
+  position: relative;
+  display: flex; flex-wrap: wrap;
+  margin-top: clamp(2.25rem, 4vw, 3.5rem);
+  background: rgba(3, 24, 18, .52);
+  border: 1px solid rgba(255, 255, 255, .13);
+  border-radius: 8px 8px 0 0;
+  border-bottom: 0;
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+}
+.hero__trustbar-item {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: .95rem 1.4rem;
+  font-size: .8125rem; font-weight: 500; color: #d6e6dd;
+  border-right: 1px solid rgba(255, 255, 255, .11);
+  flex: 1 1 auto; min-width: max-content;
+}
+.hero__trustbar-item:last-child { border-right: 0; }
+.hero__trustbar-item svg { width: 17px; height: 17px; color: var(--gold-400); flex-shrink: 0; }
+a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+
+/* --------------------------------------------------------------------------
+   3. QUICK INQUIRY — white card overlapping the hero
+   -------------------------------------------------------------------------- */
+.quickbar { position: relative; z-index: 4; margin-top: -2.75rem; }
+.quickbar__card {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(0, 2.4fr) auto;
+  align-items: center;
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 18px 44px rgba(6, 45, 34, .16);
+  padding: clamp(1.25rem, 2vw, 1.75rem) clamp(1.25rem, 2.5vw, 2rem);
+}
+.quickbar__head h2 { font-size: 1.2rem; margin-bottom: .25rem; letter-spacing: -.015em; }
+.quickbar__head p { font-size: .8125rem; color: var(--muted); margin: 0; line-height: 1.55; }
+.quickbar__options {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .6rem; margin: 0;
+}
+.quickbar__opt label {
+  flex-direction: column; gap: .45rem;
+  min-height: 82px; padding: .8rem .35rem;
+  border-radius: 8px; font-size: .8125rem;
+}
+.quickbar__opt label svg { width: 23px; height: 23px; }
+.quickbar__card > .btn-row { margin: 0; }
+
+/* --------------------------------------------------------------------------
+   4. SERVICES — 4 x 2 card grid on cream
+   -------------------------------------------------------------------------- */
+.home-services { background: var(--cream); }
+.services-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.services-grid .service-card {
+  align-items: center; gap: .9rem;
+  padding: 1.15rem 1.15rem;
+  border-radius: 8px;
+}
+.services-grid .card__icon {
+  width: 40px; height: 40px; margin: 0; flex-shrink: 0;
+  background: var(--green-50); border-radius: 7px;
+}
+.services-grid .card__icon svg { width: 20px; height: 20px; }
+.services-grid h3 { font-size: .9375rem; margin-bottom: .15rem; letter-spacing: -.01em; }
+.services-grid p { font-size: .75rem; line-height: 1.5; margin: 0; color: var(--muted); }
+
+/* --------------------------------------------------------------------------
+   5. UMRAH — centre panel flanked by Makkah photography
+   -------------------------------------------------------------------------- */
+.umrah-band { position: relative; background: var(--cream-2); padding-block: 0; overflow: hidden; }
+.umrah-band__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+.umrah-band__photo { position: relative; min-height: 430px; }
+.umrah-band__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.umrah-band__panel {
+  background: var(--cream-2);
+  padding: clamp(2.5rem, 4vw, 3.75rem) clamp(1.5rem, 3vw, 3rem);
+  text-align: center;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.umrah-band__panel .eyebrow { margin-bottom: .75rem; }
+.umrah-band__panel h2 { font-size: clamp(1.7rem, 2.6vw, 2.3rem); margin-bottom: .9rem; }
+.umrah-band__panel > p { font-size: .9375rem; color: var(--muted); line-height: 1.75; max-width: 46ch; margin: 0 auto 1.75rem; }
+
+.umrah-tiers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .65rem; margin-bottom: 1.75rem; }
+.umrah-tier {
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  padding: 1rem .5rem; background: #fff;
+  border: 1px solid var(--line); border-radius: 8px;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.umrah-tier:hover { border-color: var(--gold-500); transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+.umrah-tier svg { width: 22px; height: 22px; color: var(--gold-600); }
+.umrah-tier strong { font-size: .875rem; color: var(--ink); font-weight: 700; }
+.umrah-tier span { font-size: .6875rem; color: var(--muted-2); line-height: 1.4; }
+
+/* --------------------------------------------------------------------------
+   6. VISA — flags left, passport photograph right
+   -------------------------------------------------------------------------- */
+.visa-split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
+.visa-split__media { position: relative; border-radius: 10px; overflow: hidden; aspect-ratio: 4 / 3; background: var(--green-100); }
+.visa-split__media img { width: 100%; height: 100%; object-fit: cover; }
+.visa-flags { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; margin-bottom: 1.75rem; }
+.visa-flag {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .35rem; padding: .85rem .35rem; min-height: 84px;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px;
+  text-align: center; transition: all .2s;
+}
+.visa-flag:hover { border-color: var(--green-500); transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+.visa-flag__flag { font-size: 1.5rem; line-height: 1; }
+.visa-flag__name { font-size: .8125rem; font-weight: 600; color: var(--ink); }
+.visa-flag__sub { font-size: .6875rem; color: var(--muted-2); }
+
+/* --------------------------------------------------------------------------
+   7. DESTINATIONS — compact photo cards in a row
+   -------------------------------------------------------------------------- */
+.dest-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.dest-card {
+  display: block; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 8px; background: #fff;
+  transition: transform .25s, box-shadow .25s;
+}
+.dest-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.dest-card__img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--green-100); }
+.dest-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.dest-card:hover .dest-card__img img { transform: scale(1.06); }
+.dest-card__body { padding: .8rem .9rem 1rem; }
+.dest-card__body strong { display: block; font-size: .9375rem; color: var(--ink); font-family: var(--font-display); }
+.dest-card__body span { display: block; font-size: .6875rem; color: var(--muted-2); margin-top: .15rem; }
+
+/* --------------------------------------------------------------------------
+   8. CORPORATE — dark band, photograph left
+   -------------------------------------------------------------------------- */
+.corporate-band { background: var(--green-800); color: #cfe0d7; overflow: hidden; }
+.corporate-band__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: stretch; }
+.corporate-band__photo { position: relative; min-height: 400px; }
+.corporate-band__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.corporate-band__photo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(10,68,52,.12), rgba(10,68,52,.85));
+}
+.corporate-band__body { padding: clamp(2.5rem, 4.5vw, 4rem) clamp(1.5rem, 3vw, 3.25rem); }
+.corporate-band__body .eyebrow { color: var(--gold-400); }
+.corporate-band__body h2 { color: #fff; font-size: clamp(1.7rem, 2.6vw, 2.3rem); margin-bottom: .85rem; }
+.corporate-band__body > p { color: #b9cfc6; font-size: .9375rem; line-height: 1.75; max-width: 52ch; margin-bottom: 1.6rem; }
+.corporate-list {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .7rem 1.5rem; list-style: none; margin: 0 0 1.85rem; padding: 0;
+}
+.corporate-list li {
+  display: flex; align-items: flex-start; gap: .6rem;
+  font-size: .8125rem; color: #cfe0d7; margin: 0; line-height: 1.5;
+}
+.corporate-list svg { width: 16px; height: 16px; color: var(--gold-400); flex-shrink: 0; margin-top: 2px; }
+
+/* --------------------------------------------------------------------------
+   9. WHY US — six items across
+   -------------------------------------------------------------------------- */
+.why-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1.5rem; }
+.why-item { text-align: center; }
+.why-item__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin-bottom: .85rem;
+  background: var(--gold-50); color: var(--gold-700); border-radius: 8px;
+}
+.why-item__icon svg { width: 21px; height: 21px; }
+.why-item h3 { font-size: .9375rem; margin-bottom: .35rem; line-height: 1.35; }
+.why-item p { font-size: .75rem; color: var(--muted); line-height: 1.6; margin: 0; }
+
+/* --------------------------------------------------------------------------
+   10. TRUST — badge row on cream
+   -------------------------------------------------------------------------- */
+.trust-band { background: var(--cream-2); }
+.trust-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1rem; }
+.trust-badge {
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  padding: 1.1rem .5rem; text-align: center;
+  background: #fff; border: 1px solid var(--line); border-radius: 8px;
+}
+.trust-badge svg { width: 26px; height: 26px; color: var(--green-700); }
+.trust-badge strong { font-size: .8125rem; color: var(--ink); }
+.trust-badge span { font-size: .6875rem; color: var(--muted-2); line-height: 1.4; }
+
+/* --------------------------------------------------------------------------
+   11. REVIEWS / GUIDES / misc
+   -------------------------------------------------------------------------- */
+.section-heading-row {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 1.5rem; margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+.section-heading-row .section-head { margin: 0; }
+.section-heading-row > .btn { flex-shrink: 0; }
+
+.guide-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
+.guide-card {
+  display: flex; flex-direction: column; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 8px; background: #fff;
+  transition: transform .25s, box-shadow .25s;
+}
+.guide-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.guide-card__img { aspect-ratio: 16 / 10; overflow: hidden; background: var(--green-100); }
+.guide-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.guide-card:hover .guide-card__img img { transform: scale(1.05); }
+.guide-card__body { padding: .85rem .9rem 1rem; display: flex; flex-direction: column; flex: 1; }
+.guide-card__body strong {
+  font-size: .8125rem; color: var(--ink); font-weight: 600;
+  line-height: 1.45; margin-bottom: .45rem;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.guide-card__body time { font-size: .6875rem; color: var(--muted-2); margin-top: auto; }
+
+.feedback-invitation {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--line); border-radius: 10px; background: #fff;
+}
+.feedback-invitation h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); margin-bottom: .5rem; }
+.feedback-invitation p { color: var(--muted); font-size: .9375rem; margin: 0; max-width: 60ch; }
+.feedback-invitation .btn-row { flex-shrink: 0; }
+
+.cta-band { padding-block: clamp(3rem, 5vw, 4.5rem); }
+.cta-band h2 { font-size: clamp(1.8rem, 3.2vw, 2.7rem); }
+.footer__main { padding-block: clamp(2.75rem, 4.5vw, 4rem); }
+
+/* Built-by credit in the footer */
+.footer__built {
+  border-top: 1px solid rgba(255,255,255,.09);
+  padding-block: 1rem; font-size: .75rem; color: #7f9c8f; text-align: center;
+}
+.footer__built a { color: var(--gold-400); }
+.footer__built a:hover { color: #fff; text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   12. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1199px) {
+  .services-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .why-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.25rem; }
+  .trust-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .guide-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .quickbar__card { grid-template-columns: 1fr; gap: 1.25rem; }
+  .quickbar__card > .btn-row { justify-content: stretch; }
+  .quickbar__card > .btn-row .btn { flex: 1; }
+  .umrah-band__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr) minmax(0, 1fr); }
+  .umrah-band__photo { min-height: 380px; }
+}
+
+@media (max-width: 991px) {
+  .visa-split { grid-template-columns: 1fr; }
+  .visa-split__media { order: -1; max-height: 260px; }
+  .corporate-band__grid { grid-template-columns: 1fr; }
+  .corporate-band__photo { min-height: 260px; }
+  .corporate-band__photo::after { background: linear-gradient(0deg, rgba(10,68,52,.9), rgba(10,68,52,.15)); }
+  .dest-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .umrah-band__grid { grid-template-columns: 1fr; }
+  .umrah-band__photo { min-height: 220px; }
+  .umrah-band__photo:last-child { display: none; }
+  body { padding-bottom: calc(66px + env(safe-area-inset-bottom, 0px)); }
+  .float-actions { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .float-btn--wa { display: none; }   /* the mobile bar already offers WhatsApp */
+}
+
+@media (max-width: 767px) {
+  :root { --header-h: 72px; }
+  .topbar__tagline { display: none; }
+  .topbar__inner { justify-content: center; }
+  .hero__media img { object-position: 64% 44%; }
+  .hero__media::after {
+    background: linear-gradient(180deg, rgba(5,32,25,.95) 0%, rgba(6,40,31,.9) 45%, rgba(7,47,38,.8) 100%);
+  }
+  .hero__trustbar { margin-top: 1.75rem; }
+  .hero__trustbar-item { flex: 1 1 50%; min-width: 0; padding: .8rem 1rem; font-size: .75rem; }
+  .hero__trustbar-item:nth-child(2) { border-right: 0; }
+  .hero .btn-row .btn { width: 100%; }
+  .quickbar { margin-top: -1.5rem; }
+  .quickbar__options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .umrah-tiers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .visa-flags { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .dest-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .corporate-list { grid-template-columns: 1fr; }
+  .why-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trust-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .section-heading-row { flex-direction: column; align-items: flex-start; }
+  .feedback-invitation { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 479px) {
+  .header__actions > .btn { display: none; }
+  .services-grid, .guide-row { grid-template-columns: 1fr; }
+  .visa-flags { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why-row { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(2rem, 8.5vw, 2.6rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dest-card:hover .dest-card__img img,
+  .guide-card:hover .guide-card__img img { transform: none; }
+}
+
+@media print {
+  .hero__media, .hero__trustbar, .quickbar { display: none !important; }
+  .hero h1, .hero h1 .accent, .hero__text, .hero__eyebrow { color: #000 !important; }
+  .hero { background: #fff; }
+  .services-grid, .dest-row, .guide-row, .why-row, .trust-row { grid-template-columns: repeat(2, 1fr); }
+  .corporate-band, .corporate-band__body h2 { background: #fff; color: #000; }
+}
+
+/* ==========================================================================
+   13. Flags, card captions, and readability fixes
+   --------------------------------------------------------------------------
+   Emoji flags (🇬🇧) have no glyph in any Windows font, so they rendered as the
+   bare letters "GB". These are real SVG files served locally instead.
+   ========================================================================== */
+.flag {
+  display: block;
+  width: auto;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(20, 33, 28, .12);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Visa grid — flag above the country name */
+.visa-flag { gap: .5rem; padding: .95rem .4rem; min-height: 96px; }
+.visa-flag__flag { display: flex; align-items: center; justify-content: center; }
+.visa-flag__flag .flag { width: 34px; height: 26px; }
+.visa-flag__name { font-size: .8125rem; line-height: 1.25; }
+.visa-flag__sub { font-size: .6875rem; }
+
+/* Chip grid used on the visa hub and country pages */
+.chip { gap: .5rem; }
+.chip .flag { width: 30px; height: 23px; }
+
+/* Card captions were inside <span>, which stays inline and clipped the text
+   out of the card. Block-level wrappers, belt and braces with the markup. */
+.dest-card__img,
+.dest-card__body,
+.guide-card__img,
+.guide-card__body,
+.media-card__img,
+.media-card__body { display: block; }
+
+.dest-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .3rem;
+  padding: .85rem .9rem 1rem;
+}
+.dest-card__body .flag { width: 26px; height: 20px; margin-bottom: .15rem; }
+.dest-card__body strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.dest-card__body span {
+  display: block;
+  font-size: .6875rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold-700);
+  font-weight: 600;
+}
+
+.guide-card__body { display: flex; flex-direction: column; flex: 1; }
+
+/* --------------------------------------------------------------------------
+   Footer "Important notice" — was 12px at ~2.5:1 contrast on dark green,
+   effectively unreadable. Now a labelled, legible block.
+   -------------------------------------------------------------------------- */
+.footer__disclaimer {
+  color: #c3d6cc;
+  font-size: .8125rem;
+  line-height: 1.75;
+  background: rgba(255, 255, 255, .045);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-left: 3px solid var(--gold-500);
+  border-radius: 8px;
+  padding: 1.15rem 1.35rem;
+  margin-top: 2.25rem;
+}
+.footer__disclaimer strong {
+  display: block;
+  margin-bottom: .4rem;
+  color: var(--gold-400);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.footer__disclaimer a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.footer__disclaimer a:hover { color: var(--gold-400); }
+
+/* Footer body copy generally — lift it off the background */
+.footer { color: #b7cdc2; }
+.footer a { color: #cfe0d7; }
+.footer__about p { color: #b7cdc2; line-height: 1.7; }
+.footer__bottom { color: #9db6aa; }
+.footer__built { color: #9db6aa; font-size: .8125rem; }
+
+/* --------------------------------------------------------------------------
+   Hero: let the photograph read on the right, as the mockup does
+   -------------------------------------------------------------------------- */
+.hero__media::after {
+  background:
+    linear-gradient(97deg,
+      rgba(5, 32, 25, .95) 0%,
+      rgba(6, 40, 31, .88) 26%,
+      rgba(7, 47, 38, .58) 46%,
+      rgba(7, 47, 38, .22) 64%,
+      rgba(7, 47, 38, .06) 82%,
+      rgba(7, 47, 38, 0) 100%);
+}
+.hero__media img { object-position: 68% 48%; }
+
+@media (max-width: 767px) {
+  .hero__media::after {
+    background: linear-gradient(180deg, rgba(5,32,25,.94) 0%, rgba(6,40,31,.9) 48%, rgba(7,47,38,.82) 100%);
+  }
+  .hero__media img { object-position: 62% 44%; }
+}
+
+/* ==========================================================================
+   14. "Fly With Trust" — the front-page trust mark
+   --------------------------------------------------------------------------
+   Set as a display statement in the same typographic register as the hero,
+   because trust is the client's primary selling point rather than a footnote.
+   ========================================================================== */
+.trust-band {
+  position: relative;
+  background: var(--green-900);
+  overflow: hidden;
+  isolation: isolate;
+}
+.trust-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .5;
+  background:
+    radial-gradient(circle at 15% 12%, rgba(199, 154, 62, .18) 0, transparent 46%),
+    radial-gradient(circle at 88% 82%, rgba(23, 130, 94, .22) 0, transparent 48%);
+}
+/* Faint arch motif, echoing the Haramain silhouette in the mockup */
+.trust-band::after {
+  content: '';
+  position: absolute;
+  right: -2%;
+  bottom: -18%;
+  width: min(420px, 38vw);
+  aspect-ratio: 1;
+  z-index: -1;
+  opacity: .07;
+  background:
+    radial-gradient(circle at 50% 62%, #fff 0 30%, transparent 31%),
+    conic-gradient(from 180deg at 50% 62%, transparent 0 25%, #fff 25% 75%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 50% 55%, #000 55%, transparent 72%);
+  mask-image: radial-gradient(circle at 50% 55%, #000 55%, transparent 72%);
+}
+
+.trust-mark {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
+}
+.trust-mark .eyebrow { color: var(--gold-400); }
+.trust-mark__title {
+  color: #fff;
+  font-size: clamp(2.2rem, 4.6vw, 3.9rem);
+  line-height: 1.08;
+  letter-spacing: -.03em;
+  margin-bottom: 1rem;
+}
+.trust-mark__title .accent { color: var(--gold-400); }
+.trust-mark p {
+  color: #bed3c9;
+  font-size: clamp(.9375rem, 1.1vw, 1.0625rem);
+  line-height: 1.8;
+  margin: 0 auto;
+  max-width: 56ch;
+}
+
+/* Badges sit on the dark band now */
+.trust-band .trust-badge {
+  background: rgba(255, 255, 255, .055);
+  border-color: rgba(255, 255, 255, .13);
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.trust-band .trust-badge:hover {
+  background: rgba(255, 255, 255, .095);
+  border-color: var(--gold-500);
+  transform: translateY(-3px);
+}
+.trust-band .trust-badge svg { color: var(--gold-400); }
+.trust-band .trust-badge strong { color: #fff; }
+.trust-band .trust-badge span { color: #a9c3b8; }
+.trust-band .form-note { color: #9db6aa; }
+
+@media (max-width: 767px) {
+  .trust-band::after { display: none; }
+}
+
+/* Hero: the brand tagline now sits under the "Fly With Trust" mark */
+.hero__tagline {
+  color: var(--gold-400);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+  line-height: 1.4;
+  margin: -.35rem 0 1rem;
+  letter-spacing: -.01em;
+}
+
+/* ==========================================================================
+   15. Brand logo, footer watermark and the flight motif
+   ========================================================================== */
+
+/* Real logo artwork, used automatically once the files exist.
+   Header wants a wide lockup; the footer can carry the full stacked mark. */
+.logo__img { display: block; width: auto; }
+.logo__img--footer { height: 118px; max-width: 300px; object-fit: contain; }
+
+/* The supplied monogram, sized to sit beside the wordmark */
+.logo__mark--img {
+  width: auto;
+  height: 50px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.logo--footer .logo__mark--img { height: 62px; }
+.logo--header { align-items: center; }
+.logo--footer { align-items: flex-start; }
+
+@media (max-width: 767px) {
+  .logo__mark--img { height: 42px; }
+  .logo__img--footer { height: 94px; }
+}
+
+/* --------------------------------------------------------------------------
+   Footer watermark — the faint Haramain silhouette the mockup shows sitting
+   behind the right-hand side of the footer.
+   -------------------------------------------------------------------------- */
+.footer { position: relative; overflow: hidden; isolation: isolate; }
+.footer::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 28%;
+  height: min(300px, 34vw);
+  z-index: 0;                    /* not -1: a negative index would sit under
+                                    the footer's own background here */
+  opacity: .2;
+  background-image: url('/assets/img/footer-watermark.png');
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: cover;
+  /* dissolve into the footer rather than ending on a hard rectangle */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 38%),
+                      linear-gradient(to top, #000 42%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 38%),
+              linear-gradient(to top, #000 42%, transparent 100%);
+  mask-composite: intersect;
+  pointer-events: none;
+}
+.footer > * { position: relative; z-index: 1; }
+/* keep every footer element above the watermark */
+.footer > * { position: relative; z-index: 1; }
+
+/* --------------------------------------------------------------------------
+   Flight motif — the plane-and-arc from the logo, used as a quiet flourish
+   on the dark CTA band.
+   -------------------------------------------------------------------------- */
+.cta-band { position: relative; overflow: hidden; isolation: isolate; }
+.cta-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .22;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' fill='none' stroke='%23ddb865' stroke-width='1.6'%3E%3Cpath d='M-40 262C240 262 380 150 720 150s520 100 800 100' stroke-dasharray='8 13' opacity='.7'/%3E%3Cpath d='M-40 292C260 292 410 196 730 196s530 96 810 96' opacity='.3'/%3E%3Cg transform='translate(1292 118) rotate(-20) scale(.62)' fill='%23ddb865' stroke='none'%3E%3Cpath d='M0 14 46 6l22-22c6-6 16-8 20-4s2 14-4 20L62 22l-8 46-10 4-4-38-20 4-6 12-8 2-2-16-14-6 2-8 14 2z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .footer::before { width: 70vw; height: 42vw; opacity: .06; }
+  .cta-band::after { opacity: .1; background-size: 200% auto; }
+}
+
+/* --------------------------------------------------------------------------
+   Photographic interior page hero
+   -------------------------------------------------------------------------- */
+.page-hero--photo { isolation: isolate; }
+.page-hero--photo::before { display: none; }   /* drop the gradient wash */
+.page-hero__media { position: absolute; inset: 0; z-index: -1; }
+.page-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+.page-hero__media::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(100deg,
+      rgba(5, 32, 25, .95) 0%,
+      rgba(6, 40, 31, .9) 34%,
+      rgba(7, 47, 38, .68) 58%,
+      rgba(7, 47, 38, .44) 100%);
+}
+.page-hero--photo .page-hero__inner { padding-block: clamp(3rem, 6vw, 5rem); }
+
+@media (max-width: 767px) {
+  .page-hero__media::after {
+    background: linear-gradient(180deg, rgba(5,32,25,.93) 0%, rgba(6,40,31,.9) 50%, rgba(7,47,38,.86) 100%);
+  }
+}
+
+/* ==========================================================================
+   16. Map
+   --------------------------------------------------------------------------
+   The real Google embed. It is lazy-loaded natively, so it costs nothing
+   until the visitor scrolls to it, and it scales down to a phone without
+   the fixed pixel height a raw iframe would otherwise keep.
+   ========================================================================== */
+.mapbox {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--green-900);
+  box-shadow: var(--shadow-sm);
+}
+
+.mapbox .map-embed,
+.mapbox iframe {
+  display: block;
+  width: 100%;
+  height: clamp(300px, 46vw, 460px);
+  border: 0;
+}
+
+/* Address and directions, under the map rather than floating over it. */
+.mapbox__directions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+  margin: 0;
+  padding: .85rem clamp(.9rem, 2vw, 1.25rem);
+  background: var(--green-900);
+  color: #c2d8ce;
+  font-size: .875rem;
+  line-height: 1.55;
+}
+
+.mapbox__link {
+  flex-shrink: 0;
+  color: var(--gold-400);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(221, 184, 101, .45);
+  padding-bottom: 1px;
+}
+
+.mapbox__link:hover,
+.mapbox__link:focus-visible { color: #f0d79a; border-bottom-color: currentColor; }
+
+/* ==========================================================================
+   17. "Fly With Trust" — the hero mark
+   --------------------------------------------------------------------------
+   Treated as a piece of lettering rather than a heading: tighter tracking,
+   an optical size bump, and the gold ribbon flourish from the logo drawn
+   under the accent word.
+   ========================================================================== */
+.hero h1 {
+  font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -.038em;
+  margin-bottom: .75rem;
+  text-shadow: 0 2px 28px rgba(3, 22, 16, .4);
+}
+.hero h1 .accent {
+  position: relative;
+  display: inline-block;      /* so the flourish tracks the word, not the line */
+  padding-bottom: .16em;
+  background: linear-gradient(180deg, #f0d79a 0%, var(--gold-400) 42%, #b98f34 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* the gold ribbon, echoing the swoosh through the logo wordmark */
+.hero h1 .accent::after {
+  content: '';
+  position: absolute;
+  left: -.02em;
+  right: -.02em;
+  bottom: 0;
+  height: .19em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 26' fill='none'%3E%3Cpath d='M2 19C56 7 104 4 150 6s94 9 148 3' stroke='%23ddb865' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M10 24c52-9 98-12 142-10s90 8 140 2' stroke='%23c79a3e' stroke-width='2' stroke-linecap='round' opacity='.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+/* Tagline sits closer, in gold, as a supporting line under the mark */
+.hero__tagline {
+  margin: .9rem 0 1.15rem;
+  font-size: clamp(1rem, 1.55vw, 1.35rem);
+  letter-spacing: .005em;
+  color: var(--gold-400);
+  opacity: .95;
+}
+
+/* The same lettering treatment for the trust band heading */
+.trust-mark__title .accent {
+  background: linear-gradient(180deg, #f0d79a 0%, var(--gold-400) 45%, #b98f34 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (max-width: 767px) {
+  .hero h1 { font-size: clamp(2.3rem, 10.5vw, 3.2rem); }
+  .hero h1 .accent::after { height: .17em; }
+}
+
+/* Gradient text needs a solid fallback where background-clip is unsupported */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero h1 .accent,
+  .trust-mark__title .accent { color: var(--gold-400); background: none; }
+}
+
+/* ==========================================================================
+   18. Touch target sizes
+   --------------------------------------------------------------------------
+   Found by `npm run responsive`. WCAG 2.5.8 sets the floor at 24x24 CSS px;
+   44x44 is the size that stops a thumb missing. Most controls were 1-3px
+   short of 44, and the consent checkbox was genuinely below the floor.
+   ========================================================================== */
+
+/* Buttons were 42px tall. Two pixels is invisible on desktop and is the
+   difference between passing and failing on a phone. */
+/* Every button, including the small variant — a secondary CTA is still
+   something a thumb has to hit. */
+.btn,
+.btn--sm { min-height: 44px; }
+
+/* The consent checkbox was 18x18 — below the WCAG minimum outright. */
+.checkbox input {
+  width: 24px;
+  height: 24px;
+  margin-top: 0;
+}
+
+/* Its label text and the inline policy link get a matching line box, so the
+   whole row is comfortably tappable rather than a 16px-high link. */
+.checkbox { align-items: center; line-height: 1.6; }
+.checkbox a { padding-block: .35rem; }
+
+/* Back to top sat at 42px inside a 52px circle. */
+.float-btn { min-width: 44px; min-height: 44px; }
+
+/* WCAG 2.5.8 sets a 24x24 floor for every pointer, not just touch. These
+   rows of links were 20px tall with a mouse; four pixels clears it without
+   changing how anything looks. */
+.topbar__right a,
+.footer__legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+/* Coarse pointers only: text links that act as controls need the same room,
+   but inflating them on desktop would loosen the header and footer. */
+@media (pointer: coarse) {
+  .topbar__right a,
+  .footer__built a,
+  .footer__legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .logo { min-height: 44px; }
+
+  /* Filter pills and "read more" arrows measured 40-42px on a phone. They
+     stay compact on desktop, where a cursor does not need the room. */
+  .pill { min-height: 44px; }
+  .link-arrow { min-height: 44px; }
+}

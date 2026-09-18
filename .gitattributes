@@ -1,0 +1,10 @@
+# Normalise line endings in the repo; check out native on each platform.
+* text=auto eol=lf
+
+# Binary assets — never touched
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.svg text eol=lf
+*.ico binary
+*.webp binary

@@ -1,0 +1,40 @@
+{
+  "name": "mazin-haramain-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mazin Haramain Tours & Travels — static website generator. Umrah, Hajj, visa, flights, hotels, tours and corporate travel, Islamabad.",
+  "scripts": {
+    "build": "node src/build.js",
+    "qa": "node src/qa.js",
+    "icons": "node src/tools/make-icon.js",
+    "images": "node src/tools/fetch-images.js",
+    "preview": "node src/tools/build-preview.js",
+    "test": "node --test src/tests/*.test.js",
+    "check": "npm run build && npm run qa && npm test",
+    "start": "npm run build && node src/serve.js",
+    "serve": "node src/serve.js",
+    "flags": "node src/tools/fetch-flags.js",
+    "shoot": "node src/tools/shoot.js",
+    "logo": "node src/tools/make-logo.js assets/img/logo-source.jpg",
+    "audit": "node src/tools/audit.js",
+    "responsive": "node src/tools/responsive.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "umrah",
+    "hajj",
+    "travel-agency",
+    "visa",
+    "pakistan",
+    "islamabad",
+    "static-site"
+  ],
+  "author": "Mazin Haramain Tours & Travels",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "playwright": "^1.63.0",
+    "sharp": "^0.35.4"
+  }
+}
