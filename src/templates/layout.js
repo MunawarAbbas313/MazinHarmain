@@ -9,6 +9,7 @@ const site = require('../data/site');
 const { nav, footerNav, legalNav } = require('../data/nav');
 const icon = require('../lib/icons');
 const { esc, attr } = require('../lib/html');
+const { asset } = require('../lib/assets');
 
 /* -------------------------------------------------------------------------
    Logo
@@ -477,10 +478,10 @@ function layout(p) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"></noscript>
 
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="${asset('/assets/css/styles.css')}">
   <!-- Loaded after styles.css: refines the shared theme and carries the
        photography-led homepage layout. Order matters. -->
-  <link rel="stylesheet" href="/assets/css/refinements.css">
+  <link rel="stylesheet" href="${asset('/assets/css/refinements.css')}">
 
   <script type="application/ld+json">${jsonLd}</script>${ga}
 </head>
@@ -498,7 +499,7 @@ ${floatingActions(p.waMessage)}
     email: site.email,
     formEndpoint: site.formEndpoint,
   })};</script>
-  <script src="/assets/js/main.js" defer></script>
+  <script src="${asset('/assets/js/main.js')}" defer></script>
 </body>
 </html>
 `;
