@@ -7,6 +7,7 @@
 const site = require('../data/site');
 const { layout } = require('../templates/layout');
 const c = require('../templates/components');
+const { searchWidget, assuranceStrip } = require('../templates/search-widget');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
 const { routes, byCategory, routeFaqs } = require('../data/flights');
@@ -76,6 +77,9 @@ ${c.pageHero({
     text: 'Direct and connecting options on the routes Pakistani travellers fly most, with the fare rules and baggage allowance explained before you pay.',
     buttons: [c.btn.quote('Request a Fare'), c.btn.whatsapp(wa), c.btn.callLight()],
   })}
+
+${searchWidget({ active: 'flights' })}
+${assuranceStrip('flights')}
 
   <section class="section">
     <div class="container">

@@ -4,6 +4,7 @@
 
 const { layout } = require('../templates/layout');
 const c = require('../templates/components');
+const { searchWidget } = require('../templates/search-widget');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
 const hotels = require('../data/hotels');
@@ -53,6 +54,8 @@ ${c.pageHero({
     text: 'Hotel reservations worldwide &mdash; from Haram-facing properties in Makkah and Madinah to city hotels, beach resorts and corporate accommodation.',
     buttons: [c.btn.quote('Request a Booking'), c.btn.whatsapp(wa), c.btn.callLight()],
   })}
+
+${searchWidget({ active: 'hotels' })}
 
   <section class="section">
     <div class="container">

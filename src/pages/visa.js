@@ -7,6 +7,7 @@
 const site = require('../data/site');
 const { layout } = require('../templates/layout');
 const c = require('../templates/components');
+const { searchWidget } = require('../templates/search-widget');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
 const visaTypes = require('../data/visa-types');
@@ -84,6 +85,8 @@ ${c.pageHero({
     text: 'Professional guidance for your visa application, documentation and appointment process &mdash; for more than forty destinations, from our office in Blue Area, Islamabad.',
     buttons: [c.btn.quote('Get Visa Assistance'), c.btn.whatsapp(wa), c.btn.callLight()],
   })}
+
+${searchWidget({ active: 'visa' })}
 
   <section class="section">
     <div class="container">

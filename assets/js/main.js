@@ -195,21 +195,7 @@
   })();
 
   /* ======================================================================
-     6. Quick inquiry bar (hero) — routes to the matching service page
-     ====================================================================== */
-  (function quickBar() {
-    var form = $('[data-quickbar]');
-    if (!form) return;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var checked = form.querySelector('input[name="quick-service"]:checked');
-      var url = checked ? checked.getAttribute('data-url') : '/get-a-quote/';
-      window.location.href = url || '/get-a-quote/';
-    });
-  })();
-
-  /* ======================================================================
-     7. Lead forms
+     6. Lead forms
      ----------------------------------------------------------------------
      Order of preference:
        1. POST to the configured endpoint (a real CRM / form service)
@@ -395,6 +381,338 @@
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
       });
     }
+  })();
+
+  /* ======================================================================
+     7. Travel search widget
+     ----------------------------------------------------------------------
+     Tab switching, the from/to swap, the trip-type rules and the date
+     floors. Submitting follows the same order of preference as the lead
+     forms above: the configured endpoint first, otherwise a pre-formatted
+     WhatsApp message with a mailto fallback. There is no booking engine
+     behind this — the buttons say "Request" because that is what happens.
+     ====================================================================== */
+  (function travelSearch() {
+    var widgets = $$('[data-ts]');
+    if (!widgets.length) return;
+
+    /* Field order and wording of the message the consultant receives. */
+    var LABELS = {
+      tripType: 'Trip type', from: 'From', to: 'To',
+      departDate: 'Departing', returnDate: 'Returning', itinerary: 'Itinerary',
+      cabin: 'Cabin', travellers: 'Travellers', directOnly: 'Preference',
+      packageType: 'Package', duration: 'Duration',
+      country: 'Destination', visaType: 'Visa type',
+      city: 'City / area', checkIn: 'Check in', checkOut: 'Check out',
+      guests: 'Guests', rooms: 'Rooms', category: 'Hotel category',
+      phone: 'WhatsApp',
+    };
+    /* One order per tab, so the consultant reads the request in the order
+       the visitor filled it in. */
+    var ORDER = {
+      Flight: ['tripType', 'from', 'to', 'departDate', 'returnDate', 'itinerary', 'cabin', 'travellers', 'directOnly', 'phone'],
+      Umrah: ['packageType', 'duration', 'departDate', 'travellers', 'phone'],
+      Visa: ['country', 'visaType', 'departDate', 'phone'],
+      Hotel: ['city', 'checkIn', 'checkOut', 'guests', 'rooms', 'category', 'phone'],
+    };
+    /* "Departing" is right for a flight and wrong for the other three. */
+    var LABEL_OVERRIDES = {
+      Umrah: { departDate: 'Travel date' },
+      Visa: { departDate: 'Intended travel date' },
+    };
+    var HEADINGS = {
+      Flight: 'Flight Fare Request',
+      Umrah: 'Umrah Package Request',
+      Visa: 'Visa Eligibility Request',
+      Hotel: 'Hotel Rate Request',
+    };
+    var DATE_KEYS = { departDate: 1, returnDate: 1, checkIn: 1, checkOut: 1 };
+
+    function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+    function todayISO() {
+      var d = new Date();
+      return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+    }
+
+    /* "2026-03-12" -> "12 Mar 2026". Built in UTC so the day never slips. */
+    function prettyDate(iso) {
+      var parts = String(iso).split('-');
+      if (parts.length !== 3) return iso;
+      var d = new Date(Date.UTC(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2])));
+      if (isNaN(d.getTime())) return iso;
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function validPhone(v) { return v.replace(/[^0-9]/g, '').length >= 10; }
+
+    function setError(input, show) {
+      if (!input) return;
+      var form = input.form;
+      var err = form ? form.querySelector('[data-error-for="' + input.name + '"]') : null;
+      input.classList.toggle('is-invalid', show);
+      if (show) { input.setAttribute('aria-invalid', 'true'); } else { input.removeAttribute('aria-invalid'); }
+      if (err) err.classList.toggle('is-visible', show);
+    }
+
+    function status(form, kind, html) {
+      var box = $('[data-form-status]', form);
+      if (!box) return;
+      box.className = 'form-status is-visible form-status--' + kind;
+      box.innerHTML = html;
+    }
+
+    /* ---- Tabs ---------------------------------------------------------- */
+    function initTabs(widget) {
+      var tabs = $$('[data-ts-tab]', widget);
+      var panels = $$('[data-ts-panel]', widget);
+      if (!tabs.length) return;
+
+      function activate(key, focus) {
+        var found = false;
+        tabs.forEach(function (tab) {
+          var on = tab.getAttribute('data-ts-tab') === key;
+          if (on) found = true;
+          tab.classList.toggle('is-active', on);
+          tab.setAttribute('aria-selected', String(on));
+          tab.tabIndex = on ? 0 : -1;
+          if (on && focus) tab.focus();
+        });
+        if (!found) return;
+        panels.forEach(function (panel) {
+          panel.hidden = panel.getAttribute('data-ts-panel') !== key;
+        });
+        widget.setAttribute('data-ts-active', key);
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          activate(tab.getAttribute('data-ts-tab'));
+        });
+      });
+
+      // Roving focus, as the tablist pattern expects.
+      widget.addEventListener('keydown', function (e) {
+        if (tabs.indexOf(document.activeElement) === -1) return;
+        var i = tabs.indexOf(document.activeElement);
+        var next = null;
+        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+        else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if (e.key === 'Home') next = tabs[0];
+        else if (e.key === 'End') next = tabs[tabs.length - 1];
+        if (!next) return;
+        e.preventDefault();
+        activate(next.getAttribute('data-ts-tab'), true);
+      });
+
+      /* Deep links: /umrah-packages/#umrah and ?tab=umrah both work, so a
+         campaign link can open the widget on the right tab. */
+      var wanted = '';
+      try {
+        var q = new URLSearchParams(window.location.search).get('tab');
+        if (q) wanted = q.toLowerCase();
+      } catch (_) { /* older browsers: hash only */ }
+      if (!wanted && window.location.hash) wanted = window.location.hash.slice(1).toLowerCase();
+      if (wanted) activate(wanted);
+    }
+
+    /* ---- Per-panel behaviour ------------------------------------------- */
+    function initPanel(form) {
+      var min = todayISO();
+      $$('[data-ts-today]', form).forEach(function (el) { el.min = min; });
+
+      // A return can never precede the outbound, nor a check-out the check-in.
+      function chain(firstName, secondName) {
+        var first = form.querySelector('[name="' + firstName + '"]');
+        var second = form.querySelector('[name="' + secondName + '"]');
+        if (!first || !second) return;
+        first.addEventListener('change', function () {
+          second.min = first.value || min;
+          if (second.value && second.value < first.value) second.value = '';
+        });
+      }
+      chain('departDate', 'returnDate');
+      chain('checkIn', 'checkOut');
+
+      // Swap the two airport fields.
+      var swap = $('[data-ts-swap]', form);
+      if (swap) {
+        swap.addEventListener('click', function () {
+          var from = form.querySelector('[name="from"]');
+          var to = form.querySelector('[name="to"]');
+          if (!from || !to) return;
+          var tmp = from.value;
+          from.value = to.value;
+          to.value = tmp;
+          setError(from, false);
+          setError(to, false);
+        });
+      }
+
+      // Trip type governs the return date and the multi-city itinerary box.
+      var trips = $$('[data-ts-trip]', form);
+      var ret = $('[data-ts-return]', form);
+      var retField = ret ? ret.closest('.ts-field') : null;
+      var multi = $('[data-ts-multicity]', form);
+      function applyTrip() {
+        var checked = form.querySelector('[data-ts-trip]:checked');
+        var value = checked ? checked.value : 'Return';
+        if (ret) {
+          var off = value !== 'Return';
+          ret.disabled = off;
+          if (off) ret.value = '';
+          if (retField) retField.classList.toggle('is-off', off);
+        }
+        if (multi) multi.hidden = value !== 'Multi-City';
+      }
+      trips.forEach(function (t) { t.addEventListener('change', applyTrip); });
+      if (trips.length) applyTrip();
+
+      // Clear a field's error as soon as the visitor touches it.
+      $$('input, select, textarea', form).forEach(function (el) {
+        var evt = (el.tagName === 'SELECT' || el.type === 'checkbox' || el.type === 'date') ? 'change' : 'input';
+        el.addEventListener(evt, function () { setError(el, false); });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submit(form);
+      });
+    }
+
+    /* ---- Validation ----------------------------------------------------- */
+    function validate(form) {
+      var ok = true;
+      var firstBad = null;
+
+      function fail(el) {
+        setError(el, true);
+        ok = false;
+        if (!firstBad) firstBad = el;
+      }
+
+      $$('[data-error-for]', form).forEach(function (err) {
+        var el = form.querySelector('[name="' + err.getAttribute('data-error-for') + '"]');
+        if (!el || el.disabled) return;
+        var value = String(el.value || '').trim();
+        if (!value) { fail(el); return; }
+        if (el.name === 'phone' && !validPhone(value)) { fail(el); return; }
+        setError(el, false);
+      });
+
+      // Same city both ends is a typo, not a booking.
+      var from = form.querySelector('[name="from"]');
+      var to = form.querySelector('[name="to"]');
+      if (ok && from && to && from.value.trim() && from.value.trim().toLowerCase() === to.value.trim().toLowerCase()) {
+        fail(to);
+        status(form, 'err', 'Your departure and destination are the same — please check them.');
+        to.focus();
+        return false;
+      }
+
+      if (firstBad) firstBad.focus();
+      return ok;
+    }
+
+    /* ---- Collect and format --------------------------------------------- */
+    function collect(form) {
+      var data = {};
+      $$('input, select, textarea', form).forEach(function (el) {
+        var name = el.getAttribute('name');
+        if (!name || name === 'company' || el.disabled) return;
+        if (el.type === 'radio') { if (el.checked) data[name] = el.value; return; }
+        if (el.type === 'checkbox') { if (el.checked) data[name] = el.value; return; }
+        var v = String(el.value || '').trim();
+        if (v) data[name] = DATE_KEYS[name] ? prettyDate(v) : v;
+      });
+      return data;
+    }
+
+    function asText(data, kind) {
+      var lines = ['*' + (HEADINGS[kind] || 'Travel Inquiry') + ' — Mazin Haramain Tours & Travels*', ''];
+      var order = ORDER[kind] || Object.keys(LABELS);
+      var overrides = LABEL_OVERRIDES[kind] || {};
+      order.forEach(function (key) {
+        if (data[key]) lines.push((overrides[key] || LABELS[key]) + ': ' + data[key]);
+      });
+      lines.push('', 'Sent from ' + window.location.href);
+      return lines.join('\n');
+    }
+
+    /* ---- Submit ---------------------------------------------------------- */
+    function submit(form) {
+      var hp = form.querySelector('[name="company"]');
+      if (hp && hp.value) return; // honeypot: a bot filled the hidden field
+
+      if (!validate(form)) {
+        if (!$('[data-form-status]', form).classList.contains('form-status--err')) {
+          status(form, 'err', 'Please complete the highlighted fields and try again.');
+        }
+        return;
+      }
+
+      var kind = form.getAttribute('data-ts-kind') || 'Travel';
+      var data = collect(form);
+      data.service = kind;
+      var text = asText(data, kind);
+
+      var btn = form.querySelector('[type="submit"]');
+      var original = btn ? btn.innerHTML : '';
+      function restore() { if (btn) { btn.disabled = false; btn.innerHTML = original; } }
+
+      function handOver(endpointFailed) {
+        var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
+        var mailUrl = 'mailto:' + EMAIL +
+          '?subject=' + encodeURIComponent((HEADINGS[kind] || 'Travel Inquiry') + ' — Website') +
+          '&body=' + encodeURIComponent(text.replace(/\*/g, ''));
+        status(
+          form, 'ok',
+          '<strong>Your request is ready.</strong> ' +
+          (endpointFailed ? 'We could not confirm delivery through the form. ' : '') +
+          'It has not been sent yet — send it to our desk through WhatsApp or email and we will come back with options:<br><br>' +
+          '<a class="btn btn--whatsapp btn--sm" href="' + waUrl + '" target="_blank" rel="noopener">Send on WhatsApp</a> ' +
+          '<a class="btn btn--ghost btn--sm" href="' + mailUrl + '">Send by Email</a>'
+        );
+        restore();
+      }
+
+      if (btn) { btn.disabled = true; btn.textContent = 'Preparing…'; }
+
+      if (!ENDPOINT) { handOver(false); return; }
+
+      var controller = new AbortController();
+      var timer = window.setTimeout(function () { controller.abort(); }, 15000);
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data),
+        signal: controller.signal,
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Bad response');
+          return res.status === 204 ? null : res.json();
+        })
+        .then(function (result) {
+          if (result && (result.success === false || result.ok === false || result.error)) {
+            throw new Error('Inquiry rejected');
+          }
+          if (window.gtag) window.gtag('event', 'generate_lead', { event_label: kind });
+          window.location.href = '/thank-you/';
+        })
+        .catch(function () { handOver(true); })
+        .finally(function () { window.clearTimeout(timer); });
+    }
+
+    widgets.forEach(function (widget) {
+      initTabs(widget);
+      $$('[data-ts-panel]', widget).forEach(initPanel);
+    });
   })();
 
   /* ======================================================================

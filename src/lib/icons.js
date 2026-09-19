@@ -48,6 +48,7 @@ const raw = {
   bed: '<path d="M2 20V6"/><path d="M2 12h20v8"/><path d="M22 12v-2a2 2 0 0 0-2-2h-8v4"/><circle cx="7" cy="10" r="2"/>',
   userTie: '<circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/><path d="m12 11 1.6 2.2L12 19l-1.6-5.8z" fill="currentColor" stroke="none"/>',
   route: '<circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M5 8.5V12a4 4 0 0 0 4 4h6"/><path d="M13 13.5 16.5 16 13 18.5"/>',
+  swap: '<polyline points="16.5 3 20.5 7 16.5 11"/><line x1="3.5" y1="7" x2="20.5" y2="7"/><polyline points="7.5 13 3.5 17 7.5 21"/><line x1="20.5" y1="17" x2="3.5" y2="17"/>',
   suitcase: '<rect x="2" y="7" width="20" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M2 12h20"/>',
   certificate: '<rect x="3" y="3" width="18" height="13" rx="2"/><path d="M7 7h10M7 11h5"/><circle cx="17" cy="18" r="3"/><path d="m15.5 20.5-.5 3 2-1 2 1-.5-3"/>',
   facebook: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',

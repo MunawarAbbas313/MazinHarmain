@@ -5,6 +5,7 @@
 const site = require('../data/site');
 const { layout } = require('../templates/layout');
 const c = require('../templates/components');
+const { searchWidget } = require('../templates/search-widget');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
 const U = require('../data/umrah');
@@ -126,6 +127,8 @@ ${c.pageHero({
     text: 'Your sacred journey, carefully planned. Economy to VIP packages with the Umrah visa, flights, hotels in Makkah and Madinah, transfers and ziyarat included &mdash; departing from every major Pakistani city.',
     buttons: [c.btn.quote('Get Umrah Pricing'), c.btn.whatsapp(wa), c.btn.callLight()],
   })}
+
+${searchWidget({ active: 'umrah' })}
 
   <section class="section">
     <div class="container">

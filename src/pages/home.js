@@ -4,7 +4,7 @@
 
      1  Hero              full-bleed Kaaba photograph, overlay weighted left,
                           headline + three CTAs, trust strip along the bottom
-     2  Quick inquiry     white card overlapping the hero
+     2  Search widget     portal-style panel overlapping the hero, four tabs
      3  Services          "Complete Travel Solutions Under One Roof", 4 x 2
      4  Umrah             centre panel flanked by Makkah/Madinah photography
      5  Visa              flag grid with a passport photograph alongside
@@ -20,6 +20,7 @@
 const site = require('../data/site');
 const { layout } = require('../templates/layout');
 const c = require('../templates/components');
+const { searchWidget } = require('../templates/search-widget');
 const icon = require('../lib/icons');
 const { esc, attr, each, formatDate } = require('../lib/html');
 
@@ -82,41 +83,6 @@ function hero() {
       </div>
     </div>
   </section>`;
-}
-
-/* ------------------------------------------------------- 2. Quick inquiry */
-function quickBar() {
-  const options = [
-    { id: 'q-umrah',   icon: 'kaaba',    label: 'Umrah',   url: '/umrah-packages/' },
-    { id: 'q-flights', icon: 'plane',    label: 'Flights', url: '/services/air-ticketing/' },
-    { id: 'q-visa',    icon: 'passport', label: 'Visa',    url: '/visa-services/' },
-    { id: 'q-tours',   icon: 'globe',    label: 'Tours',   url: '/destinations/' },
-  ];
-
-  return `
-  <div class="quickbar">
-    <div class="container">
-      <form class="quickbar__card" data-quickbar action="/get-a-quote/" method="get">
-        <div class="quickbar__head">
-          <h2>What are you looking for?</h2>
-          <p>Find the right travel solution for your next journey.</p>
-        </div>
-        <div class="quickbar__options">
-          ${each(
-            options,
-            (o, i) => `
-          <div class="quickbar__opt">
-            <input type="radio" name="quick-service" id="${o.id}" value="${attr(o.label)}" data-url="${attr(o.url)}"${i === 0 ? ' checked' : ''}>
-            <label for="${o.id}">${icon(o.icon, { size: 23 })} ${esc(o.label)}</label>
-          </div>`
-          )}
-        </div>
-        <div class="btn-row">
-          <button class="btn btn--green" type="submit">Get Started ${icon('arrowRight', { size: 15 })}</button>
-        </div>
-      </form>
-    </div>
-  </div>`;
 }
 
 /* ----------------------------------------------------------- 3. Services */
@@ -482,7 +448,7 @@ function mapSection() {
 function render() {
   const body = [
     hero(),
-    quickBar(),
+    searchWidget({ active: 'flights' }),
     servicesSection(),
     umrahSection(),
     visaSection(),

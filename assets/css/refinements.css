@@ -921,3 +921,419 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   .pill { min-height: 44px; }
   .link-arrow { min-height: 44px; }
 }
+
+/* --------------------------------------------------------------------------
+   19. Travel search widget
+
+   The portal-style panel that overlaps the hero on the home page and sits
+   under the hero on the four service pages. Four tabs, one form each.
+
+   It is styled to read as a tool rather than a marketing block: micro-cap
+   labels, a single row of controls, one gold action. Everything is a real
+   form control — the tabs are buttons, the trip type is a radio group and
+   the panels are tabpanels, so it works from the keyboard and reads
+   correctly to a screen reader.
+   -------------------------------------------------------------------------- */
+.ts { position: relative; z-index: 5; }
+.ts--overlap { margin-top: -2.75rem; }
+.ts__title {
+  font-size: var(--fs-2xl);
+  text-align: center;
+  margin-bottom: var(--sp-6);
+}
+
+.ts__card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* ---- Tab strip --------------------------------------------------------- */
+.ts__head {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+}
+
+.ts__tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.ts__tabs::-webkit-scrollbar { display: none; }
+
+.ts__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex: 0 0 auto;
+  min-height: 52px;
+  padding: 0 clamp(0.85rem, 2.4vw, 1.5rem);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.ts__tab svg { color: var(--muted-2); transition: color 0.2s var(--ease); }
+.ts__tab:hover { color: var(--green-700); background: rgba(255, 255, 255, 0.6); }
+.ts__tab:hover svg { color: var(--green-600); }
+.ts__tab.is-active {
+  color: var(--green-800);
+  background: var(--white);
+  border-bottom-color: var(--gold-500);
+}
+.ts__tab.is-active svg { color: var(--gold-600); }
+.ts__tab:focus-visible { outline: 3px solid var(--gold-500); outline-offset: -3px; }
+
+.ts__brand {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--sp-6);
+  border-left: 1px solid var(--line);
+  text-align: right;
+}
+.ts__brand-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--green-800);
+  line-height: 1.3;
+}
+.ts__brand-sub {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+/* ---- Panel body -------------------------------------------------------- */
+.ts__body { padding: var(--sp-5); }
+.ts-panel[hidden] { display: none; }
+
+/* ---- Option strip (trip type, cabin, pax, direct) ---------------------- */
+.ts-opts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-5);
+  margin-bottom: var(--sp-5);
+  border-bottom: 1px dashed var(--line);
+}
+.ts-opts__spacer { display: none; }
+
+.ts-seg {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--green-50);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+}
+.ts-seg__opt { position: relative; }
+.ts-seg__opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+.ts-seg__opt label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.ts-seg__opt label:hover { color: var(--green-700); }
+.ts-seg__opt input:checked + label {
+  background: var(--green-700);
+  color: #fff;
+  box-shadow: var(--shadow-xs);
+}
+.ts-seg__opt input:focus-visible + label { outline: 3px solid var(--gold-500); outline-offset: 2px; }
+
+.ts-mini {
+  min-height: 38px;
+  padding: 0 2rem 0 var(--sp-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--white) url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235d6d66' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 0.6rem center / 14px;
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.ts-mini:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
+
+.ts-check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 38px;
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.ts-check input { width: 18px; height: 18px; accent-color: var(--green-700); cursor: pointer; }
+.ts-check:has(input:checked) { border-color: var(--green-500); background: var(--green-50); color: var(--green-800); }
+
+/* ---- Field grid -------------------------------------------------------- */
+.ts-row {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: 1fr;
+  /* Top-aligned, not bottom-aligned: an inline error appearing under one
+     field must not shove its neighbours up the row. */
+  align-items: start;
+}
+
+.ts-field { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; }
+.ts-field > label {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ts-field .req { color: var(--danger); }
+.ts-field .field__error { font-size: var(--fs-xs); line-height: 1.45; }
+
+.ts-control { position: relative; display: block; }
+.ts-control__icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  color: var(--green-600);
+  pointer-events: none;
+}
+
+.ts-input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 var(--sp-3) 0 2.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  font: inherit;
+  font-size: var(--fs-base);
+  color: var(--ink);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.ts-input::placeholder { color: var(--muted-2); }
+.ts-input:hover { border-color: var(--muted-2); }
+.ts-input:focus {
+  outline: none;
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 3px rgba(23, 130, 94, 0.14);
+}
+.ts-input:disabled { background: var(--line-2); color: var(--muted-2); cursor: not-allowed; }
+.ts-input.is-invalid { border-color: var(--danger); box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.12); }
+
+.ts-input--select {
+  padding-right: 2rem;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235d6d66' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  background-size: 15px;
+  cursor: pointer;
+}
+
+/* Safari puts date text at the top of an over-tall box unless it is told
+   to stretch, and the native picker button needs room inside our padding. */
+.ts-input[type="date"] { -webkit-appearance: none; appearance: none; display: flex; align-items: center; }
+.ts-input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.45; cursor: pointer; }
+
+.ts-field--return.is-off .ts-input { opacity: 0.55; }
+
+/* The swap sits between two fields that have a label above them, so it
+   drops by one label plus the field gap to centre on their controls. */
+.ts-swap {
+  align-self: start;
+  margin-top: calc(0.825rem + var(--sp-2) + 1px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--green-700);
+  cursor: pointer;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.ts-swap:hover { background: var(--green-50); border-color: var(--green-500); }
+.ts-swap:active { transform: scale(0.94); }
+.ts-swap:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
+
+.ts-extra { margin-top: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-2); }
+/* `display: flex` outranks the [hidden] attribute, so say it explicitly. */
+.ts-extra[hidden] { display: none; }
+.ts-extra > label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---- Submit row -------------------------------------------------------- */
+.ts-foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px dashed var(--line);
+}
+.ts-note {
+  margin: 0;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 640px;
+}
+.ts-submit { width: 100%; justify-content: center; }
+.ts-panel .form-status { margin-top: var(--sp-4); }
+
+/* ---- Responsive -------------------------------------------------------- */
+@media (min-width: 640px) {
+  .ts__body { padding: var(--sp-6); }
+  .ts-row--3, .ts-row--4, .ts-row--hotels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Three tracks: field, swap, field. From/To take the pair, the two dates
+     take it again below, and the phone number runs the full width. */
+  .ts-row--flights { grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr); }
+  .ts-row--flights > .ts-field:nth-child(1),
+  .ts-row--flights > .ts-field:nth-child(4) { grid-column: 1; }
+  .ts-row--flights > .ts-field:nth-child(3),
+  .ts-row--flights > .ts-field:nth-child(5) { grid-column: 3; }
+  .ts-row--flights > .ts-field:nth-child(6) { grid-column: 1 / -1; }
+  .ts-foot { flex-direction: row; align-items: center; justify-content: space-between; }
+  .ts-submit { width: auto; min-width: 230px; }
+}
+
+@media (min-width: 992px) {
+  .ts__brand { display: flex; }
+  .ts-opts__spacer { display: block; flex: 1 1 auto; }
+  .ts-row--3 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ts-row--4 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .ts-row--hotels { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ts-row--hotels > .ts-field--wide { grid-column: span 2; }
+  .ts-row--flights {
+    grid-template-columns: minmax(0, 1.15fr) 44px minmax(0, 1.15fr) minmax(0, 0.95fr) minmax(0, 0.95fr) minmax(0, 1.1fr);
+  }
+  .ts-row--flights > .ts-field:nth-child(n) { grid-column: auto; }
+}
+
+@media (min-width: 1200px) {
+  .ts--overlap { margin-top: -3.25rem; }
+}
+
+/* Below the two-column breakpoint the swap control has no pair of columns
+   to sit between, so it centres on its own line and points the way it
+   actually moves — vertically. */
+@media (max-width: 639px) {
+  .ts-row--flights > .ts-swap {
+    justify-self: center;
+    margin: calc(-1 * var(--sp-2)) 0;
+    transform: rotate(90deg);
+  }
+  .ts-row--flights > .ts-swap:active { transform: rotate(90deg) scale(0.94); }
+  .ts__tab { padding: 0 var(--sp-3); font-size: var(--fs-xs); }
+  .ts--overlap { margin-top: -1.5rem; }
+}
+
+@media print {
+  .ts { display: none !important; }
+}
+
+/* --------------------------------------------------------------------------
+   20. Assurance strip
+
+   The four short promises under the search widget on the ticketing pages.
+   Compact by design — this is a reassurance bar, not a features section,
+   so each item is one line of text next to a badge.
+   -------------------------------------------------------------------------- */
+.assure { padding-top: var(--sp-8); }
+.assure__grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: 1fr;
+}
+.assure__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+}
+.assure__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: var(--green-50);
+  color: var(--green-700);
+}
+.assure__title {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 2px;
+  line-height: 1.35;
+}
+.assure__text {
+  margin: 0;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+@media (min-width: 640px) {
+  .assure__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 992px) {
+  .assure__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .assure__item { flex-direction: column; gap: var(--sp-3); }
+}
+
+@media print {
+  .assure { display: none !important; }
+}

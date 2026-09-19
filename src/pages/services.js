@@ -8,6 +8,7 @@ const c = require('../templates/components');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
 const { services, fullPages, bySlug } = require('../data/services');
+const { searchWidget, assuranceStrip } = require('../templates/search-widget');
 
 /* ------------------------------------------------------------------- Hub */
 function hubPage() {
@@ -69,6 +70,13 @@ ${c.ctaBand()}`;
 }
 
 /* -------------------------------------------------------- Service detail */
+/* Air ticketing is the one service page under /services/ that the search
+   widget covers — the other three tabs have their own hub pages, which
+   carry it themselves. */
+const WIDGET_TAB = {
+  'air-ticketing': 'flights',
+};
+
 function servicePage(s) {
   const wa = `Assalam o Alaikum, I would like to enquire about your ${s.title} service.`;
 
@@ -103,6 +111,10 @@ ${c.pageHero({
     text: esc(s.lead),
     buttons: [c.btn.quote('Get a Free Quote'), c.btn.whatsapp(wa), c.btn.callLight()],
   })}
+${WIDGET_TAB[s.slug] ? `
+${searchWidget({ active: WIDGET_TAB[s.slug] })}
+${assuranceStrip(WIDGET_TAB[s.slug])}
+` : ''}
 
   <section class="section">
     <div class="container">
