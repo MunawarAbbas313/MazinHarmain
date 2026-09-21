@@ -253,12 +253,62 @@ function checkExtras() {
   }
 }
 
+/* ------------------------------------------------------- redirect parity
+   dist/_redirects is generated from src/data/redirects.js, but Vercel reads
+   vercel.json instead. Nothing forces the two to agree, so a retired URL can
+   easily end up 404ing in production while the build output looks correct.
+   This check makes that impossible to miss. */
+function checkRedirects() {
+  const declared = require('./data/redirects');
+  if (!declared.length) return;
+
+  const ROOT = path.join(__dirname, '..');
+  let config;
+  try {
+    config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  } catch (e) {
+    fail('vercel.json', `unreadable: ${e.message}`);
+    return;
+  }
+
+  /* Vercel matches without the trailing slash; trailingSlash:true adds it. */
+  const live = new Map(
+    (config.redirects || []).map((r) => [String(r.source).replace(/\/$/, ''), r])
+  );
+
+  for (const r of declared) {
+    const key = r.from.replace(/\/$/, '');
+    const found = live.get(key);
+    if (!found) {
+      fail('vercel.json', `redirect declared in src/data/redirects.js but missing here: ${r.from}`);
+      continue;
+    }
+    if (found.destination !== r.to) {
+      fail('vercel.json', `redirect ${r.from} points at ${found.destination}, expected ${r.to}`);
+    }
+    if (r.status === 301 && found.permanent !== true) {
+      fail('vercel.json', `redirect ${r.from} should be permanent (301)`);
+    }
+  }
+
+  /* A redirect must not shadow a page that still exists. */
+  for (const r of declared) {
+    const rel = r.from.replace(/^\/+|\/+$/g, '');
+    if (fs.existsSync(path.join(DIST, rel, 'index.html'))) {
+      fail('redirects', `${r.from} redirects but the page still exists in dist/`);
+    }
+  }
+
+  console.log(`  redirects      ${declared.length} declared, in sync with vercel.json`);
+}
+
 /* ------------------------------------------------------------------ run */
 console.log('\nQA check\n' + '='.repeat(46));
 htmlFiles.forEach(checkPage);
 checkSitemap();
 checkClassCoverage();
 checkExtras();
+checkRedirects();
 
 console.log(`  pages          ${stats.pages}`);
 console.log(`  links checked  ${stats.links} (${stats.internalLinks} internal)`);

@@ -16,35 +16,12 @@
 const site = require('../data/site');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
-const { routes } = require('../data/flights');
+const { AIRPORTS, HOTEL_PLACES, HOTEL_CATEGORIES } = require('../data/places');
 const umrah = require('../data/umrah');
 const visaTypes = require('../data/visa-types');
 const { countries } = require('../data/visa-countries');
-const hotels = require('../data/hotels');
 
 /* ---------------------------------------------------------------- Options */
-
-/* Airport suggestions come from the routes we actually publish pages for,
-   plus the departure cities the agency sells from. Free text is still
-   allowed — the datalist is a shortcut, never a restriction. */
-const AIRPORTS = (() => {
-  const seen = new Map();
-  const add = (city, code, name) => {
-    if (!code || seen.has(code)) return;
-    seen.set(code, `${city} (${code}) — ${name}`);
-  };
-  routes.forEach((r) => {
-    add(r.from, r.fromCode, r.fromAirport);
-    add(r.to, r.toCode, r.toAirport);
-  });
-  add('Madinah', 'MED', 'Prince Mohammad bin Abdulaziz International Airport');
-  add('Peshawar', 'PEW', 'Bacha Khan International Airport');
-  add('Multan', 'MUX', 'Multan International Airport');
-  add('Sialkot', 'SKT', 'Sialkot International Airport');
-  add('Faisalabad', 'LYP', 'Faisalabad International Airport');
-  add('Quetta', 'UET', 'Quetta International Airport');
-  return Array.from(seen.values()).sort();
-})();
 
 const CABINS = ['Economy', 'Premium Economy', 'Business', 'First'];
 
@@ -56,10 +33,6 @@ const TRIP_TYPES = [
   { value: 'One Way', label: 'One Way' },
   { value: 'Multi-City', label: 'Multi-City' },
 ];
-
-const HOTEL_CITIES = hotels.map((h) => h.city).filter(Boolean);
-
-const HOTEL_CATEGORIES = ['5 Star', '4 Star', '3 Star', 'Apartment / Aparthotel', 'Nearest to Haram', 'Best value'];
 
 const ROOMS = ['1 Room', '2 Rooms', '3 Rooms', '4 Rooms', '5+ Rooms'];
 
@@ -85,17 +58,28 @@ function options(list, { placeholder = '', selected = '' } = {}) {
     .join('');
 }
 
-/** A labelled control with an icon sitting inside the box. */
-function field({ id, label, icon: name, control, cls = '', required = false, errorFor = '', error = '' }) {
+/**
+ * A labelled control with an icon sitting inside the box.
+ * `combo: true` adds the listbox main.js turns into a type-ahead. The
+ * <datalist> stays on the input as the no-JS fallback; main.js strips the
+ * `list` attribute when it takes over so the two do not both appear.
+ */
+function field({ id, label, icon: name, control, cls = '', required = false, errorFor = '', error = '', combo = false }) {
   return `
             <div class="ts-field ${cls}">
               <label for="${attr(id)}">${esc(label)}${required ? ' <span class="req" aria-hidden="true">*</span>' : ''}</label>
-              <div class="ts-control">
+              <div class="ts-control${combo ? ' ts-combo' : ''}"${combo ? ' data-ts-combo' : ''}>
                 ${name ? `<span class="ts-control__icon">${icon(name, { size: 17 })}</span>` : ''}
                 ${control}
+                ${combo ? `<ul class="ts-combo__list" id="${attr(id)}-list" role="listbox" aria-label="${attr(label)} suggestions" hidden></ul>` : ''}
               </div>
               ${errorFor ? `<span class="field__error" data-error-for="${attr(errorFor)}">${esc(error)}</span>` : ''}
             </div>`;
+}
+
+/** ARIA wiring every combobox input needs. */
+function comboAttrs(id) {
+  return `role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="${attr(id)}-list"`;
 }
 
 function input({ id, name, type = 'text', placeholder = '', list = '', extra = '' }) {
@@ -164,15 +148,15 @@ function flightsPanel(hidden) {
 
           <div class="ts-row ts-row--flights">
             ${field({
-              id: `${p}-from`, label: 'Leaving From', icon: 'pin', required: true,
+              id: `${p}-from`, label: 'Leaving From', icon: 'pin', required: true, combo: true,
               errorFor: 'from', error: 'Where are you flying from?',
-              control: input({ id: `${p}-from`, name: 'from', placeholder: 'City or airport', list: 'ts-airports' }),
+              control: input({ id: `${p}-from`, name: 'from', placeholder: 'City or airport', list: 'ts-airports', extra: comboAttrs(`${p}-from`) }),
             })}
             <button class="ts-swap" type="button" data-ts-swap aria-label="Swap departure and destination">${icon('swap', { size: 18 })}</button>
             ${field({
-              id: `${p}-to`, label: 'Going To', icon: 'pin', required: true,
+              id: `${p}-to`, label: 'Going To', icon: 'pin', required: true, combo: true,
               errorFor: 'to', error: 'Where are you flying to?',
-              control: input({ id: `${p}-to`, name: 'to', placeholder: 'City or airport', list: 'ts-airports' }),
+              control: input({ id: `${p}-to`, name: 'to', placeholder: 'City or airport', list: 'ts-airports', extra: comboAttrs(`${p}-to`) }),
             })}
             ${field({
               id: `${p}-depart`, label: 'Departing', icon: 'calendar', required: true,
@@ -186,10 +170,16 @@ function flightsPanel(hidden) {
             ${phoneField(p)}
           </div>
 
-          <div class="ts-extra" data-ts-multicity hidden>
-            <label for="${p}-itinerary">Your full itinerary</label>
+          ${/* Always shown. It used to appear only for Multi-City, which hid
+                the one field people most wanted on a simple return — extra
+                baggage, a preferred carrier, a stopover they cannot make. */ ''}
+          <div class="ts-extra">
+            <label for="${p}-itinerary">Itinerary &amp; Special Requests</label>
             <textarea class="textarea" id="${p}-itinerary" name="itinerary" rows="2"
-              placeholder="e.g. Islamabad → Jeddah 12 Mar, Madinah → Istanbul 19 Mar, Istanbul → Islamabad 24 Mar"></textarea>
+              data-ts-itinerary
+              data-ph-default="Preferred airline, stopover limits, seat or meal requirements, extra baggage for Zamzam…"
+              data-ph-multi="e.g. Islamabad → Jeddah 12 Mar, Madinah → Istanbul 19 Mar, Istanbul → Islamabad 24 Mar"
+              placeholder="Preferred airline, stopover limits, seat or meal requirements, extra baggage for Zamzam…"></textarea>
           </div>
 
           ${panelFoot({
@@ -227,6 +217,12 @@ function umrahPanel(hidden) {
               control: select({ id: `${p}-pax`, name: 'travellers', list: PAX, selected: '1 Passenger' }),
             })}
             ${phoneField(p)}
+          </div>
+
+          <div class="ts-extra">
+            <label for="${p}-notes">Requirements &amp; Preferences</label>
+            <textarea class="textarea" id="${p}-notes" name="notes" rows="2"
+              placeholder="Room sharing, distance from the Haram, departure city, wheelchair or ground-floor needs, travelling with children…"></textarea>
           </div>
 
           ${panelFoot({
@@ -276,9 +272,9 @@ function hotelsPanel(hidden) {
               data-ts-panel="hotels" data-ts-kind="Hotel" novalidate${hidden ? ' hidden' : ''}>
           <div class="ts-row ts-row--hotels">
             ${field({
-              id: `${p}-city`, label: 'City or Area', icon: 'pin', required: true, cls: 'ts-field--wide',
+              id: `${p}-city`, label: 'City or Area', icon: 'pin', required: true, cls: 'ts-field--wide', combo: true,
               errorFor: 'city', error: 'Which city are you staying in?',
-              control: input({ id: `${p}-city`, name: 'city', placeholder: 'e.g. Makkah, Madinah, Dubai', list: 'ts-hotel-cities' }),
+              control: input({ id: `${p}-city`, name: 'city', placeholder: 'Search a city, area or hotel', list: 'ts-hotel-cities', extra: comboAttrs(`${p}-city`) }),
             })}
             ${field({
               id: `${p}-in`, label: 'Check In', icon: 'calendar', required: true,
@@ -298,10 +294,16 @@ function hotelsPanel(hidden) {
               control: select({ id: `${p}-rooms`, name: 'rooms', list: ROOMS }),
             })}
             ${field({
-              id: `${p}-cat`, label: 'Hotel Category', icon: 'star',
-              control: select({ id: `${p}-cat`, name: 'category', list: HOTEL_CATEGORIES, placeholder: 'Any category' }),
+              id: `${p}-cat`, label: 'Hotel Category', icon: 'star', combo: true,
+              control: input({ id: `${p}-cat`, name: 'category', placeholder: 'Any category — or type your own', list: 'ts-hotel-categories', extra: comboAttrs(`${p}-cat`) }),
             })}
             ${phoneField(p)}
+          </div>
+
+          <div class="ts-extra">
+            <label for="${p}-notes">Requirements &amp; Preferences</label>
+            <textarea class="textarea" id="${p}-notes" name="notes" rows="2"
+              placeholder="Haram view, connecting or family rooms, late check-in, breakfast included, walking distance…"></textarea>
           </div>
 
           ${panelFoot({
@@ -348,8 +350,11 @@ function searchWidget({ active = 'flights', overlap = true, title = '' } = {}) {
         </div>
       </div>
     </div>
+    ${/* No-JS fallback for the three comboboxes. main.js removes the `list`
+          attribute when it upgrades them, so these never double up. */ ''}
     <datalist id="ts-airports">${each(AIRPORTS, (a) => `<option value="${attr(a)}"></option>`)}</datalist>
-    <datalist id="ts-hotel-cities">${each(HOTEL_CITIES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
+    <datalist id="ts-hotel-cities">${each(HOTEL_PLACES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
+    <datalist id="ts-hotel-categories">${each(HOTEL_CATEGORIES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
   </div>`;
 }
 

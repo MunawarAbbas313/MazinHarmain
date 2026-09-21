@@ -16,7 +16,7 @@ const countries = [
   /* ==================================================== Major destinations */
   {
     slug: 'uk-visa', name: 'United Kingdom', short: 'UK', flag: '🇬🇧', region: 'Europe',
-    popular: true, order: 1,
+    popular: true, order: 9,
     vac: 'VFS Global (Islamabad, Lahore, Karachi, Mirpur)',
     metaTitle: 'UK Visit Visa from Pakistan | Documents, Process & Assistance',
     metaDescription:
@@ -44,7 +44,7 @@ const countries = [
   },
   {
     slug: 'usa-visa', name: 'United States', short: 'USA', flag: '🇺🇸', region: 'North America',
-    popular: true, order: 2,
+    popular: true, order: 8,
     vac: 'US Embassy Islamabad / Consulate General Karachi',
     metaTitle: 'USA Visit Visa from Pakistan | B1/B2 Application Help',
     metaDescription:
@@ -72,7 +72,7 @@ const countries = [
   },
   {
     slug: 'canada-visa', name: 'Canada', short: 'Canada', flag: '🇨🇦', region: 'North America',
-    popular: true, order: 3,
+    popular: true, order: 7,
     vac: 'VFS Global (Islamabad, Lahore, Karachi)',
     metaTitle: 'Canada Visit Visa from Pakistan | TRV Application Assistance',
     metaDescription:
@@ -100,7 +100,7 @@ const countries = [
   },
   {
     slug: 'schengen-visa', name: 'Schengen Area', short: 'Schengen', flag: '🇪🇺', region: 'Europe',
-    popular: true, order: 4, isSchengenHub: true,
+    order: 104, isSchengenHub: true,
     vac: 'VFS Global and TLScontact (Islamabad, Lahore, Karachi)',
     metaTitle: 'Schengen Visa from Pakistan | Europe Visa Application Assistance',
     metaDescription:
@@ -130,7 +130,7 @@ const countries = [
   },
   {
     slug: 'uae-visa', name: 'United Arab Emirates', short: 'UAE / Dubai', flag: '🇦🇪', region: 'Middle East',
-    popular: true, order: 5,
+    order: 105,
     vac: 'Online / airline-sponsored e-visa',
     metaTitle: 'Dubai & UAE Visit Visa from Pakistan | Tourist Visa Assistance',
     metaDescription:
@@ -158,7 +158,7 @@ const countries = [
   },
   {
     slug: 'turkey-visa', name: 'Turkey', short: 'Turkey', flag: '🇹🇷', region: 'Europe / Asia',
-    popular: true, order: 6,
+    order: 106,
     vac: 'Turkish Consulate / e-Visa system',
     metaTitle: 'Turkey Visa from Pakistan | Tourist & e-Visa Help',
     metaDescription:
@@ -186,7 +186,7 @@ const countries = [
   },
   {
     slug: 'azerbaijan-visa', name: 'Azerbaijan', short: 'Azerbaijan', flag: '🇦🇿', region: 'Caucasus',
-    popular: true, order: 7,
+    order: 107,
     vac: 'ASAN e-Visa system / Consulate',
     metaTitle: 'Azerbaijan Visa from Pakistan | Baku e-Visa Assistance',
     metaDescription:
@@ -213,7 +213,7 @@ const countries = [
   },
   {
     slug: 'saudi-arabia-visa', name: 'Saudi Arabia', short: 'Saudi Arabia', flag: '🇸🇦', region: 'Middle East',
-    popular: true, order: 8,
+    order: 108,
     vac: 'Nusuk / Saudi e-Visa platform',
     metaTitle: 'Saudi Arabia Visa from Pakistan | Umrah, Tourist & Business Visas',
     metaDescription:
@@ -242,7 +242,7 @@ const countries = [
 
   /* ============================================ Schengen member countries */
   {
-    slug: 'germany-visa', name: 'Germany', flag: '🇩🇪', region: 'Europe', schengen: true, order: 20,
+    slug: 'germany-visa', name: 'Germany', flag: '🇩🇪', region: 'Europe', schengen: true, popular: true, order: 20,
     vac: 'VFS Global / TLScontact',
     lead: 'Germany is one of the most frequently applied-for Schengen destinations from Pakistan, covering business, study and family visits.',
     intro: [
@@ -252,7 +252,7 @@ const countries = [
     highlights: ['Berlin, Munich, Frankfurt and Hamburg', 'Trade fairs and business travel', 'Family visits to the Pakistani diaspora', 'Study and research visits'],
   },
   {
-    slug: 'france-visa', name: 'France', flag: '🇫🇷', region: 'Europe', schengen: true, order: 21,
+    slug: 'france-visa', name: 'France', flag: '🇫🇷', region: 'Europe', schengen: true, popular: true, order: 3,
     vac: 'VFS Global / TLScontact',
     lead: 'France is a leading tourist main-destination for Schengen applications and a frequent first point of entry for European itineraries.',
     intro: [
@@ -262,7 +262,7 @@ const countries = [
     highlights: ['Paris, Nice and the French Riviera', 'Business and conference travel', 'Multi-country European itineraries', 'Family visits'],
   },
   {
-    slug: 'italy-visa', name: 'Italy', flag: '🇮🇹', region: 'Europe', schengen: true, order: 22,
+    slug: 'italy-visa', name: 'Italy', flag: '🇮🇹', region: 'Europe', schengen: true, popular: true, order: 1,
     vac: 'VFS Global',
     lead: 'Italy combines a heavy tourist application volume with significant business and seasonal work routes.',
     intro: [
@@ -272,7 +272,7 @@ const countries = [
     highlights: ['Rome, Venice, Milan and Florence', 'Business and trade travel', 'Family visits', 'Distinct national work routes'],
   },
   {
-    slug: 'spain-visa', name: 'Spain', flag: '🇪🇸', region: 'Europe', schengen: true, order: 23,
+    slug: 'spain-visa', name: 'Spain', flag: '🇪🇸', region: 'Europe', schengen: true, popular: true, order: 2,
     vac: 'BLS International / VFS Global',
     lead: 'Spain is a popular main destination for leisure travel and a common choice on longer European itineraries.',
     intro: [
@@ -282,7 +282,7 @@ const countries = [
     highlights: ['Madrid, Barcelona and Andalusia', 'Leisure and family travel', 'Business and trade', 'Longer European itineraries'],
   },
   {
-    slug: 'netherlands-visa', name: 'Netherlands', flag: '🇳🇱', region: 'Europe', schengen: true, order: 24,
+    slug: 'netherlands-visa', name: 'Netherlands', flag: '🇳🇱', region: 'Europe', schengen: true, popular: true, order: 21,
     vac: 'VFS Global',
     lead: 'The Netherlands sees strong business, study and family-visit demand from Pakistani applicants.',
     intro: [
@@ -292,7 +292,7 @@ const countries = [
     highlights: ['Amsterdam, Rotterdam and The Hague', 'Business and logistics travel', 'Formal host guarantee route', 'Study visits'],
   },
   {
-    slug: 'greece-visa', name: 'Greece', flag: '🇬🇷', region: 'Europe', schengen: true, order: 25,
+    slug: 'greece-visa', name: 'Greece', flag: '🇬🇷', region: 'Europe', schengen: true, popular: true, order: 10,
     vac: 'VFS Global',
     lead: 'Greece is primarily a leisure main-destination, concentrated in the summer season.',
     intro: [
@@ -302,7 +302,7 @@ const countries = [
     highlights: ['Athens and the Greek islands', 'Strongly seasonal demand', 'Island-hopping itineraries', 'Honeymoon travel'],
   },
   {
-    slug: 'portugal-visa', name: 'Portugal', flag: '🇵🇹', region: 'Europe', schengen: true, order: 26,
+    slug: 'portugal-visa', name: 'Portugal', flag: '🇵🇹', region: 'Europe', schengen: true, popular: true, order: 4,
     vac: 'VFS Global',
     lead: 'Portugal covers tourist travel, family visits and distinct national residence routes.',
     intro: [
@@ -312,7 +312,7 @@ const countries = [
     highlights: ['Lisbon, Porto and the Algarve', 'Combined Spain–Portugal itineraries', 'Family visits', 'Separate national residence routes'],
   },
   {
-    slug: 'austria-visa', name: 'Austria', flag: '🇦🇹', region: 'Europe', schengen: true, order: 27,
+    slug: 'austria-visa', name: 'Austria', flag: '🇦🇹', region: 'Europe', schengen: true, popular: true, order: 12,
     vac: 'VFS Global',
     lead: 'Austria draws tourist, conference and family-visit applications, with Vienna as the usual focus.',
     intro: [
@@ -322,7 +322,7 @@ const countries = [
     highlights: ['Vienna, Salzburg and the Alps', 'International conference travel', 'Winter and summer leisure', 'Family visits'],
   },
   {
-    slug: 'switzerland-visa', name: 'Switzerland', flag: '🇨🇭', region: 'Europe', schengen: true, order: 28,
+    slug: 'switzerland-visa', name: 'Switzerland', flag: '🇨🇭', region: 'Europe', schengen: true, popular: true, order: 14,
     vac: 'TLScontact / VFS Global',
     lead: 'Switzerland is a high-cost destination, and applications are assessed with the cost of the trip firmly in view.',
     intro: [
@@ -332,7 +332,7 @@ const countries = [
     highlights: ['Zurich, Geneva, Interlaken and Lucerne', 'Higher cost-of-trip expectations', 'Rail-based itineraries', 'Business and banking travel'],
   },
   {
-    slug: 'sweden-visa', name: 'Sweden', flag: '🇸🇪', region: 'Europe', schengen: true, order: 29,
+    slug: 'sweden-visa', name: 'Sweden', flag: '🇸🇪', region: 'Europe', schengen: true, popular: true, order: 15,
     vac: 'VFS Global',
     lead: 'Sweden sees family-visit and study demand alongside leisure travel.',
     intro: [
@@ -342,7 +342,7 @@ const countries = [
     highlights: ['Stockholm, Gothenburg and Malmö', 'Family visits to the diaspora', 'Study routes', 'Summer leisure travel'],
   },
   {
-    slug: 'norway-visa', name: 'Norway', flag: '🇳🇴', region: 'Europe', schengen: true, order: 30,
+    slug: 'norway-visa', name: 'Norway', flag: '🇳🇴', region: 'Europe', schengen: true, popular: true, order: 11,
     vac: 'VFS Global',
     lead: 'Norway attracts scenic leisure travel and family visits, with cost expectations similar to Switzerland.',
     intro: [
@@ -352,7 +352,7 @@ const countries = [
     highlights: ['Oslo, Bergen and the fjords', 'Northern lights travel', 'High cost-of-trip expectations', 'Family visits'],
   },
   {
-    slug: 'finland-visa', name: 'Finland', flag: '🇫🇮', region: 'Europe', schengen: true, order: 31,
+    slug: 'finland-visa', name: 'Finland', flag: '🇫🇮', region: 'Europe', schengen: true, popular: true, order: 18,
     vac: 'VFS Global',
     lead: 'Finland covers winter leisure travel, business and family visits.',
     intro: [
@@ -362,7 +362,7 @@ const countries = [
     highlights: ['Helsinki and Lapland', 'Winter and northern lights travel', 'Technology sector business travel', 'Family visits'],
   },
   {
-    slug: 'poland-visa', name: 'Poland', flag: '🇵🇱', region: 'Europe', schengen: true, order: 32,
+    slug: 'poland-visa', name: 'Poland', flag: '🇵🇱', region: 'Europe', schengen: true, popular: true, order: 13,
     vac: 'VFS Global',
     lead: 'Poland sees business, study and visit applications, with growing tourist interest.',
     intro: [
@@ -372,7 +372,7 @@ const countries = [
     highlights: ['Warsaw and Kraków', 'Business and manufacturing travel', 'Study routes', 'Separate national work routes'],
   },
   {
-    slug: 'hungary-visa', name: 'Hungary', flag: '🇭🇺', region: 'Europe', schengen: true, order: 33,
+    slug: 'hungary-visa', name: 'Hungary', flag: '🇭🇺', region: 'Europe', schengen: true, popular: true, order: 6,
     vac: 'VFS Global',
     lead: 'Hungary is a common main destination for central European itineraries and study travel.',
     intro: [
@@ -382,7 +382,7 @@ const countries = [
     highlights: ['Budapest and the Danube', 'Central European itineraries', 'Scholarship and study travel', 'Business visits'],
   },
   {
-    slug: 'bulgaria-visa', name: 'Bulgaria', flag: '🇧🇬', region: 'Europe', schengen: true, order: 34,
+    slug: 'bulgaria-visa', name: 'Bulgaria', flag: '🇧🇬', region: 'Europe', schengen: true, popular: true, order: 16,
     vac: 'VFS Global',
     lead: 'Bulgaria covers leisure, business and seasonal travel at more accessible costs than western Europe.',
     intro: [
@@ -392,7 +392,7 @@ const countries = [
     highlights: ['Sofia and the Black Sea coast', 'Winter skiing', 'More accessible trip costs', 'Business travel'],
   },
   {
-    slug: 'slovakia-visa', name: 'Slovakia', flag: '🇸🇰', region: 'Europe', schengen: true, order: 35,
+    slug: 'slovakia-visa', name: 'Slovakia', flag: '🇸🇰', region: 'Europe', schengen: true, popular: true, order: 17,
     vac: 'VFS Global',
     lead: 'Slovakia is usually travelled as part of a wider central European itinerary.',
     intro: [
@@ -402,7 +402,7 @@ const countries = [
     highlights: ['Bratislava and the High Tatras', 'Central European itineraries', 'Business travel', 'Study visits'],
   },
   {
-    slug: 'denmark-visa', name: 'Denmark', flag: '🇩🇰', region: 'Europe', schengen: true, order: 36,
+    slug: 'denmark-visa', name: 'Denmark', flag: '🇩🇰', region: 'Europe', schengen: true, order: 136,
     vac: 'VFS Global',
     lead: 'Denmark draws family-visit, business and study applications.',
     intro: [
@@ -412,7 +412,7 @@ const countries = [
     highlights: ['Copenhagen and Aarhus', 'Family visits to the diaspora', 'Business travel', 'Study visits'],
   },
   {
-    slug: 'czech-republic-visa', name: 'Czech Republic', flag: '🇨🇿', region: 'Europe', schengen: true, order: 37,
+    slug: 'czech-republic-visa', name: 'Czech Republic', flag: '🇨🇿', region: 'Europe', schengen: true, order: 137,
     vac: 'VFS Global',
     lead: 'Czechia is a popular leisure destination and a common leg of central European trips.',
     intro: [
@@ -422,7 +422,7 @@ const countries = [
     highlights: ['Prague and Český Krumlov', 'Central European itineraries', 'Leisure and honeymoon travel', 'Business visits'],
   },
   {
-    slug: 'belgium-visa', name: 'Belgium', flag: '🇧🇪', region: 'Europe', schengen: true, order: 38,
+    slug: 'belgium-visa', name: 'Belgium', flag: '🇧🇪', region: 'Europe', schengen: true, order: 138,
     vac: 'VFS Global',
     lead: 'Belgium sees institutional, business and family-visit travel, with Brussels as the focus.',
     intro: [
@@ -434,7 +434,7 @@ const countries = [
 
   /* ============================================== Other major destinations */
   {
-    slug: 'ireland-visa', name: 'Ireland', flag: '🇮🇪', region: 'Europe', order: 40,
+    slug: 'ireland-visa', name: 'Ireland', flag: '🇮🇪', region: 'Europe', popular: true, order: 19,
     vac: 'VFS Global',
     lead: 'Ireland is not part of the Schengen area and requires its own visa.',
     intro: [
@@ -444,7 +444,7 @@ const countries = [
     highlights: ['Dublin, Cork and Galway', 'Separate from the Schengen area', 'Significant study destination', 'Family visits'],
   },
   {
-    slug: 'malaysia-visa', name: 'Malaysia', flag: '🇲🇾', region: 'Southeast Asia', popular: true, order: 41,
+    slug: 'malaysia-visa', name: 'Malaysia', flag: '🇲🇾', region: 'Southeast Asia', order: 141,
     vac: 'Malaysia eVISA / Consulate',
     lead: 'Malaysia is one of the most accessible Asian destinations for Pakistani travellers, with an electronic visa system.',
     intro: [
@@ -454,7 +454,7 @@ const countries = [
     highlights: ['Kuala Lumpur, Langkawi and Penang', 'Electronic visa facility', 'Halal-friendly and family-suited', 'Combines with Thailand and Singapore'],
   },
   {
-    slug: 'thailand-visa', name: 'Thailand', flag: '🇹🇭', region: 'Southeast Asia', popular: true, order: 42,
+    slug: 'thailand-visa', name: 'Thailand', flag: '🇹🇭', region: 'Southeast Asia', order: 142,
     vac: 'Thailand e-Visa / Royal Thai Embassy',
     lead: 'Thailand issues tourist visas to Pakistani travellers through an electronic system.',
     intro: [
@@ -464,7 +464,7 @@ const countries = [
     highlights: ['Bangkok, Phuket and Krabi', 'Electronic visa platform', 'Honeymoon and family travel', 'Frequently updated rules'],
   },
   {
-    slug: 'singapore-visa', name: 'Singapore', flag: '🇸🇬', region: 'Southeast Asia', order: 43,
+    slug: 'singapore-visa', name: 'Singapore', flag: '🇸🇬', region: 'Southeast Asia', order: 143,
     vac: 'Authorised visa agent submission',
     lead: 'Singapore requires applications to be submitted through an authorised local agent or sponsor.',
     intro: [
@@ -474,7 +474,7 @@ const countries = [
     highlights: ['Marina Bay, Sentosa and Gardens by the Bay', 'Agent or sponsor submission required', 'Combines with Malaysia', 'Business and MICE travel'],
   },
   {
-    slug: 'china-visa', name: 'China', flag: '🇨🇳', region: 'East Asia', order: 44,
+    slug: 'china-visa', name: 'China', flag: '🇨🇳', region: 'East Asia', order: 144,
     vac: 'Chinese Visa Application Service Centre',
     lead: 'China is a major business destination for Pakistani travellers, with applications through the dedicated visa centre.',
     intro: [
@@ -484,7 +484,7 @@ const countries = [
     highlights: ['Beijing, Shanghai and Guangzhou', 'Canton Fair and trade travel', 'Manufacturing and sourcing visits', 'Study routes'],
   },
   {
-    slug: 'japan-visa', name: 'Japan', flag: '🇯🇵', region: 'East Asia', order: 45,
+    slug: 'japan-visa', name: 'Japan', flag: '🇯🇵', region: 'East Asia', popular: true, order: 5,
     vac: 'Embassy of Japan / designated agencies',
     lead: 'Japan requires applications through designated travel agencies for most tourist categories.',
     intro: [
@@ -494,7 +494,7 @@ const countries = [
     highlights: ['Tokyo, Kyoto and Osaka', 'Designated agency submission', 'Cherry blossom and autumn seasons', 'Detailed itinerary requirements'],
   },
   {
-    slug: 'australia-visa', name: 'Australia', flag: '🇦🇺', region: 'Oceania', order: 46,
+    slug: 'australia-visa', name: 'Australia', flag: '🇦🇺', region: 'Oceania', order: 146,
     vac: 'VFS Global / online lodgement',
     lead: 'Australia assesses visitor applications online, with an emphasis on genuine temporary entry.',
     intro: [
@@ -504,7 +504,7 @@ const countries = [
     highlights: ['Sydney, Melbourne and Brisbane', 'Online lodgement', 'Genuine temporary entrant test', 'Family visits and study'],
   },
   {
-    slug: 'new-zealand-visa', name: 'New Zealand', flag: '🇳🇿', region: 'Oceania', order: 47,
+    slug: 'new-zealand-visa', name: 'New Zealand', flag: '🇳🇿', region: 'Oceania', order: 147,
     vac: 'VFS Global / online lodgement',
     lead: 'New Zealand assesses visitor applications online, often alongside an Australian itinerary.',
     intro: [
@@ -514,7 +514,7 @@ const countries = [
     highlights: ['Auckland, Queenstown and the South Island', 'Online lodgement', 'Often combined with Australia', 'Separate visa from Australia'],
   },
   {
-    slug: 'qatar-visa', name: 'Qatar', flag: '🇶🇦', region: 'Middle East', order: 48,
+    slug: 'qatar-visa', name: 'Qatar', flag: '🇶🇦', region: 'Middle East', order: 148,
     vac: 'Hayya platform / online',
     lead: 'Qatar issues tourist and visit visas electronically, including through its Hayya platform.',
     intro: [
@@ -524,7 +524,7 @@ const countries = [
     highlights: ['Doha and the Corniche', 'Electronic issuance', 'Stopover and transit options', 'Business and MICE travel'],
   },
   {
-    slug: 'oman-visa', name: 'Oman', flag: '🇴🇲', region: 'Middle East', order: 49,
+    slug: 'oman-visa', name: 'Oman', flag: '🇴🇲', region: 'Middle East', order: 149,
     vac: 'Royal Oman Police e-Visa portal',
     lead: 'Oman issues electronic tourist visas through its official portal.',
     intro: [
@@ -534,7 +534,7 @@ const countries = [
     highlights: ['Muscat, Salalah and Nizwa', 'Electronic portal application', 'Quieter Gulf alternative', 'Short flying time from Pakistan'],
   },
   {
-    slug: 'bahrain-visa', name: 'Bahrain', flag: '🇧🇭', region: 'Middle East', order: 50,
+    slug: 'bahrain-visa', name: 'Bahrain', flag: '🇧🇭', region: 'Middle East', order: 150,
     vac: 'Bahrain eVisa portal',
     lead: 'Bahrain operates an electronic visa system with straightforward requirements.',
     intro: [
@@ -544,7 +544,7 @@ const countries = [
     highlights: ['Manama and Muharraq', 'Electronic visa portal', 'Short flying time', 'Business and leisure travel'],
   },
   {
-    slug: 'georgia-visa', name: 'Georgia', flag: '🇬🇪', region: 'Caucasus', order: 51,
+    slug: 'georgia-visa', name: 'Georgia', flag: '🇬🇪', region: 'Caucasus', order: 151,
     vac: 'Georgian e-Visa portal / Embassy',
     lead: 'Georgia is an accessible Caucasus destination with an electronic visa facility.',
     intro: [
@@ -554,7 +554,7 @@ const countries = [
     highlights: ['Tbilisi, Batumi and Kazbegi', 'Electronic visa facility', 'Combines with Azerbaijan', 'Accessible trip costs'],
   },
   {
-    slug: 'uzbekistan-visa', name: 'Uzbekistan', flag: '🇺🇿', region: 'Central Asia', order: 52,
+    slug: 'uzbekistan-visa', name: 'Uzbekistan', flag: '🇺🇿', region: 'Central Asia', order: 152,
     vac: 'Uzbekistan e-Visa portal',
     lead: 'Uzbekistan issues electronic visas and is a growing destination for heritage travel.',
     intro: [
@@ -564,7 +564,7 @@ const countries = [
     highlights: ['Samarkand, Bukhara and Khiva', 'Islamic heritage and ziyarat travel', 'Electronic visa system', 'Imam Bukhari shrine'],
   },
   {
-    slug: 'indonesia-visa', name: 'Indonesia', flag: '🇮🇩', region: 'Southeast Asia', order: 53,
+    slug: 'indonesia-visa', name: 'Indonesia', flag: '🇮🇩', region: 'Southeast Asia', order: 153,
     vac: 'Indonesia e-Visa / visa on arrival',
     lead: 'Indonesia offers electronic visa and visa-on-arrival facilities for eligible travellers.',
     intro: [
@@ -574,7 +574,7 @@ const countries = [
     highlights: ['Bali, Jakarta and Yogyakarta', 'Electronic and on-arrival options', 'Halal-friendly destination', 'Honeymoon travel'],
   },
   {
-    slug: 'sri-lanka-visa', name: 'Sri Lanka', flag: '🇱🇰', region: 'South Asia', order: 54,
+    slug: 'sri-lanka-visa', name: 'Sri Lanka', flag: '🇱🇰', region: 'South Asia', order: 154,
     vac: 'Sri Lanka ETA portal',
     lead: 'Sri Lanka issues an Electronic Travel Authorisation with minimal documentation.',
     intro: [
@@ -584,7 +584,7 @@ const countries = [
     highlights: ['Colombo, Kandy and Galle', 'Electronic travel authorisation', 'Short flying time and low cost', 'Family-friendly variety'],
   },
   {
-    slug: 'maldives-visa', name: 'Maldives', flag: '🇲🇻', region: 'South Asia', order: 55,
+    slug: 'maldives-visa', name: 'Maldives', flag: '🇲🇻', region: 'South Asia', order: 155,
     vac: 'Visa on arrival',
     lead: 'The Maldives grants visa on arrival to Pakistani passport holders meeting the entry conditions.',
     intro: [
@@ -594,7 +594,7 @@ const countries = [
     highlights: ['Visa on arrival for Pakistani passports', 'Honeymoon and anniversary travel', 'Resort and transfer selection', 'Confirmed accommodation required'],
   },
   {
-    slug: 'egypt-visa', name: 'Egypt', flag: '🇪🇬', region: 'Africa', order: 56,
+    slug: 'egypt-visa', name: 'Egypt', flag: '🇪🇬', region: 'Africa', order: 156,
     vac: 'Egyptian Consulate / e-Visa',
     lead: 'Egypt issues tourist visas through consular and electronic routes.',
     intro: [
@@ -604,7 +604,7 @@ const countries = [
     highlights: ['Cairo, Luxor and Aswan', 'Islamic and ancient heritage', 'Red Sea resorts', 'Guided group itineraries'],
   },
   {
-    slug: 'morocco-visa', name: 'Morocco', flag: '🇲🇦', region: 'Africa', order: 57,
+    slug: 'morocco-visa', name: 'Morocco', flag: '🇲🇦', region: 'Africa', order: 157,
     vac: 'Moroccan Consulate / e-Visa',
     lead: 'Morocco issues tourist visas through consular and electronic channels.',
     intro: [
@@ -614,7 +614,7 @@ const countries = [
     highlights: ['Marrakech, Fez and Chefchaouen', 'Sahara and Atlas excursions', 'Halal-friendly destination', 'Combines with Spain or Turkey'],
   },
   {
-    slug: 'south-korea-visa', name: 'South Korea', flag: '🇰🇷', region: 'East Asia', order: 58,
+    slug: 'south-korea-visa', name: 'South Korea', flag: '🇰🇷', region: 'East Asia', order: 158,
     vac: 'Korean Embassy / VFS',
     lead: 'South Korea assesses tourist applications with attention to funding and travel history.',
     intro: [
@@ -624,7 +624,7 @@ const countries = [
     highlights: ['Seoul, Busan and Jeju', 'Travel history carries weight', 'Spring and autumn seasons', 'Business and technology travel'],
   },
   {
-    slug: 'vietnam-visa', name: 'Vietnam', flag: '🇻🇳', region: 'Southeast Asia', order: 59,
+    slug: 'vietnam-visa', name: 'Vietnam', flag: '🇻🇳', region: 'Southeast Asia', order: 159,
     vac: 'Vietnam e-Visa portal',
     lead: 'Vietnam operates an electronic visa system open to Pakistani travellers.',
     intro: [

@@ -405,15 +405,15 @@
       country: 'Destination', visaType: 'Visa type',
       city: 'City / area', checkIn: 'Check in', checkOut: 'Check out',
       guests: 'Guests', rooms: 'Rooms', category: 'Hotel category',
-      phone: 'WhatsApp',
+      notes: 'Requirements', phone: 'WhatsApp',
     };
     /* One order per tab, so the consultant reads the request in the order
        the visitor filled it in. */
     var ORDER = {
       Flight: ['tripType', 'from', 'to', 'departDate', 'returnDate', 'itinerary', 'cabin', 'travellers', 'directOnly', 'phone'],
-      Umrah: ['packageType', 'duration', 'departDate', 'travellers', 'phone'],
+      Umrah: ['packageType', 'duration', 'departDate', 'travellers', 'notes', 'phone'],
       Visa: ['country', 'visaType', 'departDate', 'phone'],
-      Hotel: ['city', 'checkIn', 'checkOut', 'guests', 'rooms', 'category', 'phone'],
+      Hotel: ['city', 'checkIn', 'checkOut', 'guests', 'rooms', 'category', 'notes', 'phone'],
     };
     /* "Departing" is right for a flight and wrong for the other three. */
     var LABEL_OVERRIDES = {
@@ -522,6 +522,226 @@
       if (wanted) activate(wanted);
     }
 
+    /* ---- Type-ahead comboboxes -----------------------------------------
+       The place fields were plain <datalist>s, which only match from the
+       start of the string and give up entirely on a typo: "jedah" found
+       nothing, and "jinnah" would not find Karachi. These search the city,
+       the IATA code and the airport name together, and tolerate a slip or
+       two in the spelling.
+
+       Progressive enhancement: the <datalist> stays in the markup and keeps
+       working without JavaScript. We strip the `list` attribute only once
+       we have successfully taken over, so the two never open at once.
+       -------------------------------------------------------------------- */
+    var MAX_SUGGESTIONS = 8;
+
+    function normalise(v) {
+      var s = String(v).toLowerCase();
+      return s.normalize ? s.normalize('NFD').replace(/[̀-ͯ]/g, '') : s;
+    }
+
+    /* Levenshtein, abandoned the moment it exceeds `max` — the question is
+       only ever "within one or two edits?", never "how far apart?". */
+    function within(a, b, max) {
+      if (Math.abs(a.length - b.length) > max) return false;
+      var prev = [];
+      var cur = [];
+      var i, j;
+      for (j = 0; j <= b.length; j++) prev[j] = j;
+      for (i = 1; i <= a.length; i++) {
+        cur[0] = i;
+        var best = i;
+        for (j = 1; j <= b.length; j++) {
+          cur[j] = Math.min(
+            prev[j] + 1,
+            cur[j - 1] + 1,
+            prev[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1)
+          );
+          if (cur[j] < best) best = cur[j];
+        }
+        if (best > max) return false;
+        prev = cur.slice();
+      }
+      return prev[b.length] <= max;
+    }
+
+    /* Lower rank is a better match. null means "no match at all". */
+    function scoreToken(opt, token) {
+      var at = opt.norm.indexOf(token);
+      if (at === 0) return { rank: 0, at: 0, len: token.length };
+
+      var k;
+      for (k = 0; k < opt.words.length; k++) {
+        if (opt.words[k].indexOf(token) === 0) {
+          return { rank: 1, at: opt.norm.indexOf(opt.words[k]), len: token.length };
+        }
+      }
+      if (at > 0) return { rank: 2, at: at, len: token.length };
+
+      /* Truncated with a wrong last letter — "barca" for Barcelona. Without
+         this the only hit for that query was Bursa, which is worse than
+         nothing: a confident wrong answer. */
+      if (token.length >= 4) {
+        var stem = token.slice(0, -1);
+        for (k = 0; k < opt.words.length; k++) {
+          if (opt.words[k].indexOf(stem) === 0) {
+            return { rank: 2, at: opt.norm.indexOf(opt.words[k]), len: stem.length };
+          }
+        }
+      }
+
+      var tol = token.length <= 4 ? 1 : 2;
+      for (k = 0; k < opt.words.length; k++) {
+        if (within(opt.words[k], token, tol)) {
+          return { rank: 3, at: opt.norm.indexOf(opt.words[k]), len: opt.words[k].length };
+        }
+      }
+      return null;
+    }
+
+    function search(options, query) {
+      var tokens = normalise(query).split(/\s+/).filter(Boolean);
+      if (!tokens.length) {
+        return options.slice(0, MAX_SUGGESTIONS).map(function (o) {
+          return { opt: o, mark: null };
+        });
+      }
+
+      var hits = [];
+      for (var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var worst = 0;
+        var mark = null;
+        var ok = true;
+        for (var t = 0; t < tokens.length; t++) {
+          var sc = scoreToken(opt, tokens[t]);
+          if (!sc) { ok = false; break; }
+          if (sc.rank > worst) worst = sc.rank;
+          if (!mark || sc.at < mark.at) mark = sc;
+        }
+        if (ok) hits.push({ opt: opt, rank: worst, mark: mark });
+      }
+
+      hits.sort(function (a, b) {
+        return a.rank - b.rank || a.opt.value.localeCompare(b.opt.value);
+      });
+      return hits.slice(0, MAX_SUGGESTIONS);
+    }
+
+    function initCombo(wrap) {
+      var input = wrap.querySelector('input');
+      var list = wrap.querySelector('.ts-combo__list');
+      if (!input || !list) return;
+
+      var source = document.getElementById(input.getAttribute('list') || '');
+      if (!source) return;
+
+      var options = $$('option', source).map(function (o) {
+        var value = o.value;
+        var norm = normalise(value);
+        return { value: value, norm: norm, words: norm.split(/[^a-z0-9]+/).filter(Boolean) };
+      });
+      if (!options.length) return;
+
+      input.removeAttribute('list');   // we are in charge now
+
+      var hits = [];
+      var active = -1;
+
+      function close() {
+        if (list.hidden) return;
+        list.hidden = true;
+        active = -1;
+        input.setAttribute('aria-expanded', 'false');
+        input.removeAttribute('aria-activedescendant');
+      }
+
+      function highlight(li, text, mark) {
+        li.textContent = '';
+        if (!mark || mark.at < 0) { li.textContent = text; return; }
+        /* Built as DOM nodes, never as an HTML string: the option text is
+           ours, but the query the visitor typed is not. */
+        li.appendChild(document.createTextNode(text.slice(0, mark.at)));
+        var m = document.createElement('mark');
+        m.textContent = text.slice(mark.at, mark.at + mark.len);
+        li.appendChild(m);
+        li.appendChild(document.createTextNode(text.slice(mark.at + mark.len)));
+      }
+
+      function setActive(i) {
+        var items = $$('li', list);
+        if (!items.length) return;
+        if (i < 0) i = items.length - 1;
+        if (i >= items.length) i = 0;
+        active = i;
+        items.forEach(function (li, n) {
+          var on = n === i;
+          li.classList.toggle('is-active', on);
+          li.setAttribute('aria-selected', String(on));
+          if (on) {
+            input.setAttribute('aria-activedescendant', li.id);
+            if (li.scrollIntoView) li.scrollIntoView({ block: 'nearest' });
+          }
+        });
+      }
+
+      function open(query) {
+        hits = search(options, query);
+        list.textContent = '';
+        if (!hits.length) { close(); return; }
+
+        hits.forEach(function (hit, n) {
+          var li = document.createElement('li');
+          li.className = 'ts-combo__opt';
+          li.id = list.id + '-opt-' + n;
+          li.setAttribute('role', 'option');
+          li.setAttribute('aria-selected', 'false');
+          highlight(li, hit.opt.value, hit.mark);
+          li.addEventListener('mousedown', function (e) {
+            e.preventDefault();     // keep focus; blur would close us first
+            choose(n);
+          });
+          list.appendChild(li);
+        });
+
+        list.hidden = false;
+        input.setAttribute('aria-expanded', 'true');
+        active = -1;
+      }
+
+      function choose(i) {
+        var hit = hits[i];
+        if (!hit) return;
+        input.value = hit.opt.value;
+        close();
+        /* Let the panel's own listeners clear any error state. */
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      input.addEventListener('input', function () { open(input.value); });
+      input.addEventListener('focus', function () { open(input.value); });
+      input.addEventListener('blur', function () { window.setTimeout(close, 120); });
+
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          if (list.hidden) { open(input.value); if (list.hidden) return; }
+          e.preventDefault();
+          setActive(active + (e.key === 'ArrowDown' ? 1 : -1));
+          return;
+        }
+        if (e.key === 'Enter' && !list.hidden && active > -1) {
+          e.preventDefault();
+          choose(active);
+          return;
+        }
+        if (e.key === 'Escape' && !list.hidden) {
+          e.preventDefault();
+          close();
+        }
+      });
+    }
+
     /* ---- Per-panel behaviour ------------------------------------------- */
     function initPanel(form) {
       var min = todayISO();
@@ -559,7 +779,7 @@
       var trips = $$('[data-ts-trip]', form);
       var ret = $('[data-ts-return]', form);
       var retField = ret ? ret.closest('.ts-field') : null;
-      var multi = $('[data-ts-multicity]', form);
+      var itinerary = $('[data-ts-itinerary]', form);
       function applyTrip() {
         var checked = form.querySelector('[data-ts-trip]:checked');
         var value = checked ? checked.value : 'Return';
@@ -569,10 +789,18 @@
           if (off) ret.value = '';
           if (retField) retField.classList.toggle('is-off', off);
         }
-        if (multi) multi.hidden = value !== 'Multi-City';
+        /* The box stays on for every trip type; only the prompt changes,
+           because a multi-city request needs the sectors spelled out and a
+           simple return usually does not. */
+        if (itinerary) {
+          var key = value === 'Multi-City' ? 'phMulti' : 'phDefault';
+          if (itinerary.dataset[key]) itinerary.placeholder = itinerary.dataset[key];
+        }
       }
       trips.forEach(function (t) { t.addEventListener('change', applyTrip); });
       if (trips.length) applyTrip();
+
+      $$('[data-ts-combo]', form).forEach(initCombo);
 
       // Clear a field's error as soon as the visitor touches it.
       $$('input, select, textarea', form).forEach(function (el) {

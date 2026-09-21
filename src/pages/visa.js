@@ -111,8 +111,12 @@ ${searchWidget({ active: 'visa' })}
               .join('')}
           </div>
 
-          ${group('Popular Destinations', popularCountries)}
-          ${group('Schengen Countries', schengenCountries)}
+          ${group('Countries We Handle Most', popularCountries)}
+          ${/* 15 of the 21 above are Schengen members, so list only the rest
+                here — otherwise Italy, France and the others appear twice on
+                the same page. schengenCountries stays factually complete for
+                anything that needs the full membership list. */ ''}
+          ${group('Other Schengen Countries', schengenCountries.filter((v) => !v.popular))}
           ${group('Other Destinations', otherCountries)}
 
           ${c.inlineCta({

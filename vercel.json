@@ -3,6 +3,11 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "trailingSlash": true,
+  "redirects": [
+    { "source": "/visa-services/student-visa", "destination": "/visa-services/", "permanent": true },
+    { "source": "/visa-services/work-visa", "destination": "/visa-services/", "permanent": true },
+    { "source": "/visa-services/family-visa", "destination": "/visa-services/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

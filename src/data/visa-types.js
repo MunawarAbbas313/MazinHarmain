@@ -1,5 +1,10 @@
 /* ==========================================================================
-   Visa categories (the six in the client's menu).
+   Visa categories.
+
+   Visit, Tourist and Business only — these are the three the agency actually
+   processes. Student, Work and Family were removed in September 2026 at the
+   client's instruction; advertising them produced enquiries they had to turn
+   away. Their pages are 301'd in src/data/redirects.js.
    Country-specific detail lives in visa-countries.js; these pages explain the
    category itself and link out to the countries.
    ========================================================================== */
@@ -96,101 +101,6 @@ const visaTypes = [
       'Evidence of the commercial relationship (contracts, orders, correspondence)',
       'Exhibition or conference registration confirmation',
       'Travel itinerary and accommodation booking',
-    ],
-  },
-  {
-    slug: 'student-visa',
-    title: 'Student Visa',
-    icon: 'doc',
-    h1: 'Student Visa Assistance from Pakistan',
-    metaTitle: 'Student Visa from Pakistan | Study Abroad Visa Application Support',
-    metaDescription:
-      'Student visa assistance from Pakistan — admission documentation, financial evidence, language test requirements and appointment booking for study abroad applications.',
-    lead: 'Student applications are document-heavy and deadline-driven. Getting the financial evidence right is usually the whole battle.',
-    intro: [
-      'A student visa follows an offer of admission, and the visa file is built around three things: that the offer is genuine, that you meet the academic and language requirements, and that the tuition and living costs are funded from a source that will hold up to scrutiny.',
-      'Financial evidence is where most student applications come unstuck. Many countries require funds to have been held for a minimum period in an acceptable account, with a clear and documented source. Money moved into an account shortly before the application, without an explanation of where it came from, is a recognised refusal pattern.',
-      'Timing is the other pressure. Admission deadlines, appointment availability, biometric enrolment and processing times all have to fit inside the window before your course starts. We work backwards from the course start date so the appointment is booked early enough to leave room for a resubmission if one is needed.',
-    ],
-    covers: [
-      'Undergraduate and postgraduate study',
-      'Language and foundation courses',
-      'Professional and vocational programmes',
-      'Research and exchange programmes',
-    ],
-    keyDocs: [
-      'Offer letter or confirmation of acceptance from the institution',
-      'Academic transcripts, degrees and certificates',
-      'Language test results (IELTS, PTE, TOEFL or equivalent)',
-      'Proof of tuition fee payment or deposit',
-      'Financial evidence held for the required maintenance period',
-      'Sponsor documentation and relationship proof where applicable',
-      'Accommodation arrangements',
-      'Medical and tuberculosis screening where required',
-    ],
-  },
-  {
-    slug: 'work-visa',
-    title: 'Work Visa',
-    icon: 'building',
-    h1: 'Work Visa Assistance from Pakistan',
-    metaTitle: 'Work Visa from Pakistan | Employment Visa Documentation Support',
-    metaDescription:
-      'Work visa documentation assistance from Pakistan — employment contracts, attestation, medical requirements and protectorate procedures for overseas employment.',
-    lead: 'Work visas begin with a confirmed job offer and a sponsoring employer. Everything else follows from those two documents.',
-    intro: [
-      'A work visa requires an employer abroad who has offered you a role and is willing to sponsor the application. In most systems the employer initiates the process — obtaining a permit, certificate or sponsorship reference — and you apply against it. No legitimate route begins with the visa.',
-      'For Gulf employment in particular, the sequence involves employment contract attestation, medical screening at approved centres, and for Pakistani workers, completion of Protectorate of Emigrants formalities before departure. Skipping any step creates problems that are difficult to fix after you have travelled.',
-      'We assist with the documentation side: contract review, attestation routing, medical scheduling, document translation and the application itself. We are direct about the limits of that assistance — we are a travel agency, not a recruitment agency, and we do not offer, arrange or promise employment abroad.',
-    ],
-    covers: [
-      'Employment in the Gulf states and Middle East',
-      'Skilled worker routes to the UK, Europe and other destinations',
-      'Intra-company transfers',
-      'Seasonal and contract-based employment',
-    ],
-    keyDocs: [
-      'Signed employment contract or offer letter',
-      'Employer sponsorship reference, permit or certificate',
-      'Educational certificates, attested as required',
-      'Professional experience letters',
-      'Medical screening from an approved centre',
-      'Police character certificate',
-      'Passport with sufficient validity',
-      'Protectorate of Emigrants documentation where applicable',
-    ],
-    notice:
-      'Mazin Haramain Tours & Travels provides travel and visa documentation assistance only. We are not a recruitment or manpower agency, we do not offer employment abroad, and we never charge for job placement. Be cautious of anyone who does.',
-  },
-  {
-    slug: 'family-visa',
-    title: 'Family Visa',
-    icon: 'users',
-    h1: 'Family Visa & Dependant Visa Assistance',
-    metaTitle: 'Family & Dependant Visa from Pakistan | Spouse & Children',
-    metaDescription:
-      'Family and dependant visa documentation assistance from Pakistan — spouse, children and parent applications, relationship evidence, NADRA documents and attestation.',
-    lead: 'Family applications rest on proving the relationship and the sponsor\'s ability to support — documented to the standard the mission expects.',
-    intro: [
-      'Family and dependant visas allow a spouse, children or in some cases parents to join a relative who is settled, working or studying abroad. The application has two halves: proving the relationship is genuine, and proving the sponsor can accommodate and support the family without recourse to public funds.',
-      'Relationship evidence is more than a nikah nama. Missions look for a documented history — NADRA records, the family registration certificate, photographs across time, communication records, evidence of visits, and where children are involved, birth registration showing both parents. Documents that exist only from the month of the application invite scrutiny.',
-      'The sponsor side requires income evidence meeting a stated threshold, accommodation adequate for the family size, and proof of immigration status. Requirements differ substantially between countries and change over time, so we confirm the current criteria for your destination before assembling the file.',
-    ],
-    covers: [
-      'Spouse and partner applications',
-      'Dependent children joining a parent',
-      'Parents joining settled children where permitted',
-      'Dependants accompanying a student or worker',
-    ],
-    keyDocs: [
-      'Nikah nama and marriage registration certificate',
-      'NADRA family registration certificate (FRC)',
-      'Birth registration certificates for children (CRC)',
-      'Sponsor\'s passport, visa or residence documentation',
-      'Sponsor\'s income and employment evidence',
-      'Accommodation evidence (tenancy or ownership)',
-      'Relationship evidence over time',
-      'Attested and translated documents where required',
     ],
   },
 ];

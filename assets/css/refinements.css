@@ -76,7 +76,19 @@ button, input, select, textarea { font: inherit; }
 .accordion__panel.is-open { visibility: visible; }
 .accordion__btn { padding-block: 1.2rem; line-height: 1.5; }
 
+/* Promoting Visa Appointments took the top level to ten items, which was
+   enough to squeeze the quote button onto two lines. The button holds its
+   width and the nav run absorbs the pressure instead. */
+.header__actions { flex-shrink: 0; }
+.header__actions .btn { white-space: nowrap; }
+
 @media (min-width: 1200px) { .nav { display: block; } .nav-toggle { display: none; } }
+@media (min-width: 1200px) and (max-width: 1499px) {
+  .nav__link { padding-inline: .42rem; font-size: .78125rem; }
+  .logo__name { font-size: .95rem; }
+  .logo__sub { font-size: .625rem; letter-spacing: .16em; }
+  .logo__mark { width: 38px; height: 38px; }
+}
 @media (max-width: 1199px) {
   .nav { display: none; }
   .nav-toggle { display: inline-flex; }
@@ -102,9 +114,14 @@ button, input, select, textarea { font: inherit; }
 }
 .hero__inner { position: relative; padding-block: clamp(3rem, 6vw, 5.25rem) 0; }
 .hero__content { max-width: 620px; }
+/* The agency name above the headline. Enlarged and set to full bold at the
+   client's request (Sept 2026) — at 12px/600 it read as a caption rather
+   than as the company. Tracking eases off as the size climbs, otherwise
+   wide letter-spacing at bold weight starts to come apart. */
 .hero__eyebrow {
-  display: block; color: var(--gold-400); font-size: .75rem; font-weight: 600;
-  letter-spacing: .2em; text-transform: uppercase; margin-bottom: 1.15rem;
+  display: block; color: var(--gold-400);
+  font-size: clamp(.875rem, 1.35vw, 1.0625rem); font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1.15rem;
 }
 .hero h1 {
   color: #fff; font-size: clamp(2.35rem, 4.4vw, 3.75rem);
@@ -947,7 +964,8 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  overflow: hidden;
+  /* NOT overflow:hidden — the type-ahead dropdown has to escape the card.
+     The tab strip clips itself instead, on .ts__head below. */
 }
 
 /* ---- Tab strip --------------------------------------------------------- */
@@ -958,6 +976,10 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   gap: var(--sp-4);
   background: var(--cream);
   border-bottom: 1px solid var(--line);
+  /* Rounds the tab strip to the card's top corners now that the card
+     itself no longer clips its children. */
+  border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
+  overflow: hidden;
 }
 
 .ts__tabs {
@@ -1205,6 +1227,59 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+/* ---- Type-ahead dropdown ------------------------------------------------
+   Sits under its input, above everything else in the card. The card
+   deliberately does not clip, so this can overhang the panel edge. */
+.ts-combo { position: relative; }
+
+.ts-combo__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  margin: 0;
+  padding: var(--sp-1);
+  list-style: none;
+  max-height: 17rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+.ts-combo__list[hidden] { display: none; }
+
+.ts-combo__opt {
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+  color: var(--ink-2);
+  cursor: pointer;
+  /* Long airport names wrap rather than overflow the panel. */
+  overflow-wrap: anywhere;
+}
+.ts-combo__opt mark {
+  background: var(--gold-100);
+  color: var(--ink);
+  font-weight: 700;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.ts-combo__opt:hover,
+.ts-combo__opt.is-active {
+  background: var(--green-50);
+  color: var(--green-800);
+}
+.ts-combo__opt.is-active mark { background: var(--gold-200, var(--gold-100)); }
+
+@media (pointer: coarse) {
+  /* Comfortable tap target on a phone. */
+  .ts-combo__opt { padding: var(--sp-3); min-height: 44px; display: flex; align-items: center; }
 }
 
 /* ---- Submit row -------------------------------------------------------- */

@@ -11,6 +11,7 @@ const fs = require('fs');
 const path = require('path');
 
 const site = require('./data/site');
+const redirects = require('./data/redirects');
 
 const ROOT = path.join(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
@@ -325,6 +326,12 @@ const NETLIFY_HEADERS = `/*
   Cache-Control: public, max-age=31536000, immutable
 `;
 
+/* Netlify-style redirect table, generated from src/data/redirects.js so the
+   retired URLs cannot drift out of sync with the host config. Vercel reads
+   its own copy from vercel.json; qa.js checks the two agree. */
+const REDIRECTS_FILE =
+  redirects.map((r) => [r.from, r.to, r.status].join('  ')).join('\n') + '\n';
+
 /* --------------------------------------------------------------- build */
 function run() {
   const started = Date.now();
@@ -357,6 +364,7 @@ function run() {
   fs.writeFileSync(path.join(DIST, 'site.webmanifest'), buildManifest(), 'utf8');
   fs.writeFileSync(path.join(DIST, '.htaccess'), HTACCESS, 'utf8');
   fs.writeFileSync(path.join(DIST, '_headers'), NETLIFY_HEADERS, 'utf8');
+  fs.writeFileSync(path.join(DIST, '_redirects'), REDIRECTS_FILE, 'utf8');
 
   copyDir(ASSETS, path.join(DIST, 'assets'));
   ensureDir(path.join(DIST, 'assets', 'img'));

@@ -6,7 +6,6 @@
 
 const nav = [
   { label: 'Home', url: '/' },
-  { label: 'About Us', url: '/about/' },
   {
     label: 'Services',
     url: '/services/',
@@ -56,16 +55,16 @@ const nav = [
       { label: 'Visit Visa', url: '/visa-services/visit-visa/' },
       { label: 'Tourist Visa', url: '/visa-services/tourist-visa/' },
       { label: 'Business Visa', url: '/visa-services/business-visa/' },
-      { label: 'Student Visa', url: '/visa-services/student-visa/' },
-      { label: 'Work Visa', url: '/visa-services/work-visa/' },
-      { label: 'Family / Visit Sponsorship', url: '/visa-services/family-visa/' },
+      /* Mirrors the client's own list in src/data/visa-countries.js. */
       { head: 'Popular Countries' },
+      { label: 'Italy Visa', url: '/visa-services/italy-visa/' },
+      { label: 'Spain Visa', url: '/visa-services/spain-visa/' },
+      { label: 'France Visa', url: '/visa-services/france-visa/' },
+      { label: 'Germany Visa', url: '/visa-services/germany-visa/' },
       { label: 'UK Visa', url: '/visa-services/uk-visa/' },
       { label: 'USA Visa', url: '/visa-services/usa-visa/' },
       { label: 'Canada Visa', url: '/visa-services/canada-visa/' },
       { label: 'Schengen Visa', url: '/visa-services/schengen-visa/' },
-      { label: 'UAE / Dubai Visa', url: '/visa-services/uae-visa/' },
-      { label: 'Turkey Visa', url: '/visa-services/turkey-visa/' },
       { label: 'Visa Appointment Booking', url: '/services/visa-appointment-booking/' },
     ],
   },
@@ -85,8 +84,14 @@ const nav = [
       { label: 'Saudi Arabia', url: '/destinations/saudi-arabia/' },
     ],
   },
+  /* Promoted out of the Services dropdown to top level — the client's most
+     requested service and the one they felt the site hid. */
+  { label: 'Visa Appointments', url: '/services/visa-appointment-booking/' },
   { label: 'Corporate', url: '/corporate-travel/' },
   { label: 'Travel Guides', url: '/travel-guides/' },
+  /* About Us sits at the end at the client's request (Sept 2026): the
+     services are what visitors arrive looking for. */
+  { label: 'About Us', url: '/about/' },
   { label: 'Contact', url: '/contact/' },
 ];
 
