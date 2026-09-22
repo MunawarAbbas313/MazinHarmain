@@ -677,7 +677,48 @@ const homepageServiceOrder = [
   'ziyarat-tours',
 ];
 
-const bySlug = (slug) => services.find((s) => s.slug === slug);
-const fullPages = services.filter((s) => !s.hub);
+/* ---- One canonical order, everywhere -------------------------------------
+   The client's order is not just the home grid's — it is how services should
+   read wherever they are listed. Rather than repeat it at each call site and
+   watch the copies drift, `services` is exported already sorted, so anything
+   that iterates it inherits the order for free: the services hub, the
+   sitemap page, and anything added later.
 
-module.exports = { services, fullPages, homepageServiceOrder, bySlug };
+   Services outside the client's nine keep their declared order, after it.
+   -------------------------------------------------------------------------- */
+const rankOf = (slug) => {
+  const i = homepageServiceOrder.indexOf(slug);
+  return i === -1 ? homepageServiceOrder.length + services.findIndex((x) => x.slug === slug) : i;
+};
+
+const ordered = [...services].sort((a, b) => rankOf(a.slug) - rankOf(b.slug));
+
+/* URL -> rank, for the hand-written "Related Services" lists. Those name a
+   mix of service hubs and individual pages, so they are matched on URL and
+   anything unrecognised keeps its position at the end. */
+const RANK_BY_URL = new Map(ordered.map((s, i) => [s.url, i]));
+
+/**
+ * Sort a list of {label, url} links into the canonical service order.
+ * Links that are not services (a visa category, say) fall to the end in the
+ * order they were written.
+ */
+function orderServiceLinks(links) {
+  return [...links].sort((a, b) => {
+    const ra = RANK_BY_URL.has(a.url) ? RANK_BY_URL.get(a.url) : Infinity;
+    const rb = RANK_BY_URL.has(b.url) ? RANK_BY_URL.get(b.url) : Infinity;
+    if (ra === rb) return links.indexOf(a) - links.indexOf(b);
+    return ra - rb;
+  });
+}
+
+const bySlug = (slug) => services.find((s) => s.slug === slug);
+const fullPages = ordered.filter((s) => !s.hub);
+
+module.exports = {
+  services: ordered,
+  fullPages,
+  homepageServiceOrder,
+  orderServiceLinks,
+  bySlug,
+};

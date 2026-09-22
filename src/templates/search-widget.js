@@ -38,11 +38,21 @@ const ROOMS = ['1 Room', '2 Rooms', '3 Rooms', '4 Rooms', '5+ Rooms'];
 
 const GUESTS = ['1 Guest', '2 Guests', '3 Guests', '4 Guests', '5 Guests', '6 Guests', '7+ Guests'];
 
+/* The client's order, the same one the services now run in everywhere. */
 const TABS = [
-  { key: 'flights', label: 'Flights', icon: 'plane' },
   { key: 'umrah', label: 'Umrah', icon: 'kaaba' },
+  { key: 'appointments', label: 'Visa Appointment', icon: 'calendar' },
   { key: 'visa', label: 'Visa', icon: 'passport' },
+  { key: 'flights', label: 'Flights', icon: 'plane' },
   { key: 'hotels', label: 'Hotels', icon: 'hotel' },
+];
+
+/* Where an appointment is actually sat. Free text is still accepted. */
+const APPOINTMENT_CENTRES = [
+  'VFS Global — Islamabad', 'VFS Global — Lahore', 'VFS Global — Karachi',
+  'VFS Global — Mirpur', 'TLScontact — Islamabad', 'TLScontact — Lahore',
+  'TLScontact — Karachi', "Gerry's — Islamabad", "Gerry's — Lahore",
+  "Gerry's — Karachi", 'Embassy or consulate direct', 'Not sure — advise me',
 ];
 
 /* ------------------------------------------------------------- Field bits */
@@ -233,6 +243,47 @@ function umrahPanel(hidden) {
         </form>`;
 }
 
+function appointmentsPanel(hidden) {
+  const p = 'tsa';
+  const countryNames = [...countries.map((c) => c.name), 'Another country'];
+  return `
+        <form class="ts-panel" id="ts-panel-appointments" role="tabpanel" aria-labelledby="ts-tab-appointments"
+              data-ts-panel="appointments" data-ts-kind="Appointment" novalidate${hidden ? ' hidden' : ''}>
+          <div class="ts-row ts-row--4">
+            ${field({
+              id: `${p}-country`, label: 'Destination Country', icon: 'globe', required: true,
+              errorFor: 'country', error: 'Which country is the appointment for?',
+              control: select({ id: `${p}-country`, name: 'country', list: countryNames, placeholder: 'Select a country' }),
+            })}
+            ${field({
+              id: `${p}-type`, label: 'Visa Type', icon: 'passport',
+              control: select({ id: `${p}-type`, name: 'visaType', list: visaTypes.map((v) => v.title), placeholder: 'Select a visa type' }),
+            })}
+            ${field({
+              id: `${p}-centre`, label: 'Application Centre', icon: 'building', combo: true,
+              control: input({ id: `${p}-centre`, name: 'centre', placeholder: 'VFS, TLScontact, Gerry&rsquo;s…', list: 'ts-centres', extra: comboAttrs(`${p}-centre`) }),
+            })}
+            ${field({
+              id: `${p}-date`, label: 'Earliest Date You Can Travel', icon: 'calendar',
+              control: input({ id: `${p}-date`, name: 'departDate', type: 'date', extra: 'data-ts-today' }),
+            })}
+            ${phoneField(p)}
+          </div>
+
+          <div class="ts-extra">
+            <label for="${p}-notes">Anything We Should Know</label>
+            <textarea class="textarea" id="${p}-notes" name="notes" rows="2"
+              placeholder="Number of applicants, whether the file is already prepared, dates you cannot attend, a deadline you are working to…"></textarea>
+          </div>
+
+          ${panelFoot({
+            p,
+            label: 'Check Availability',
+            note: 'Slots are released by the centre, not by us, and they move. We monitor the ones for your country and tell you honestly what the realistic wait is.',
+          })}
+        </form>`;
+}
+
 function visaPanel(hidden) {
   const p = 'tsv';
   const countryNames = [...countries.map((c) => c.name), 'Another country'];
@@ -314,7 +365,13 @@ function hotelsPanel(hidden) {
         </form>`;
 }
 
-const PANELS = { flights: flightsPanel, umrah: umrahPanel, visa: visaPanel, hotels: hotelsPanel };
+const PANELS = {
+  umrah: umrahPanel,
+  appointments: appointmentsPanel,
+  visa: visaPanel,
+  flights: flightsPanel,
+  hotels: hotelsPanel,
+};
 
 /* ------------------------------------------------------------------ Widget */
 
@@ -355,6 +412,7 @@ function searchWidget({ active = 'flights', overlap = true, title = '' } = {}) {
     <datalist id="ts-airports">${each(AIRPORTS, (a) => `<option value="${attr(a)}"></option>`)}</datalist>
     <datalist id="ts-hotel-cities">${each(HOTEL_PLACES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
     <datalist id="ts-hotel-categories">${each(HOTEL_CATEGORIES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
+    <datalist id="ts-centres">${each(APPOINTMENT_CENTRES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
   </div>`;
 }
 

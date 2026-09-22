@@ -11,7 +11,7 @@ const { esc, attr, each } = require('../lib/html');
 
 const faqs = require('../data/faqs');
 const { reviews, googleReviewUrl, googleProfileUrl } = require('../data/reviews');
-const { services } = require('../data/services');
+const { services, orderServiceLinks } = require('../data/services');
 const U = require('../data/umrah');
 const visaTypes = require('../data/visa-types');
 const { countries } = require('../data/visa-countries');
@@ -375,14 +375,14 @@ ${c.pageHero({
 
         <aside class="sidebar is-sticky">
           ${c.contactSidebarCard(wa)}
-          ${c.linkListCard('Related Services', [
+          ${c.linkListCard('Related Services', orderServiceLinks([
             { label: 'Air Ticketing', url: '/services/air-ticketing/' },
             { label: 'Hotel Reservations', url: '/hotels/' },
             { label: 'Business Visa', url: '/visa-services/business-visa/' },
             { label: 'Visa Appointments', url: '/services/visa-appointment-booking/' },
             { label: 'Airport Transfers', url: '/services/airport-transfers/' },
             { label: 'Travel Insurance', url: '/services/travel-insurance/' },
-          ])}
+          ]))}
         </aside>
       </div>
     </div>

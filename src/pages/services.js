@@ -7,21 +7,15 @@ const { layout } = require('../templates/layout');
 const c = require('../templates/components');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
-const { services, fullPages, bySlug } = require('../data/services');
+const { services, fullPages, bySlug, orderServiceLinks } = require('../data/services');
 const { searchWidget, assuranceStrip } = require('../templates/search-widget');
 
 /* ------------------------------------------------------------------- Hub */
 function hubPage() {
-  /* Same order as the home grid and the menus: the client's nine first,
-     then everything else in the order it is declared. */
-  const { homepageServiceOrder } = require('../data/services');
-  const rank = (slug) => {
-    const i = homepageServiceOrder.indexOf(slug);
-    return i === -1 ? homepageServiceOrder.length + services.findIndex((x) => x.slug === slug) : i;
-  };
-  const cards = [...services]
-    .sort((a, b) => rank(a.slug) - rank(b.slug))
-    .map((s) => c.iconCard({ url: s.url, icon: s.icon, title: s.title, text: s.blurb }));
+  /* `services` is exported in the canonical order, so no sorting here. */
+  const cards = services.map((s) =>
+    c.iconCard({ url: s.url, icon: s.icon, title: s.title, text: s.blurb })
+  );
 
   const body = `
 ${c.pageHero({
@@ -82,6 +76,7 @@ ${c.ctaBand()}`;
    carry it themselves. */
 const WIDGET_TAB = {
   'air-ticketing': 'flights',
+  'visa-appointment-booking': 'appointments',
 };
 
 function servicePage(s) {
@@ -161,7 +156,7 @@ ${assuranceStrip(WIDGET_TAB[s.slug])}
 
         <aside class="sidebar is-sticky">
           ${c.contactSidebarCard(wa)}
-          ${related.length ? c.linkListCard('Related Services', related) : ''}
+          ${related.length ? c.linkListCard('Related Services', orderServiceLinks(related)) : ''}
           <div class="sidebar-card sidebar-card--cream">
             <h3>Office Hours</h3>
             <p style="font-size:var(--fs-sm);color:var(--muted)">${esc(site.openingHoursText)}</p>

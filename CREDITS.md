@@ -7,8 +7,8 @@ permitted, no attribution required, no permission needed**.
 Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
-- Images: **59**
-- Total weight: **15494 KB**
+- Images: **65**
+- Total weight: **18071 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -68,6 +68,8 @@ npm run images -- --force           # everything
 | `hero-flight-2560.jpg` | 2560×1440 | 209 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
 | `hero-flight-768.jpg` | 768×432 | 21 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
 | `hero-flight.jpg` | 1920×1080 | 99 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
+| `hero-haram-2560.jpg` | 2560×1440 | 999 KB | [#38546878](https://www.pexels.com/photo/38546878/) |
+| `hero-haram.jpg` | 1600×900 | 438 KB | [#38546878](https://www.pexels.com/photo/38546878/) |
 | `hero-istanbul-2560.jpg` | 2560×1440 | 530 KB | [#18165242](https://www.pexels.com/photo/18165242/) |
 | `hero-istanbul.jpg` | 1600×900 | 216 KB | [#18165242](https://www.pexels.com/photo/18165242/) |
 | `hero-kaaba-1200.jpg` | 1200×675 | 289 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
@@ -77,6 +79,10 @@ npm run images -- --force           # everything
 | `hero-madinah.jpg` | 1920×1080 | 190 KB | [#34246953](https://www.pexels.com/photo/34246953/) |
 | `hero-maldives-2560.jpg` | 2560×1440 | 298 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
 | `hero-maldives.jpg` | 1600×900 | 125 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
+| `hero-nabawi-2560.jpg` | 2560×1440 | 286 KB | [#33169796](https://www.pexels.com/photo/33169796/) |
+| `hero-nabawi.jpg` | 1600×900 | 123 KB | [#33169796](https://www.pexels.com/photo/33169796/) |
+| `hero-paris-2560.jpg` | 2560×1440 | 506 KB | [#30133212](https://www.pexels.com/photo/30133212/) |
+| `hero-paris.jpg` | 1600×900 | 224 KB | [#30133212](https://www.pexels.com/photo/30133212/) |
 | `hero-umrah.jpg` | 1600×900 | 373 KB | [#4118058](https://www.pexels.com/photo/4118058/) |
 | `hotels/baku-hotels.jpg` | 1600×1200 | 198 KB | [#15236595](https://www.pexels.com/photo/15236595/) |
 | `hotels/dubai-hotels.jpg` | 1600×1200 | 359 KB | [#31033420](https://www.pexels.com/photo/31033420/) |

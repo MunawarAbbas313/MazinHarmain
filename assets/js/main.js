@@ -402,7 +402,7 @@
       departDate: 'Departing', returnDate: 'Returning', itinerary: 'Itinerary',
       cabin: 'Cabin', travellers: 'Travellers', directOnly: 'Preference',
       packageType: 'Package', duration: 'Duration',
-      country: 'Destination', visaType: 'Visa type',
+      country: 'Destination', visaType: 'Visa type', centre: 'Application centre',
       city: 'City / area', checkIn: 'Check in', checkOut: 'Check out',
       guests: 'Guests', rooms: 'Rooms', category: 'Hotel category',
       notes: 'Requirements', phone: 'WhatsApp',
@@ -413,17 +413,20 @@
       Flight: ['tripType', 'from', 'to', 'departDate', 'returnDate', 'itinerary', 'cabin', 'travellers', 'directOnly', 'phone'],
       Umrah: ['packageType', 'duration', 'departDate', 'travellers', 'notes', 'phone'],
       Visa: ['country', 'visaType', 'departDate', 'phone'],
+      Appointment: ['country', 'visaType', 'centre', 'departDate', 'notes', 'phone'],
       Hotel: ['city', 'checkIn', 'checkOut', 'guests', 'rooms', 'category', 'notes', 'phone'],
     };
     /* "Departing" is right for a flight and wrong for the other three. */
     var LABEL_OVERRIDES = {
       Umrah: { departDate: 'Travel date' },
       Visa: { departDate: 'Intended travel date' },
+      Appointment: { departDate: 'Earliest travel date' },
     };
     var HEADINGS = {
       Flight: 'Flight Fare Request',
       Umrah: 'Umrah Package Request',
       Visa: 'Visa Eligibility Request',
+      Appointment: 'Visa Appointment Request',
       Hotel: 'Hotel Rate Request',
     };
     var DATE_KEYS = { departDate: 1, returnDate: 1, checkIn: 1, checkOut: 1 };

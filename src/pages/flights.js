@@ -11,6 +11,7 @@ const { searchWidget, assuranceStrip } = require('../templates/search-widget');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
 const { routes, byCategory, routeFaqs } = require('../data/flights');
+const { orderServiceLinks } = require('../data/services');
 
 const BASE = '/flights/';
 const crumbBase = { label: 'Flight Routes', url: BASE };
@@ -29,14 +30,14 @@ function flightSidebar(wa) {
             { label: 'All Flight Routes', url: BASE },
             ...routes.slice(0, 9).map((r) => ({ label: `${r.from} to ${r.to}`, url: `${BASE}${r.slug}/` })),
           ])}
-          ${c.linkListCard('Related Services', [
+          ${c.linkListCard('Related Services', orderServiceLinks([
             { label: 'Air Ticketing', url: '/services/air-ticketing/' },
             { label: 'Umrah Packages', url: '/umrah-packages/' },
             { label: 'Hotel Reservations', url: '/hotels/' },
             { label: 'Airport Transfers', url: '/services/airport-transfers/' },
             { label: 'Travel Insurance', url: '/services/travel-insurance/' },
             { label: 'Corporate Travel', url: '/corporate-travel/' },
-          ])}
+          ]))}
         </aside>`;
 }
 

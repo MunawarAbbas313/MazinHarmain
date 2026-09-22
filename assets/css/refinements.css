@@ -1051,12 +1051,16 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 .ts__tab svg { color: var(--muted-2); transition: color 0.2s var(--ease); }
 .ts__tab:hover { color: var(--green-700); background: rgba(255, 255, 255, 0.6); }
 .ts__tab:hover svg { color: var(--green-600); }
+/* The selected tab is filled, not underlined. The client asked for it to
+   colour in the way the Return / One Way / Multi-City control does, so the
+   two selection styles in the panel now read the same. */
 .ts__tab.is-active {
-  color: var(--green-800);
-  background: var(--white);
+  color: #fff;
+  background: linear-gradient(180deg, var(--green-700) 0%, var(--green-800) 100%);
   border-bottom-color: var(--gold-500);
 }
-.ts__tab.is-active svg { color: var(--gold-600); }
+.ts__tab.is-active svg { color: var(--gold-400); }
+.ts__tab.is-active:hover { color: #fff; background: linear-gradient(180deg, var(--green-600) 0%, var(--green-800) 100%); }
 .ts__tab:focus-visible { outline: 3px solid var(--gold-500); outline-offset: -3px; }
 
 .ts__brand {

@@ -44,8 +44,16 @@ const WA_HERO = 'Assalam o Alaikum, I would like to speak to a travel expert abo
    impression. These are decorative variations on the opening frame, which
    is why they carry an empty alt rather than four competing descriptions. */
 const HERO_SLIDES = [
-  { src: '/assets/img/hero-dubai.jpg', wide: '/assets/img/hero-dubai-2560.jpg' },
+  /* Eight frames. Makkah and Madinah are back in the rotation at the
+     client's request — the original objection was that the Kaaba was the
+     ONLY thing the home page showed, not that it should be absent. Beside
+     Paris, Venice, Istanbul, Dubai and the Maldives, the agency reads as
+     both the Umrah specialist and the worldwide operator it is. */
+  { src: '/assets/img/hero-haram.jpg', wide: '/assets/img/hero-haram-2560.jpg' },
+  { src: '/assets/img/hero-nabawi.jpg', wide: '/assets/img/hero-nabawi-2560.jpg' },
+  { src: '/assets/img/hero-paris.jpg', wide: '/assets/img/hero-paris-2560.jpg' },
   { src: '/assets/img/hero-istanbul.jpg', wide: '/assets/img/hero-istanbul-2560.jpg' },
+  { src: '/assets/img/hero-dubai.jpg', wide: '/assets/img/hero-dubai-2560.jpg' },
   { src: '/assets/img/hero-europe.jpg', wide: '/assets/img/hero-europe-2560.jpg' },
   { src: '/assets/img/hero-maldives.jpg', wide: '/assets/img/hero-maldives-2560.jpg' },
 ];
@@ -523,7 +531,8 @@ function mapSection() {
 function render() {
   const body = [
     hero(),
-    searchWidget({ active: 'flights' }),
+    /* Opens on the first tab in the client's order. */
+    searchWidget({ active: 'umrah' }),
     servicesSection(),
     umrahSection(),
     visaSection(),

@@ -7,6 +7,7 @@ const c = require('../templates/components');
 const { searchWidget } = require('../templates/search-widget');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
+const { orderServiceLinks } = require('../data/services');
 const hotels = require('../data/hotels');
 
 const BASE = '/hotels/';
@@ -20,12 +21,12 @@ function hotelSidebar(wa) {
             { label: 'All Destinations', url: BASE },
             ...hotels.map((h) => ({ label: h.city, url: `${BASE}${h.slug}/` })),
           ])}
-          ${c.linkListCard('Related Services', [
+          ${c.linkListCard('Related Services', orderServiceLinks([
             { label: 'Umrah Packages', url: '/umrah-packages/' },
             { label: 'Air Ticketing', url: '/services/air-ticketing/' },
             { label: 'Airport Transfers', url: '/services/airport-transfers/' },
             { label: 'International Tours', url: '/destinations/' },
-          ])}
+          ]))}
         </aside>`;
 }
 

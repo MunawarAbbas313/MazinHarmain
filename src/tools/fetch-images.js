@@ -79,6 +79,14 @@ const CURATED = [
   { file: 'hero-istanbul.jpg',    id: 18165242, ...WIDE, alt: 'Istanbul seen from above the Bosphorus' },
   { file: 'hero-europe.jpg',      id: 11279691, ...WIDE, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives.jpg',    id: 28843924, ...WIDE, alt: 'An island resort with overwater villas in the Maldives' },
+  { file: 'hero-paris.jpg',       id: 30133212, ...WIDE, alt: 'The Paris skyline with the Eiffel Tower seen from above' },
+
+  /* Makkah and Madinah rejoin the rotation. The original complaint was that
+     the Kaaba was the ONLY thing the home page showed, not that it should be
+     absent — with seven other frames alongside it, the agency reads as both
+     the Umrah specialist and the worldwide operator it is. */
+  { file: 'hero-haram.jpg',       id: 38546878, ...WIDE, alt: 'Masjid al-Haram in Makkah seen from the air at sunset' },
+  { file: 'hero-nabawi.jpg',      id: 33169796, ...WIDE, alt: 'Al-Masjid an-Nabawi in Madinah' },
 
   /* 2560-wide copies of every hero frame. A 1920 image on a 1440px viewport
      at devicePixelRatio 2 needs 2880 to look sharp, so 1920 was rendering
@@ -89,6 +97,9 @@ const CURATED = [
   { file: 'hero-istanbul-2560.jpg', id: 18165242, ...HERO_2X, alt: 'Istanbul seen from above the Bosphorus' },
   { file: 'hero-europe-2560.jpg',   id: 11279691, ...HERO_2X, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives-2560.jpg', id: 28843924, ...HERO_2X, alt: 'An island resort with overwater villas in the Maldives' },
+  { file: 'hero-paris-2560.jpg',    id: 30133212, ...HERO_2X, alt: 'The Paris skyline with the Eiffel Tower seen from above' },
+  { file: 'hero-haram-2560.jpg',    id: 38546878, ...HERO_2X, alt: 'Masjid al-Haram in Makkah seen from the air at sunset' },
+  { file: 'hero-nabawi-2560.jpg',   id: 33169796, ...HERO_2X, alt: 'Al-Masjid an-Nabawi in Madinah' },
 
   /* Service card photography, at FEATURE size so the cards stay sharp. */
   { file: 'services/air-ticketing.jpg', id: 32649171, ...FEATURE, alt: 'An airliner cabin with soft daylight through the windows' },

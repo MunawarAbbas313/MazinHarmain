@@ -765,5 +765,83 @@
     "height": 1200,
     "bytes": 160304,
     "mode": "curated"
+  },
+  "hero-paris.jpg": {
+    "source": "Pexels",
+    "photo_id": 30133212,
+    "source_page": "https://www.pexels.com/photo/30133212/",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "attribution_required": false,
+    "alt": "The Paris skyline with the Eiffel Tower seen from above",
+    "width": 1600,
+    "height": 900,
+    "bytes": 229376,
+    "mode": "curated"
+  },
+  "hero-paris-2560.jpg": {
+    "source": "Pexels",
+    "photo_id": 30133212,
+    "source_page": "https://www.pexels.com/photo/30133212/",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "attribution_required": false,
+    "alt": "The Paris skyline with the Eiffel Tower seen from above",
+    "width": 2560,
+    "height": 1440,
+    "bytes": 518313,
+    "mode": "curated"
+  },
+  "hero-haram.jpg": {
+    "source": "Pexels",
+    "photo_id": 38546878,
+    "source_page": "https://www.pexels.com/photo/38546878/",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "attribution_required": false,
+    "alt": "Masjid al-Haram in Makkah seen from the air at sunset",
+    "width": 1600,
+    "height": 900,
+    "bytes": 448344,
+    "mode": "curated"
+  },
+  "hero-haram-2560.jpg": {
+    "source": "Pexels",
+    "photo_id": 38546878,
+    "source_page": "https://www.pexels.com/photo/38546878/",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "attribution_required": false,
+    "alt": "Masjid al-Haram in Makkah seen from the air at sunset",
+    "width": 2560,
+    "height": 1440,
+    "bytes": 1023252,
+    "mode": "curated"
+  },
+  "hero-nabawi.jpg": {
+    "source": "Pexels",
+    "photo_id": 33169796,
+    "source_page": "https://www.pexels.com/photo/33169796/",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "attribution_required": false,
+    "alt": "Al-Masjid an-Nabawi in Madinah",
+    "width": 1600,
+    "height": 900,
+    "bytes": 126304,
+    "mode": "curated"
+  },
+  "hero-nabawi-2560.jpg": {
+    "source": "Pexels",
+    "photo_id": 33169796,
+    "source_page": "https://www.pexels.com/photo/33169796/",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "attribution_required": false,
+    "alt": "Al-Masjid an-Nabawi in Madinah",
+    "width": 2560,
+    "height": 1440,
+    "bytes": 293062,
+    "mode": "curated"
   }
 }
