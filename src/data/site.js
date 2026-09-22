@@ -4,7 +4,12 @@
    pages updates on the next `npm run build`.
    ========================================================================== */
 
-const SITE_URL = 'https://www.mazinharamain.com'; // <-- change to the live domain before launch
+/* The live domain. This was still the placeholder mazinharamain.com after
+   launch, and that host does not resolve — so every page on the live site was
+   telling search engines "the real version of this page lives at
+   mazinharamain.com", pointing them at nothing. Canonicals, og:url, the
+   sitemap and the schema all read from here. */
+const SITE_URL = 'https://www.mhtravel.pk';
 
 const site = {
   url: SITE_URL,
@@ -129,7 +134,7 @@ const site = {
     /* The car-rental line, supplied by the client September 2026. Car rental
        is MyCab's service run from the same office, so the car-rental page
        reaches this number rather than the agency's ticketing landline. */
-    uan: { label: '0306-111-2234', tel: '+923061112234', wa: '923061112234' },
+    uan: { label: '0311-111-2234', tel: '+923111112234', wa: '923111112234' },
     email: 'mycabpakistan@gmail.com',
     blurb:
       'Dedicated vehicles with a driver — airport pickups, city meetings, ' +

@@ -85,7 +85,7 @@ const CURATED = [
      an-Nabawi, UK, USA, Turkey, Azerbaijan, Paris, Maldives. Dubai and
      Venice drop out of the rotation to make room; their cuts stay on disk
      because the destination pages still use them. */
-  { file: 'hero-london.jpg',      id: 36156076, ...WIDE, alt: 'Big Ben and Westminster Bridge over the Thames at sunset' },
+  { file: 'hero-london.jpg',      id: 258117,   ...WIDE, alt: 'The Houses of Parliament and Big Ben across the Thames' },
   { file: 'hero-newyork.jpg',     id: 33619969, ...WIDE, alt: 'The Brooklyn Bridge and the Manhattan skyline at sunset' },
   { file: 'hero-baku.jpg',        id: 8412720,  ...WIDE, alt: "Baku at dusk, the Flame Towers above the Caspian" },
 
@@ -106,7 +106,7 @@ const CURATED = [
   { file: 'hero-europe-2560.jpg',   id: 11279691, ...HERO_2X, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives-2560.jpg', id: 28843924, ...HERO_2X, alt: 'An island resort with overwater villas in the Maldives' },
   { file: 'hero-paris-2560.jpg',    id: 30133212, ...HERO_2X, alt: 'The Paris skyline with the Eiffel Tower seen from above' },
-  { file: 'hero-london-2560.jpg',   id: 36156076, ...HERO_2X, alt: 'Big Ben and Westminster Bridge over the Thames at sunset' },
+  { file: 'hero-london-2560.jpg',   id: 258117,   ...HERO_2X, alt: 'The Houses of Parliament and Big Ben across the Thames' },
   { file: 'hero-newyork-2560.jpg',  id: 33619969, ...HERO_2X, alt: 'The Brooklyn Bridge and the Manhattan skyline at sunset' },
   { file: 'hero-baku-2560.jpg',     id: 8412720,  ...HERO_2X, alt: "Baku at dusk, the Flame Towers above the Caspian" },
   { file: 'hero-haram-2560.jpg',    id: 26436662, ...HERO_2X, alt: 'The Kaaba at night, pilgrims performing tawaf in Masjid al-Haram' },

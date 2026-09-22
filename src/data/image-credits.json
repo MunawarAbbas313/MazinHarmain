@@ -950,15 +950,15 @@
   },
   "hero-london.jpg": {
     "source": "Pexels",
-    "photo_id": 36156076,
-    "source_page": "https://www.pexels.com/photo/36156076/",
+    "photo_id": 258117,
+    "source_page": "https://www.pexels.com/photo/258117/",
     "license": "Pexels License",
     "license_url": "https://www.pexels.com/license/",
     "attribution_required": false,
-    "alt": "Big Ben and Westminster Bridge over the Thames at sunset",
+    "alt": "The Houses of Parliament and Big Ben across the Thames",
     "width": 1600,
     "height": 900,
-    "bytes": 165307,
+    "bytes": 196588,
     "mode": "curated"
   },
   "hero-newyork.jpg": {
@@ -1015,15 +1015,15 @@
   },
   "hero-london-2560.jpg": {
     "source": "Pexels",
-    "photo_id": 36156076,
-    "source_page": "https://www.pexels.com/photo/36156076/",
+    "photo_id": 258117,
+    "source_page": "https://www.pexels.com/photo/258117/",
     "license": "Pexels License",
     "license_url": "https://www.pexels.com/license/",
     "attribution_required": false,
-    "alt": "Big Ben and Westminster Bridge over the Thames at sunset",
+    "alt": "The Houses of Parliament and Big Ben across the Thames",
     "width": 2560,
     "height": 1440,
-    "bytes": 361312,
+    "bytes": 470070,
     "mode": "curated"
   }
 }

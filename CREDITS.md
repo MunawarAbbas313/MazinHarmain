@@ -8,7 +8,7 @@ Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
 - Images: **79**
-- Total weight: **21507 KB**
+- Total weight: **21644 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -78,8 +78,8 @@ npm run images -- --force           # everything
 | `hero-kaaba-1600.jpg` | 1600×900 | 507 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba-768.jpg` | 768×432 | 125 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba.jpg` | 1920×1080 | 701 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
-| `hero-london-2560.jpg` | 2560×1440 | 353 KB | [#36156076](https://www.pexels.com/photo/36156076/) |
-| `hero-london.jpg` | 1600×900 | 161 KB | [#36156076](https://www.pexels.com/photo/36156076/) |
+| `hero-london-2560.jpg` | 2560×1440 | 459 KB | [#258117](https://www.pexels.com/photo/258117/) |
+| `hero-london.jpg` | 1600×900 | 192 KB | [#258117](https://www.pexels.com/photo/258117/) |
 | `hero-madinah.jpg` | 1920×1080 | 190 KB | [#34246953](https://www.pexels.com/photo/34246953/) |
 | `hero-maldives-2560.jpg` | 2560×1440 | 298 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
 | `hero-maldives.jpg` | 1600×900 | 125 KB | [#28843924](https://www.pexels.com/photo/28843924/) |

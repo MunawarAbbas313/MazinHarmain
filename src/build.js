@@ -66,9 +66,18 @@ function outputPathFor(page) {
    alone, and so is anything that is not a real file on disk.
    ------------------------------------------------------------------------ */
 const ASSET_URL = /(["'(])(\/assets\/[A-Za-z0-9._\/-]+?\.(?:jpg|jpeg|png|gif|svg|webp|avif|ico|css|js|woff2?|mp4|webm|json|txt|xml|pdf))(?=["')\s])/g;
+const ABSOLUTE_ASSET_URL = /(["'(])(https?:\/\/[^"'()\s]+?)(\/assets\/[A-Za-z0-9._\/-]+?\.(?:jpg|jpeg|png|gif|svg|webp|avif|ico|css|js|woff2?|mp4|webm|json|txt|xml|pdf))(?=["')\s])/g;
 
 function versionAssets(html) {
-  return html.replace(ASSET_URL, (match, open, url) => open + asset(url));
+  /* Two passes. Root-relative URLs are what the templates emit; absolute ones
+     come from og:image and the schema, which write the full origin. A
+     root-relative-only rule left the sharing image without a hash, so a
+     replaced OG picture would have stuck in every scraper's cache. */
+  const origin = site.url;
+  return html
+    .replace(ASSET_URL, (m, open, url) => open + asset(url))
+    .replace(ABSOLUTE_ASSET_URL, (m, open, host, url) =>
+      (host === origin ? open + host + asset(url) : m));
 }
 
 function writePage(page) {
