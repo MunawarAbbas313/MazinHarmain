@@ -145,7 +145,14 @@ button, input, select, textarea { font: inherit; }
       rgba(7, 47, 38, .34) 72%,
       rgba(7, 47, 38, .22) 100%);
 }
-.hero__inner { position: relative; padding-block: clamp(3rem, 6vw, 5.25rem) 0; }
+/* The bottom used to be zero because the trust strip sat flush against the
+   hero's lower edge and supplied its own inset. With that strip removed at
+   the client's request the buttons ran straight into the edge and the last
+   one was clipped by it. */
+.hero__inner {
+  position: relative;
+  padding-block: clamp(3rem, 6vw, 5.25rem) clamp(2.5rem, 5vw, 4.25rem);
+}
 .hero__content { max-width: 620px; }
 /* The agency name above the headline. It was a bordered gold plate in
    uppercase; the client asked for the border gone, the size up and the face
@@ -981,15 +988,10 @@ button, input, select, textarea { font: inherit; }
 /* On the inner pages the panel simply follows the page hero. */
 .ts--overlap { margin-top: var(--sp-8); }
 
-/* On the home page it is pulled UP onto the hero, so the tab strip sits on
-   the photograph and the card straddles its lower edge — the arrangement in
-   the client's reference. A second full-width photograph below the hero was
-   the alternative, and it read as two slabs stacked with a lot of empty sky
-   going to waste. One lift value drives both halves so they cannot drift:
-   the hero opens up exactly as much room as the panel takes back. */
-.page-home { --ts-lift: clamp(4.5rem, 8vw, 7rem); }
-.page-home .hero__inner { padding-bottom: calc(var(--ts-lift) + clamp(1.5rem, 3vw, 2.75rem)); }
-.page-home .ts--overlap { margin-top: calc(var(--ts-lift) * -1); }
+/* The home panel is NOT pulled onto the hero. The client asked twice for the
+   form to come down and not collide with the section above it, so it clears
+   the hero entirely. What keeps the two from reading as separate slabs is the
+   banner's dissolve, not an overlap. */
 .ts__title {
   font-size: var(--fs-2xl);
   text-align: center;
@@ -1353,8 +1355,6 @@ button, input, select, textarea { font: inherit; }
 
 @media (min-width: 1200px) {
   .ts--overlap { margin-top: var(--sp-10); }
-  /* Re-stated so the generic rule above does not cancel the home lift. */
-  .page-home .ts--overlap { margin-top: calc(var(--ts-lift) * -1); }
 }
 
 /* Below the two-column breakpoint the swap control has no pair of columns
@@ -1368,10 +1368,7 @@ button, input, select, textarea { font: inherit; }
   }
   .ts-row--flights > .ts-swap:active { transform: rotate(90deg) scale(0.94); }
   .ts__tab { padding: 0 var(--sp-3); font-size: var(--fs-xs); }
-  /* A gentler lift on a phone, where the hero is tall and narrow and a big
-     pull would push the card over the headline. */
   .ts--overlap { margin-top: var(--sp-6); }
-  .page-home { --ts-lift: 2.25rem; }
 }
 
 @media print {
@@ -1764,6 +1761,13 @@ button, input, select, textarea { font: inherit; }
   .hero__eyebrow { font-size: 1.15rem; margin-bottom: .7rem; }
 }
 
+/* Above 900px the aircraft banner below the hero carries the agency's name at
+   full size. Showing it here too put the name on the first screen twice.
+   Exactly one of the pair is ever visible — see .ts__banner. */
+@media (min-width: 901px) {
+  .page-home .hero__eyebrow { display: none; }
+}
+
 
 
 /* "051-8465006-7" was breaking after the second hyphen and dropping the "7"
@@ -1879,13 +1883,13 @@ button, input, select, textarea { font: inherit; }
    photograph is its own panel, not a continuation of the hero.
    ========================================================================== */
 .ts--photo {
-  /* No gap at all. A white stripe between the hero and this band read as a
-     seam; a cream one still read as a seam. The two photographs now meet
-     directly, so the hero and the search panel are one continuous first
-     screen rather than two pasted-together sections. The band still fades
-     into cream at the BOTTOM, where it has to hand over to the services
-     section. */
-  margin-top: 0;
+  /* Clear of the hero, with page colour between them — the form must not
+     collide with the section above. The band does not read as a second slab
+     because it has no edges: the photograph is masked so the sky dissolves
+     into the page above and below, leaving the aircraft and the name as the
+     only solid part of it. */
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--cream);
   /* A PERCENTAGE, not a rem clamp: the photograph scales with the viewport
      width, so a fixed cap lets the aircraft slide down behind the card on a
      wide screen. The aircraft's underside sits at 29% of the photograph's
@@ -1910,6 +1914,26 @@ button, input, select, textarea { font: inherit; }
      to be, and any other anchor slides it down behind the card as the band
      grows. */
   object-position: center top;
+  /* The dissolve. The photograph has no top or bottom edge — it comes up out
+     of the page and goes back into it, so the aircraft and the name are the
+     prominent part and the rest of the sky simply disappears. This is what
+     stops a full-width photograph reading as a slab wedged under the hero.
+     Browsers without mask-image just get the whole photograph, which is the
+     old behaviour and still fine. */
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.55) 7%,
+    #000 20%,
+    #000 52%,
+    rgba(0, 0, 0, 0.45) 78%,
+    transparent 94%);
+  mask-image: linear-gradient(180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.55) 7%,
+    #000 20%,
+    #000 52%,
+    rgba(0, 0, 0, 0.45) 78%,
+    transparent 94%);
 }
 /* Deep at the edges, lighter behind the card, so the photograph still reads
    as a photograph instead of as a tint. */
@@ -1921,16 +1945,12 @@ button, input, select, textarea { font: inherit; }
     /* Light at the top, where the aircraft is and must stay readable;
        stronger at the bottom, where the band has to hand over cleanly to the
        cream section below it. */
-    /* Dark at the very top so it continues out of the hero instead of
-       starting against it, clear through the middle where the aircraft is,
-       cream at the bottom to meet the services section. */
+    /* A light wash only. The edges are handled by the mask on the image
+       itself, not by painting cream over the top of it. */
     linear-gradient(180deg,
-      rgba(7, 48, 34, 0.78) 0%,
-      rgba(7, 48, 34, 0.30) 7%,
-      rgba(253, 248, 238, 0.06) 18%,
-      rgba(253, 248, 238, 0.20) 50%,
-      rgba(250, 248, 243, 0.80) 92%,
-      var(--cream) 100%);
+      rgba(253, 248, 238, 0.04) 0%,
+      rgba(253, 248, 238, 0.16) 55%,
+      rgba(253, 248, 238, 0.30) 100%);
 }
 
 /* The band is light, so a title over it stays dark. */

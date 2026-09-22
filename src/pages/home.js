@@ -55,10 +55,6 @@ const HERO_SLIDES = [
   { src: '/assets/img/hero-baku.jpg', wide: '/assets/img/hero-baku-2560.jpg' },
   { src: '/assets/img/hero-paris.jpg', wide: '/assets/img/hero-paris-2560.jpg' },
   { src: '/assets/img/hero-maldives.jpg', wide: '/assets/img/hero-maldives-2560.jpg' },
-  /* The aircraft banner the client asked for. It no longer has a band of its
-     own — the form sits on the hero now — so it rotates through here, which
-     is where the form's own backdrop lands every ninth frame anyway. */
-  { src: '/assets/img/search-backdrop.jpg', wide: '/assets/img/search-backdrop-2560.jpg' },
 ];
 
 /** Photo with the branded placeholder as an automatic fallback. */
@@ -96,6 +92,9 @@ ${each(HERO_SLIDES, (h) => `      <img class="hero__slide" data-src="${attr(h.sr
     <div class="container">
       <div class="hero__inner">
         <div class="hero__content">
+          ${/* CSS hides this above 900px, where the banner below carries the
+                name at full size. It stays on phones, where the banner title
+                is hidden and this is the only place the name appears. */ ''}
           <span class="hero__eyebrow">${esc(site.name)}</span>
           <h1>Fly With <span class="accent">Trust.</span></h1>
           <p class="hero__tagline">From Sacred Journeys to Global Destinations.</p>
@@ -529,12 +528,12 @@ function mapSection() {
 function render() {
   const body = [
     hero(),
-    /* Opens on the first tab in the client's order. No photograph of its own:
-       it is pulled up over the hero, so the form sits ON the hero's picture
-       the way the client's reference sits on its banner. A second full-width
-       photograph underneath the hero made the top of the page read as two
-       slabs stacked rather than one screen. */
-    searchWidget({ active: 'umrah' }),
+    /* Opens on the first tab in the client's order, on the client's own
+       aircraft banner. The form must not touch the hero — the client asked
+       twice for it to come down — so the two do not overlap; what stops the
+       banner reading as a second slab is that its sky dissolves into the page
+       at the top and bottom instead of ending on a cut. */
+    searchWidget({ active: 'umrah', backdrop: true }),
     servicesSection(),
     umrahSection(),
     visaSection(),
