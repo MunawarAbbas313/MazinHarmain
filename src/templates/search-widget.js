@@ -16,7 +16,7 @@
 const site = require('../data/site');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
-const { AIRPORTS, HOTEL_PLACES, HOTEL_CATEGORIES } = require('../data/places');
+const { AIRPORTS, HOTEL_PLACES, HOTEL_CATEGORIES, WORLD_COUNTRIES } = require('../data/places');
 const umrah = require('../data/umrah');
 const visaTypes = require('../data/visa-types');
 const { countries, appointmentCountries } = require('../data/visa-countries');
@@ -48,13 +48,45 @@ const TABS = [
   { key: 'hotels', label: 'Hotels', icon: 'hotel' },
 ];
 
-/* Where an appointment is actually sat. Free text is still accepted. */
-const APPOINTMENT_CENTRES = [
-  'VFS Global — Islamabad', 'VFS Global — Lahore', 'VFS Global — Karachi',
-  'VFS Global — Mirpur', 'TLScontact — Islamabad', 'TLScontact — Lahore',
-  'TLScontact — Karachi', "Gerry's — Islamabad", "Gerry's — Lahore",
-  "Gerry's — Karachi", 'Embassy or consulate direct', 'Not sure — advise me',
+/* The city the applicant will submit in. It used to name the operators —
+   "VFS Global — Lahore", "TLScontact — Islamabad" — which asked the applicant
+   to know which company runs the centre for their destination. They rarely
+   do, and it is our job to work out anyway. The city is the part they do
+   know. Free text is still accepted. */
+const APPOINTMENT_CITIES = [
+  'Islamabad', 'Lahore', 'Karachi', 'Rawalpindi', 'Peshawar', 'Faisalabad',
+  'Multan', 'Sialkot', 'Quetta', 'Mirpur (AJK)', 'Abbottabad',
+  'Not sure — advise me',
 ];
+
+/* The categories an appointment can be BOOKED for, which is a longer list
+   than the ones the agency processes itself. The client withdrew work, study
+   and family-reunion visas as services — those pages are gone and redirected
+   — but the appointment desk still secures a slot at the centre whatever the
+   category, so they belong here and nowhere else. The visa tab keeps the
+   three services in src/data/visa-types.js. */
+const APPOINTMENT_VISA_TYPES = [
+  'Visit Visa', 'Tourist Visa', 'Business Visa',
+  'Work Visa', 'Study Visa', 'Family Reunion Visa',
+];
+
+/* The follow-up to "Another country". The dropdown above it carries the
+   twenty-one the client named; anyone else was submitting the literal words
+   "Another country" and waiting for us to write back and ask which. This is a
+   type-ahead over every sovereign state, hidden until it is needed. */
+function otherCountryField(p) {
+  return field({
+    id: `${p}-othercountry`, label: 'Which country?', icon: 'globe', combo: true,
+    cls: 'ts-field--other', required: true,
+    errorFor: 'otherCountry', error: 'Please type the country.',
+    control: input({
+      id: `${p}-othercountry`, name: 'otherCountry',
+      placeholder: 'Start typing a country…',
+      list: 'ts-world-countries',
+      extra: `${comboAttrs(`${p}-othercountry`)} disabled`,
+    }),
+  });
+}
 
 /* ------------------------------------------------------------- Field bits */
 
@@ -99,9 +131,9 @@ function input({ id, name, type = 'text', placeholder = '', list = '', extra = '
     `${list ? ` list="${attr(list)}" autocomplete="off"` : ''} ${extra}>`;
 }
 
-function select({ id, name, list, placeholder = '', selected = '' }) {
-  return `<select class="ts-input ts-input--select" id="${attr(id)}" name="${attr(name)}">` +
-    `${options(list, { placeholder, selected })}</select>`;
+function select({ id, name, list, placeholder = '', selected = '', extra = '' }) {
+  return `<select class="ts-input ts-input--select" id="${attr(id)}" name="${attr(name)}"` +
+    `${extra ? ` ${extra}` : ''}>${options(list, { placeholder, selected })}</select>`;
 }
 
 /** Phone field — every panel ends with the same one. */
@@ -255,15 +287,16 @@ function appointmentsPanel(hidden) {
             ${field({
               id: `${p}-country`, label: 'Destination Country', icon: 'globe', required: true,
               errorFor: 'country', error: 'Which country is the appointment for?',
-              control: select({ id: `${p}-country`, name: 'country', list: countryNames, placeholder: 'Select a country' }),
+              control: select({ id: `${p}-country`, name: 'country', list: countryNames, placeholder: 'Select a country', extra: 'data-ts-country' }),
             })}
+            ${otherCountryField(p)}
             ${field({
               id: `${p}-type`, label: 'Visa Type', icon: 'passport',
-              control: select({ id: `${p}-type`, name: 'visaType', list: visaTypes.map((v) => v.title), placeholder: 'Select a visa type' }),
+              control: select({ id: `${p}-type`, name: 'visaType', list: APPOINTMENT_VISA_TYPES, placeholder: 'Select a visa type' }),
             })}
             ${field({
-              id: `${p}-centre`, label: 'Application Centre', icon: 'building', combo: true,
-              control: input({ id: `${p}-centre`, name: 'centre', placeholder: 'VFS, TLScontact, Gerry&rsquo;s…', list: 'ts-centres', extra: comboAttrs(`${p}-centre`) }),
+              id: `${p}-centre`, label: 'City', icon: 'building', combo: true,
+              control: input({ id: `${p}-centre`, name: 'centre', placeholder: 'Islamabad, Lahore, Karachi…', list: 'ts-centres', extra: comboAttrs(`${p}-centre`) }),
             })}
             ${field({
               id: `${p}-date`, label: 'Earliest Date You Can Travel', icon: 'calendar',
@@ -296,8 +329,9 @@ function visaPanel(hidden) {
             ${field({
               id: `${p}-country`, label: 'Destination Country', icon: 'globe', required: true,
               errorFor: 'country', error: 'Please choose a destination country.',
-              control: select({ id: `${p}-country`, name: 'country', list: countryNames, placeholder: 'Select a country' }),
+              control: select({ id: `${p}-country`, name: 'country', list: countryNames, placeholder: 'Select a country', extra: 'data-ts-country' }),
             })}
+            ${otherCountryField(p)}
             ${field({
               id: `${p}-type`, label: 'Visa Type', icon: 'passport', required: true,
               errorFor: 'visaType', error: 'Please choose a visa type.',
@@ -308,6 +342,12 @@ function visaPanel(hidden) {
               control: input({ id: `${p}-date`, name: 'departDate', type: 'date', extra: 'data-ts-today' }),
             })}
             ${phoneField(p)}
+          </div>
+
+          <div class="ts-extra">
+            <label for="${p}-notes">Anything We Should Know</label>
+            <textarea class="textarea" id="${p}-notes" name="notes" rows="2"
+              placeholder="Previous refusals, travel history, who is travelling with you, employment or sponsorship, a deadline you are working to…"></textarea>
           </div>
 
           ${panelFoot({
@@ -438,7 +478,8 @@ function searchWidget({ active = 'flights', overlap = true, title = '', backdrop
     <datalist id="ts-airports">${each(AIRPORTS, (a) => `<option value="${attr(a)}"></option>`)}</datalist>
     <datalist id="ts-hotel-cities">${each(HOTEL_PLACES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
     <datalist id="ts-hotel-categories">${each(HOTEL_CATEGORIES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
-    <datalist id="ts-centres">${each(APPOINTMENT_CENTRES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
+    <datalist id="ts-centres">${each(APPOINTMENT_CITIES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
+    <datalist id="ts-world-countries">${each(WORLD_COUNTRIES, (c) => `<option value="${attr(c)}"></option>`)}</datalist>
   </div>`;
 }
 

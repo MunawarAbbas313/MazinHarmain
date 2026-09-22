@@ -2146,3 +2146,8 @@ button, input, select, textarea { font: inherit; }
   text-transform: uppercase;
   color: var(--gold-700);
 }
+
+/* The "Another country" follow-up. Hidden until the dropdown asks for it —
+   hidden via the attribute, so it collapses out of the grid row rather than
+   leaving a gap. */
+.ts-field--other[hidden] { display: none !important; }
