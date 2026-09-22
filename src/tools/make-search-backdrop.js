@@ -44,8 +44,8 @@ const cdn = (id, w) =>
 /* Where the aircraft sits in the finished frame, as fractions of it. Taken
    off the client's reference: the aircraft is about a third of the banner
    tall and sits right of centre, high enough that the form clears it. */
-const PLANE_HEIGHT = 0.30;
-const PLANE_CENTRE = { x: 0.60, y: 0.21 };
+const PLANE_HEIGHT = 0.24;
+const PLANE_CENTRE = { x: 0.62, y: 0.17 };
 
 const OUTPUTS = [
   { file: 'search-backdrop.jpg', w: 1600, h: 900 },

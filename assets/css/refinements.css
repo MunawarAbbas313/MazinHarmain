@@ -1856,14 +1856,20 @@ button, input, select, textarea { font: inherit; }
    photograph is its own panel, not a continuation of the hero.
    ========================================================================== */
 .ts--photo {
-  margin-top: clamp(2rem, 4vw, 3.25rem);
-  /* The strip above the tabs is what lets the aircraft be seen, and it has to
-     be a PERCENTAGE, not a clamp in rem: the photograph scales with the
-     viewport width, so a fixed cap lets the aircraft slide down behind the
-     card on a wide screen. The aircraft's underside sits at 36% of the
-     photograph's height, which is 0.2025 x viewport width; 19% plus the tab
-     strip clears it from 320px to 2560px. */
-  padding: 19% 0 clamp(3rem, 6vw, 5rem);
+  /* The gap between the hero and this band used to be page white, which read
+     as a hard white stripe between two photographs. It is the same cream as
+     the services section below, and the photograph fades into it at the top
+     and bottom, so the band sits between the two rather than being wedged
+     between them. */
+  margin-top: 0;
+  border-top: clamp(1.25rem, 2.5vw, 2rem) solid var(--cream);
+  /* A PERCENTAGE, not a rem clamp: the photograph scales with the viewport
+     width, so a fixed cap lets the aircraft slide down behind the card on a
+     wide screen. The aircraft's underside sits at 29% of the photograph's
+     height, ie 0.163 x viewport width, and 11% plus the tab strip clears it
+     down to 320px. Above 900px the banner title adds its own height on top,
+     which is why this does not need to be larger there. */
+  padding: 11% 0 clamp(2.5rem, 5vw, 4rem);
   isolation: isolate;
 }
 
@@ -1892,7 +1898,13 @@ button, input, select, textarea { font: inherit; }
     /* Light at the top, where the aircraft is and must stay readable;
        stronger at the bottom, where the band has to hand over cleanly to the
        cream section below it. */
-    linear-gradient(180deg, rgba(253, 248, 238, 0.10) 0%, rgba(253, 248, 238, 0.22) 45%, rgba(250, 243, 230, 0.72) 100%);
+    linear-gradient(180deg,
+      var(--cream) 0%,
+      rgba(250, 248, 243, 0.55) 4%,
+      rgba(253, 248, 238, 0.10) 16%,
+      rgba(253, 248, 238, 0.22) 50%,
+      rgba(250, 248, 243, 0.80) 92%,
+      var(--cream) 100%);
 }
 
 /* The band is light, so a title over it stays dark. */
@@ -1920,8 +1932,10 @@ button, input, select, textarea { font: inherit; }
    and hidden below 900px, where that strip is too short to hold both and the
    header lockup is only a scroll away in any case. */
 .ts__banner {
-  max-width: 34rem;
-  margin-bottom: clamp(1.25rem, 3vw, 2.25rem);
+  /* Held to the left half so it sits BESIDE the aircraft rather than under
+     it — stacking the two was what made the band so tall. */
+  max-width: min(34rem, 46%);
+  margin-bottom: clamp(0.9rem, 2vw, 1.5rem);
   color: var(--green-900);
 }
 .ts__banner-eyebrow {
@@ -1930,14 +1944,15 @@ button, input, select, textarea { font: inherit; }
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  /* Gold on a sunlit cloud is gold on gold. The darker step is what keeps
-     this line legible against the brightest part of the photograph. */
-  color: var(--gold-700);
+  /* Gold on a sunlit cloud is gold on gold. Even --gold-700 only reaches
+     about 3.3:1 against the brightest cloud behind it, so this line uses a
+     darker step of its own rather than the token. */
+  color: #6b4f14;
 }
 .ts__banner-name {
   margin: 0.35rem 0 0.2rem;
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 4.4vw, 3.25rem);
+  font-size: clamp(1.7rem, 3.6vw, 2.75rem);
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.01em;
