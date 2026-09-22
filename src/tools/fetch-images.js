@@ -146,7 +146,12 @@ const CURATED = [
   { file: 'destinations/europe.jpg',         id: 10719465, ...FEATURE, alt: 'The Eiffel Tower against a vivid sunrise over Paris' },
   { file: 'destinations/singapore.jpg',      id: 1842332,  ...FEATURE, alt: 'Marina Bay Sands and the Helix Bridge illuminated at night in Singapore' },
 
-  { file: 'hotels/makkah-hotels.jpg',   id: 38546878, ...FEATURE, alt: 'Masjid al-Haram in Makkah seen from the air at sunset' },
+  /* NOT the sunset aerial that was here (38546878). The client rejected it:
+     it is shot from above the hills with the construction works and the
+     surrounding city filling most of the frame. This one is the Haram at
+     night with the Abraj Al Bait towers — which are the hotels this page is
+     about — rising behind it. */
+  { file: 'hotels/makkah-hotels.jpg',   id: 36861231, ...FEATURE, alt: 'Masjid al-Haram at night with the Abraj Al Bait towers behind it' },
   { file: 'hotels/madinah-hotels.jpg',  id: 33169796, ...FEATURE, alt: 'Al-Masjid an-Nabawi in Madinah' },
   { file: 'hotels/dubai-hotels.jpg',    id: 31033420, ...FEATURE, alt: 'Aerial view of Dubai Marina with its skyline and towers' },
   { file: 'hotels/istanbul-hotels.jpg', id: 7487202,  ...FEATURE, alt: 'Hagia Sophia in Istanbul in warm evening light' },

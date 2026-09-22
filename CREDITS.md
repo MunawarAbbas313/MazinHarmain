@@ -8,7 +8,7 @@ Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
 - Images: **79**
-- Total weight: **21777 KB**
+- Total weight: **21507 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -96,7 +96,7 @@ npm run images -- --force           # everything
 | `hotels/istanbul-hotels.jpg` | 1600×1200 | 373 KB | [#7487202](https://www.pexels.com/photo/7487202/) |
 | `hotels/london-hotels.jpg` | 1600×1200 | 253 KB | [#31147777](https://www.pexels.com/photo/31147777/) |
 | `hotels/madinah-hotels.jpg` | 1600×1200 | 169 KB | [#33169796](https://www.pexels.com/photo/33169796/) |
-| `hotels/makkah-hotels.jpg` | 1600×1200 | 548 KB | [#38546878](https://www.pexels.com/photo/38546878/) |
+| `hotels/makkah-hotels.jpg` | 1600×1200 | 277 KB | [#36861231](https://www.pexels.com/photo/36861231/) |
 | `hotels/worldwide-hotels.jpg` | 1600×1200 | 275 KB | [#695193](https://www.pexels.com/photo/695193/) |
 | `search-backdrop-2560.jpg` | 2560×1440 | 335 KB | [#23508916](https://www.pexels.com/photo/23508916/) |
 | `search-backdrop.jpg` | 1600×900 | 102 KB | [#23508916](https://www.pexels.com/photo/23508916/) |

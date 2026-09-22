@@ -144,15 +144,15 @@
   },
   "hotels/makkah-hotels.jpg": {
     "source": "Pexels",
-    "photo_id": 38546878,
-    "source_page": "https://www.pexels.com/photo/38546878/",
+    "photo_id": 36861231,
+    "source_page": "https://www.pexels.com/photo/36861231/",
     "license": "Pexels License",
     "license_url": "https://www.pexels.com/license/",
     "attribution_required": false,
-    "alt": "Masjid al-Haram in Makkah seen from the air at sunset",
+    "alt": "Masjid al-Haram at night with the Abraj Al Bait towers behind it",
     "width": 1600,
     "height": 1200,
-    "bytes": 560872,
+    "bytes": 283991,
     "mode": "curated"
   },
   "hotels/madinah-hotels.jpg": {
