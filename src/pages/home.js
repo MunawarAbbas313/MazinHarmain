@@ -35,6 +35,20 @@ const { visaFlagCodes, destinationFlagCodes, flagImg } = require('../data/flags'
 
 const WA_HERO = 'Assalam o Alaikum, I would like to speak to a travel expert about my journey.';
 
+/* The hero rotation after the opening frame. The client asked the home page
+   to stop leading on the Kaaba — the agency sells worldwide and one
+   religious image said otherwise. Makkah and Madinah photography still
+   carries the Umrah sections further down this page, so that side of the
+   business keeps its place; it is simply no longer the only first
+   impression. These are decorative variations on the opening frame, which
+   is why they carry an empty alt rather than four competing descriptions. */
+const HERO_SLIDES = [
+  '/assets/img/hero-dubai.jpg',
+  '/assets/img/hero-istanbul.jpg',
+  '/assets/img/hero-europe.jpg',
+  '/assets/img/hero-maldives.jpg',
+];
+
 /** Photo with the branded placeholder as an automatic fallback. */
 function photo(src, alt, { w = 1200, h = 900, eager = false } = {}) {
   return `<img src="${attr(src)}" alt="${attr(alt)}" width="${w}" height="${h}" ` +
@@ -53,16 +67,23 @@ function hero() {
 
   return `
   <section class="hero">
-    <div class="hero__media">
-      <img src="/assets/img/hero-kaaba-1600.jpg"
-           srcset="/assets/img/hero-kaaba-768.jpg 768w,
-                   /assets/img/hero-kaaba-1200.jpg 1200w,
-                   /assets/img/hero-kaaba-1600.jpg 1600w,
-                   /assets/img/hero-kaaba.jpg 1920w"
+    <div class="hero__media" data-hero-slides>
+      ${/* Slide one is the LCP candidate, so it alone carries the srcset and
+            loads eagerly. The rest have no src at all: they sit inside the
+            viewport, where loading="lazy" would not have deferred them, so
+            main.js attaches them once the page has finished loading. With
+            JavaScript off this stays a single static hero. */ ''}
+      <img class="hero__slide is-active"
+           src="/assets/img/hero-flight-1600.jpg"
+           srcset="/assets/img/hero-flight-768.jpg 768w,
+                   /assets/img/hero-flight-1200.jpg 1200w,
+                   /assets/img/hero-flight-1600.jpg 1600w,
+                   /assets/img/hero-flight.jpg 1920w"
            sizes="100vw"
-           alt="Pilgrims performing tawaf around the Kaaba at Masjid al-Haram in Makkah"
+           alt="An airliner silhouetted against a sunset sky"
            width="1600" height="900" loading="eager" fetchpriority="high" decoding="async"
            onerror="this.onerror=null;this.srcset='';this.src='/assets/img/placeholder.svg'">
+${each(HERO_SLIDES, (h) => `      <img class="hero__slide" data-src="${attr(h)}" alt="" width="1600" height="900" decoding="async" aria-hidden="true">`)}
     </div>
     <div class="container">
       <div class="hero__inner">
@@ -263,6 +284,36 @@ function corporateSection() {
   </section>`;
 }
 
+/* ------------------------------------------------------- 7b. MyCab (cars) */
+/* The sister company: same building, same landline (see site.partner for
+   why that framing is accurate rather than promotional). Presented as part
+   of what the two businesses offer together. */
+function carRentalSection() {
+  const p = site.partner;
+  return `
+  <section class="section section--cream">
+    <div class="container">
+      ${c.sectionHead({ eyebrow: 'Car Rental', title: 'Getting Around, Handled Too', center: true })}
+      <div class="split" style="margin-top:var(--sp-8);align-items:center">
+        <div>
+          <p>${esc(p.blurb)}</p>
+          <p style="font-size:var(--fs-sm);color:var(--muted)">${esc(p.name)} works out of this same office in Safdar Mansion and answers the same landline, so a car and a driver can be added to anything we book for you &mdash; one call, one point of contact.</p>
+          <ul class="tick-list tick-list--gold" style="margin-top:var(--sp-5)">
+            ${each(p.fleet, (f) => `<li><strong>${esc(f.tier)}</strong> &mdash; ${esc(f.cars)}</li>`)}
+          </ul>
+          <div class="btn-row" style="margin-top:var(--sp-6)">
+            <a class="btn btn--gold" href="/services/car-rental/">Car Rental Details ${icon('arrowRight', { size: 15 })}</a>
+            <a class="btn btn--outline" href="${attr(p.url)}" target="_blank" rel="noopener">Visit ${esc(p.shortName)} ${icon('globe', { size: 15 })}</a>
+          </div>
+        </div>
+        <div>
+          ${photo('/assets/img/car-rental.jpg', 'A white Range Rover parked on a driveway')}
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
 /* -------------------------------------------------------------- 8. Why us */
 function whySection() {
   const features = [
@@ -454,6 +505,7 @@ function render() {
     visaSection(),
     destinationsSection(),
     corporateSection(),
+    carRentalSection(),
     whySection(),
     trustSection(),
     reviewsSection(),

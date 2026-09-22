@@ -944,7 +944,59 @@
   })();
 
   /* ======================================================================
-     8. Current year (footer fallback)
+     8. Rotating hero
+     ----------------------------------------------------------------------
+     The opening frame ships in the HTML with its srcset and is the LCP
+     candidate. The remaining frames carry only data-src, because they sit
+     inside the viewport where loading="lazy" defers nothing — so they are
+     attached once the page has finished loading and never compete with
+     first paint. Without JavaScript the hero stays a single static image.
+     ====================================================================== */
+  (function heroSlides() {
+    var stage = $('[data-hero-slides]');
+    if (!stage) return;
+
+    var slides = $$('.hero__slide', stage);
+    if (slides.length < 2) return;
+
+    /* Honour a reduced-motion preference by not rotating at all — which
+       also means the extra frames are never downloaded. */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    function hydrate() {
+      slides.forEach(function (img) {
+        var src = img.getAttribute('data-src');
+        if (!src) return;
+        img.src = src;
+        img.removeAttribute('data-src');
+      });
+    }
+    if (document.readyState === 'complete') hydrate();
+    else window.addEventListener('load', hydrate);
+
+    var HOLD = 5000;
+    var at = 0;
+    var timer = null;
+
+    function show(next) {
+      slides[at].classList.remove('is-active');
+      at = (next + slides.length) % slides.length;
+      slides[at].classList.add('is-active');
+    }
+
+    function start() { if (!timer) timer = window.setInterval(function () { show(at + 1); }, HOLD); }
+    function stop() { if (timer) { window.clearInterval(timer); timer = null; } }
+
+    /* No point animating a tab nobody is looking at. */
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { stop(); } else { start(); }
+    });
+
+    start();
+  })();
+
+  /* ======================================================================
+     9. Current year (footer fallback)
      ====================================================================== */
   $$('[data-year]').forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
 })();

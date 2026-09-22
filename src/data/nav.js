@@ -23,6 +23,7 @@ const nav = [
       { label: 'Corporate Travel', url: '/corporate-travel/' },
       { label: 'Travel Insurance', url: '/services/travel-insurance/' },
       { label: 'Airport Transfers', url: '/services/airport-transfers/' },
+      { label: 'Car Rental', url: '/services/car-rental/' },
     ],
   },
   {
@@ -111,6 +112,7 @@ const footerNav = {
       { label: 'Corporate Travel', url: '/corporate-travel/' },
       { label: 'Travel Insurance', url: '/services/travel-insurance/' },
       { label: 'Airport Transfers', url: '/services/airport-transfers/' },
+      { label: 'Car Rental', url: '/services/car-rental/' },
     ],
   },
   company: {

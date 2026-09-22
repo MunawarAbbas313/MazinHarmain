@@ -86,6 +86,32 @@ const site = {
      to a pre-filled WhatsApp message + mailto so no lead is ever lost.       */
   formEndpoint: '',
 
+  /* ---- Sister company ----------------------------------------------------
+     MyCab Pakistan runs the vehicles. Not an arm's-length advertiser: their
+     published address is this same office (Safdar Mansion, 2nd floor) and
+     they share the 051-8465006-7 landline, under GH Group. The site
+     cross-refers to them the way the two businesses already work together.
+     Verified against mycabpakistan.com, September 2026.                     */
+  partner: {
+    name: 'MyCab Pakistan',
+    shortName: 'MyCab',
+    url: 'https://mycabpakistan.com/',
+    tagline: 'Rent a car with a driver, across Pakistan.',
+    uan: { label: '0311-111-2234', tel: '+923111112234' },
+    email: 'mycabpakistan@gmail.com',
+    blurb:
+      'Dedicated vehicles with a driver — airport pickups, city meetings, ' +
+      'wedding cars and the northern-areas run. Not a ride-hailing app: one ' +
+      'car, one driver, for as long as you need it.',
+    fleet: [
+      { tier: 'Economy', cars: 'Suzuki Alto, Toyota Vitz, Daihatsu Move' },
+      { tier: 'Sedan', cars: 'Toyota Corolla, Honda City, Toyota Yaris, Suzuki Swift' },
+      { tier: 'SUV', cars: 'Honda BR-V, Kia Sportage, Toyota Revo' },
+      { tier: 'Vans & coaches', cars: 'Toyota Hiace (14 seats), Toyota Coaster (29 seats)' },
+      { tier: 'VIP', cars: 'Land Cruiser Prado and LC300, Audi A8, Mercedes-Benz S-Class' },
+    ],
+  },
+
   /* ---- Who built the site (rendered in the footer) ---------------------- */
   builtBy: {
     name: 'DataX Technologies',

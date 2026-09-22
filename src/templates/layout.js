@@ -218,6 +218,14 @@ function footer() {
     </p>
   </div>
   <div class="container">
+    ${/* The sister company, same building and same landline — see
+          site.partner. A line rather than a banner: it belongs here
+          because the two businesses genuinely operate together. */ ''}
+    ${site.partner ? `<p class="footer__partner">
+      Need a car and a driver? <strong>${esc(site.partner.name)}</strong> shares our office &mdash;
+      <a href="/services/car-rental/">car rental details</a>
+      or visit <a href="${attr(site.partner.url)}" target="_blank" rel="noopener">mycabpakistan.com</a>.
+    </p>` : ''}
     <div class="footer__bottom">
       <span>&copy; ${year} ${esc(site.name)}. All rights reserved.</span>
       <span class="footer__legal">

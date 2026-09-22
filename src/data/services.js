@@ -329,6 +329,78 @@ const services = [
     related: ['/umrah-packages/', '/services/ziyarat-tours/', '/hotels/', '/destinations/dubai/'],
   },
 
+  {
+    /* Car rental is delivered by MyCab Pakistan, the sister company in this
+       same building (see site.partner). The page says so plainly rather than
+       implying Mazin Haramain runs a fleet of its own. */
+    slug: 'car-rental',
+    heroImage: '/assets/img/car-rental.jpg',
+    heroImageAlt: 'A white Range Rover parked on a driveway',
+    url: '/services/car-rental/',
+    icon: 'car',
+    title: 'Car Rental',
+    blurb: 'Rent a car with a driver — airport runs, city meetings, weddings and the northern areas, through our sister company MyCab.',
+    h1: 'Car Rental With a Driver, in Islamabad and Across Pakistan',
+    metaTitle: 'Rent a Car With Driver in Islamabad | Car Rental — Mazin Haramain',
+    metaDescription:
+      'Car rental with a driver in Islamabad and across Pakistan — airport transfers, city meetings, wedding cars, northern-areas tours. Economy to Land Cruiser and Mercedes, arranged with MyCab Pakistan.',
+    lead: 'A car on its own is rarely what you need. A car, a driver who knows the route, and a phone number that answers — that is the whole job.',
+    intro: [
+      'Car rental in Pakistan is almost always rental <em>with</em> a driver, and that is deliberate. Road conditions, city traffic and the mountain routes north all reward someone who drives them every week, and the cost difference against self-drive is small enough that very few visitors choose otherwise.',
+      'The vehicles come from <strong>MyCab Pakistan</strong>, which operates from this same office in Safdar Mansion and answers the same landline. That is the practical point of mentioning them at all: a car can be attached to a booking we are already making for you, and one conversation covers both.',
+      'Airport pickups are the most common request — a driver in arrivals, tracking the flight, with the luggage space actually booked rather than hoped for. After that it is city meetings, wedding cars, and the Islamabad-to-Hunza or Skardu run, where the vehicle class matters far more than most people expect.',
+    ],
+    features: [
+      { icon: 'plane', title: 'Airport Transfers', text: 'Islamabad International in both directions, with the flight tracked and waiting time allowed for.' },
+      { icon: 'briefcase', title: 'Corporate & Executive', text: 'Daily or monthly hire for visiting staff and delegations, billed to the company.' },
+      { icon: 'heart', title: 'Wedding Cars', text: 'Presentation vehicles for the baraat and walima, booked for the day rather than the hour.' },
+      { icon: 'compass', title: 'Northern Areas', text: 'Murree, Naran, Hunza, Skardu and Swat — on vehicles chosen for the road, not just the price.' },
+      { icon: 'users', title: 'Groups & Coaches', text: 'Hiace at 14 seats and Coaster at 29 for families, tour groups and ziyarat parties.' },
+      { icon: 'award', title: 'VIP Class', text: 'Land Cruiser Prado and LC300, Audi A8 and Mercedes-Benz S-Class where the occasion calls for it.' },
+    ],
+    includes: [
+      'A professional driver on every booking',
+      'Fuel arrangement agreed and stated in writing before travel',
+      'Unlimited mileage on standard city rentals',
+      'Vehicle insurance in place',
+      'Airport meet-and-greet on arrival transfers',
+      'Intercity and interior-Pakistan routes quoted per trip',
+      'Multi-day hire for tours and business visits',
+      'One point of contact for the car and the rest of your travel',
+    ],
+    notice:
+      'Vehicles are supplied and operated by MyCab Pakistan, a separate company at the same address. Rental terms, security deposits and insurance conditions are theirs, and we will put you in direct contact with them before anything is confirmed.',
+    process: [
+      { title: 'Tell Us the Journey', text: 'Dates, pickup point, how many passengers and how much luggage. For the north, the destination decides the vehicle.' },
+      { title: 'Choose the Vehicle Class', text: 'We come back with what is available in your dates and what each class actually costs, fuel policy included.' },
+      { title: 'Confirm in Writing', text: 'Vehicle class, driver, timings and the total. Nothing is charged before you have seen it.' },
+      { title: 'Driver Meets You', text: 'Contact details are shared ahead of the pickup, and the office line stays open while you travel.' },
+    ],
+    faqs: [
+      {
+        q: 'Can I rent a car without a driver in Pakistan?',
+        a: '<p>Self-drive is possible but uncommon, and the conditions are stricter: a larger security deposit, a longer list of documents, and restrictions on where the vehicle may be taken. For visitors in particular, hire with a driver is usually cheaper once the deposit and the risk are counted, and considerably less stressful in city traffic. Tell us which you want and we will quote both.</p>',
+      },
+      {
+        q: 'Is the driver included in the price?',
+        a: '<p>Yes. Quoted rates are for the vehicle with a driver. What varies is the fuel policy and whether the driver\'s meals and overnight accommodation are included on multi-day trips outside the city — both are stated explicitly in your written quote rather than left to be settled on the road.</p>',
+      },
+      {
+        q: 'Which vehicle do I need for Hunza or Skardu?',
+        a: '<p>For the Karakoram Highway to Hunza a good sedan is usually adequate in season, but for Skardu, Deosai or anything off the main highway a Revo or a Prado is the sensible choice, and in winter it is not really optional. We would rather tell you that before you book than have you discover it on a mountain road.</p>',
+      },
+      {
+        q: 'Can a car be added to my Umrah or tour booking?',
+        a: '<p>In Pakistan, yes — airport transfers at either end, and onward travel to your departure city. Inside Saudi Arabia transport is arranged separately as part of the Umrah package itself, with Makkah and Madinah transfers and ziyarat covered there.</p>',
+      },
+      {
+        q: 'How far in advance should I book?',
+        a: '<p>A day or two is usually enough for a city car or an airport pickup. Wedding season and the summer window for the northern areas are the exceptions — presentation vehicles and the larger SUVs go early, and in June and July the good Prados are often committed weeks ahead.</p>',
+      },
+    ],
+    related: ['/services/airport-transfers/', '/destinations/', '/corporate-travel/', '/services/ziyarat-tours/'],
+  },
+
   /* ---- Hub cards: full sections live under their own URL trees --------- */
   {
     slug: 'umrah-packages', url: '/umrah-packages/', icon: 'kaaba', hub: true,
@@ -336,7 +408,7 @@ const services = [
   },
   {
     slug: 'visa-services', url: '/visa-services/', icon: 'passport', hub: true,
-    title: 'Visa Services', blurb: 'Visit, Tourist, Student & Work',
+    title: 'Visa Services', blurb: 'Visit, Tourist & Business',
   },
   {
     slug: 'hotel-reservations', url: '/hotels/', icon: 'hotel', hub: true,

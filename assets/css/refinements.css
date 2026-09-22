@@ -101,9 +101,25 @@ button, input, select, textarea { font: inherit; }
 .hero { position: relative; background: var(--green-900); isolation: isolate; }
 .hero__media { position: absolute; inset: 0; z-index: -2; }
 .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 46%; }
+
+/* Rotating hero. Every frame is stacked in the same place and cross-fades;
+   only the active one is opaque. The frames sit below the gradient overlay,
+   which is what keeps the headline readable over any of them. */
+.hero__slide {
+  position: absolute; inset: 0; z-index: 1;
+  opacity: 0;
+  transition: opacity 1.1s var(--ease);
+}
+.hero__slide.is-active { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* main.js does not rotate either, so the opening frame simply stays. */
+  .hero__slide { transition: none; }
+}
+
 .hero__media::after {
   content: '';
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 2;
   background:
     linear-gradient(96deg,
       rgba(5, 32, 25, .97) 0%,
@@ -1412,3 +1428,16 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 @media print {
   .assure { display: none !important; }
 }
+
+/* Sister-company line in the footer. Deliberately typographic rather than a
+   banner: MyCab shares this office, so it reads as information. */
+.footer__partner {
+  margin: 0 0 var(--sp-4);
+  padding-top: var(--sp-4);
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  font-size: var(--fs-sm);
+  color: #b9cdc3;
+}
+.footer__partner strong { color: var(--gold-400); font-weight: 600; }
+.footer__partner a { color: #dcebe4; text-decoration: underline; text-underline-offset: 2px; }
+.footer__partner a:hover { color: #fff; }

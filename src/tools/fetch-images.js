@@ -57,6 +57,30 @@ const CURATED = [
   { file: 'hero-umrah.jpg',       id: 4118058,  ...WIDE, alt: 'Pilgrims gathered around the Kaaba at night during Umrah' },
   { file: 'visa-services.jpg',    id: 7235894,  ...CARD, alt: 'A passport, compass and travel planner laid out on a world map' },
 
+  /* ---- Home hero rotation ------------------------------------------------
+     The client asked the home page to stop leading on the Kaaba: the agency
+     sells worldwide and a single religious image said otherwise. These five
+     rotate instead. Makkah and Madinah photography still carries the Umrah
+     sections further down the page, so that side of the business is not
+     hidden — just no longer the only first impression.
+
+     Curated rather than searched because Pexels now answers its search
+     pages with HTTP 403; the photo CDN still serves fine. Listing the same
+     id at four sizes is how hero-kaaba already builds its srcset, and it
+     guarantees every size is the same photograph.
+     -------------------------------------------------------------------- */
+  { file: 'hero-flight.jpg',      id: 1911388, ...HERO,           alt: 'An airliner silhouetted against a sunset sky' },
+  { file: 'hero-flight-768.jpg',  id: 1911388, w: 768,  h: 432,   alt: 'An airliner silhouetted against a sunset sky' },
+  { file: 'hero-flight-1200.jpg', id: 1911388, w: 1200, h: 675,   alt: 'An airliner silhouetted against a sunset sky' },
+  { file: 'hero-flight-1600.jpg', id: 1911388, w: 1600, h: 900,   alt: 'An airliner silhouetted against a sunset sky' },
+  { file: 'hero-dubai.jpg',       id: 17865557, ...WIDE, alt: 'The Dubai skyline with the Burj Khalifa, United Arab Emirates' },
+  { file: 'hero-istanbul.jpg',    id: 18165242, ...WIDE, alt: 'Istanbul seen from above the Bosphorus' },
+  { file: 'hero-europe.jpg',      id: 11279691, ...WIDE, alt: 'The Grand Canal in Venice, Italy' },
+  { file: 'hero-maldives.jpg',    id: 28843924, ...WIDE, alt: 'An island resort with overwater villas in the Maldives' },
+
+  /* Car rental, for the MyCab sister-company section and its service page. */
+  { file: 'car-rental.jpg',       id: 116675,   ...CARD, alt: 'A white Range Rover parked on a driveway' },
+
   { file: 'destinations/turkey.jpg',         id: 13337127, ...CARD, alt: 'The Blue Mosque silhouetted against a sunset in Istanbul, Turkey' },
   { file: 'destinations/azerbaijan.jpg',     id: 17857195, ...CARD, alt: 'The Flame Towers and Baku cityscape at sunset, Azerbaijan' },
   { file: 'destinations/dubai.jpg',          id: 17865557, ...CARD, alt: 'Aerial view of the Dubai skyline with the Burj Khalifa' },
@@ -372,6 +396,31 @@ async function main() {
         };
         console.log(`ok  ${w}x${h}  ${(buf.length / 1024).toFixed(0)}KB  "${cand.alt.slice(0, 30)}"`);
         got++; done = true;
+
+        /* Other sizes are cut from the SAME photo. A responsive srcset must
+           not be four different pictures, which is what four independent
+           searches would give us. */
+        for (const v of t.variants || []) {
+          const vDest = path.join(IMG, v.file);
+          if (!FORCE && fs.existsSync(vDest)) { skipped++; continue; }
+          process.stdout.write(`  ${v.file.padEnd(52)}`);
+          try {
+            const r = await download(cand.id, { ...t, w: v.w, h: v.h });
+            fs.mkdirSync(path.dirname(vDest), { recursive: true });
+            fs.writeFileSync(vDest, r.buf);
+            credits[v.file] = {
+              ...credits[t.file],
+              width: r.w, height: r.h, bytes: r.buf.length, mode: 'search-variant',
+              variant_of: t.file,
+            };
+            console.log(`ok  ${r.w}x${r.h}  ${(r.buf.length / 1024).toFixed(0)}KB`);
+            got++;
+          } catch (e) {
+            console.log(`FAILED (${e.message})`);
+            failed.push(v.file);
+          }
+          await sleep(300);
+        }
         break;
       } catch (e) { /* next candidate */ }
       await sleep(250);
