@@ -108,7 +108,7 @@ const site = {
     { key: 'secp', name: 'SECP', seal: 'SECP', sub: 'Registered', icon: 'building', ref: '' },
     { key: 'fbr', name: 'FBR', seal: 'FBR', sub: 'Registered', icon: 'doc', ref: '' },
     { key: 'dts', name: 'DTS', seal: 'DTS', sub: 'Licensed', icon: 'certificate', ref: '' },
-    { key: 'iata', name: 'IATA', seal: 'IATA', sub: 'Accredited', icon: 'ticket', ref: '' },
+    { key: 'iata', name: 'IATA', seal: 'IATA', sub: 'Ground Handling Partner', icon: 'ticket', ref: '' },
     { key: 'mora', name: 'MORA', seal: 'MORA', sub: 'Approved', icon: 'kaaba', ref: '' },
     /* Not an accreditation, so it keeps a glyph rather than pretending to a
        seal it was never issued. */

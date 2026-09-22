@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Mazin Haramain">
+  <title>Mazin Haramain</title>
+  <!--
+    The small-size mark: browser tabs, 16 and 32px.
+
+    logo-icon.svg carries the badge rim, the flight arc, the aeroplane, the
+    photographic globe and both letters. That is the right amount of detail
+    at 180px and up; at 16px it turns to mush, which is exactly what the
+    client reported seeing in the tab.
+
+    So this is a separate cut with everything removed that cannot survive the
+    size: no rim, no arc, no aeroplane, and the globe reduced to a solid disc.
+    What is left is the M-globe-H the brand is actually known by, set as large
+    as the square allows.
+
+    Used for favicon-16/32/48 and favicon.ico. The fuller logo-icon.svg still
+    drives apple-touch-icon and the 192/512 app icons, where the detail reads.
+  -->
+  <defs>
+    <linearGradient id="fv-gold" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#f3e2b4"/>
+      <stop offset="0.5" stop-color="#dcb45f"/>
+      <stop offset="1" stop-color="#c08f2c"/>
+    </linearGradient>
+    <linearGradient id="fv-green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#12694c"/>
+      <stop offset="1" stop-color="#06371f"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="120" height="120" rx="22" fill="url(#fv-green)"/>
+
+  <!--
+    Spacing is set rather than eyeballed. M occupies 7-47, the globe 51-73 and
+    H 77-113, which leaves a 4px gutter either side of the globe and centres
+    the group in the square. At the first attempt the letters overlapped the
+    disc and the three shapes fused into one blob at 16px.
+  -->
+  <g font-family="'Playfair Display', 'Georgia', 'Times New Roman', serif"
+     font-weight="700" font-size="76" fill="url(#fv-gold)">
+    <text x="7" y="86" textLength="40" lengthAdjust="spacingAndGlyphs">M</text>
+    <text x="77" y="86" textLength="36" lengthAdjust="spacingAndGlyphs">H</text>
+  </g>
+
+  <!--
+    The globe, reduced to a disc and one cross-hair. Wrapped in its own group
+    because the 16px render strips it: at that size the disc is three pixels
+    across and the M, globe and H fuse into a single blob. The generator in
+    make-icons removes this group for 16px and keeps it for 32 and 48.
+  -->
+  <g id="fv-globe">
+    <circle cx="62" cy="62" r="11" fill="url(#fv-gold)"/>
+    <circle cx="62" cy="62" r="11" fill="none" stroke="#06371f" stroke-width="2"/>
+    <path d="M62 51v22M51 62h22" stroke="#06371f" stroke-width="1.7" stroke-linecap="round" opacity="0.5"/>
+  </g>
+</svg>

@@ -366,7 +366,8 @@ function run() {
   /* Fallback when no .ico has been generated: prefer the real square mark
      over the built-in placeholder, which is a different logo entirely. */
   else {
-    const markSvg = path.join(ASSETS, 'img', 'logo-icon.svg');
+    /* The stripped tab cut, not the detailed square — this is the favicon. */
+    const markSvg = path.join(ASSETS, 'img', 'logo-favicon.svg');
     fs.writeFileSync(
       path.join(DIST, 'favicon.svg'),
       fs.existsSync(markSvg) ? fs.readFileSync(markSvg, 'utf8') : FAVICON,

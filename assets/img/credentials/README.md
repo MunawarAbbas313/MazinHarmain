@@ -16,23 +16,24 @@ from `site.credentials` in `src/data/site.js`.
 
 ## What is here
 
-    fbr.png    Federal Board of Revenue — the official lockup, downloaded
-               September 2026 from
-               download1.fbr.gov.pk/MediaManager/english/images/FBR-Logo.png
-               and trimmed. 532x74, transparent.
+All five regulator marks are installed. The client supplied SECP, DTS and
+IATA directly; FBR and MORA were obtainable from the official sources.
 
-The other four are still outstanding, and not for want of trying:
+    secp.png   Seal of the Registrar of Companies — supplied by the client
+    fbr.png    Federal Board of Revenue — download1.fbr.gov.pk, trimmed
+    dts.png    Department of Tourist Services — supplied by the client
+    iata.png   IATA Ground Handling Partner — supplied by the client, masked
+               to its circle because it arrived on a black square and the
+               strip puts it on a white plate
+    mora.png   State Emblem of Pakistan, as the Ministry of Religious Affairs
+               uses it — mora.gov.pk/SiteImage/Setting/GoP.png
 
-    SECP   secp.gov.pk serves its HTML but answers 403 to a direct request
-           for the logo asset. Deliberate hotlink protection.
-    MORA   no logo in the markup at mora.gov.pk.
-    DTS    tourism.gov.pk publishes a "Salam Pakistan" tourism brand, not a
-           Department of Tourist Services mark.
-    IATA   iata.org exposes only a white "IATA Airlines" footer variant, not
-           the accreditation mark an agent is issued.
+Hotel Partners keeps a glyph on purpose: it is a partnership rather than an
+accreditation, and it should not dress as a seal it was never issued.
 
-Each of those should be in the client's own registration pack, which is the
-right source anyway — it is the copy they were licensed to display.
+Note the IATA artwork reads "Ground Handling Partner", which is a different
+credential from IATA Accredited Agent. The label under it was changed to
+match the badge rather than the other way round.
 
 ## Why these are not already here
 

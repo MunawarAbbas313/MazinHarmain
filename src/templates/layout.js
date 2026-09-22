@@ -491,6 +491,7 @@ function layout(p) {
 
   <!-- Icons -->
   <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="${asset('/assets/img/favicon-16.png')}" type="image/png" sizes="16x16">
   <link rel="icon" href="${asset('/assets/img/favicon-32.png')}" type="image/png" sizes="32x32">
   <link rel="icon" href="${asset('/assets/img/favicon-48.png')}" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="${asset('/assets/img/apple-touch-icon.png')}">
