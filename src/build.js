@@ -131,16 +131,46 @@ const htmlDecode = (s) =>
     .replace(/&gt;/g, '>')
     .replace(/&amp;/g, '&');
 
+/* Site furniture, not page content. The header logo is the first <img> on
+   every page, so without this the logo was the image every page offered to
+   image search ahead of its own photographs. */
+const NOT_CONTENT = /\/(?:logo-|favicon|icon-|apple-touch|og-default|footer-skyline)|\/(?:flags|credentials)\//;
+
 function imagesIn(html) {
   const found = new Map();
   for (const tag of html.match(/<img\b[^>]*>/g) || []) {
-    const src = (tag.match(/\bsrc="([^"]+)"/) || [])[1];
+    let src = (tag.match(/\bsrc="([^"]+)"/) || [])[1];
     if (!src || !src.startsWith('/assets/img/')) continue;
     if (src.endsWith('.svg')) continue;            // placeholders and icons
+    /* The cache-busting hash belongs on the page, not in the sitemap. The
+       plain path serves the same bytes and does not change every time the
+       photograph behind it does, so the indexed URL stays stable. */
+    src = src.replace(/\?v=[a-f0-9]+$/, '');
+    if (NOT_CONTENT.test(src)) continue;
     const alt = htmlDecode((tag.match(/\balt="([^"]*)"/) || [])[1] || '');
     if (!found.has(src)) found.set(src, alt);
   }
   return [...found.entries()].slice(0, 8);          // Google reads plenty; 8 is ample
+}
+
+/* The hreflang set, lifted from the page's own head.
+
+   The page objects carry only url/html/priority/changefreq — the language
+   pairing lives inside the layout, so asking every template to repeat it here
+   would be one more thing to forget. Reading the head means any page the
+   layout marks up is paired automatically.
+
+   Only a real pair is worth declaring: a page with no translation emits an
+   en-pk and an x-default that both point at itself, and saying that in the
+   sitemap is noise. */
+function hreflangsIn(html) {
+  const links = [];
+  for (const tag of html.match(/<link\b[^>]*rel="alternate"[^>]*>/g) || []) {
+    const lang = (tag.match(/\bhreflang="([^"]+)"/) || [])[1];
+    const href = (tag.match(/\bhref="([^"]+)"/) || [])[1];
+    if (lang && href) links.push({ lang, href });
+  }
+  return links.some((l) => l.lang === 'ur-pk') ? links : [];
 }
 
 function buildSitemap(pages) {
@@ -151,8 +181,11 @@ function buildSitemap(pages) {
     .map((p) => {
       const file = outputPathFor(p);
       let images = [];
+      let alternates = [];
       try {
-        images = imagesIn(fs.readFileSync(file, 'utf8'));
+        const html = fs.readFileSync(file, 'utf8');
+        images = imagesIn(html);
+        alternates = hreflangsIn(html);
       } catch (_) { /* page not written yet */ }
 
       const imageTags = images
@@ -165,18 +198,24 @@ function buildSitemap(pages) {
         )
         .join('');
 
+      const altTags = alternates
+        .map((a) => `
+    <xhtml:link rel="alternate" hreflang="${xmlEscape(a.lang)}" href="${xmlEscape(a.href)}"/>`)
+        .join('');
+
       return `  <url>
     <loc>${site.url}${p.url}</loc>
     <lastmod>${p.lastmod || today}</lastmod>
     <changefreq>${p.changefreq || 'monthly'}</changefreq>
-    <priority>${p.priority || '0.7'}</priority>${imageTags}
+    <priority>${p.priority || '0.7'}</priority>${altTags}${imageTags}
   </url>`;
     })
     .join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls}
 </urlset>
 `;
