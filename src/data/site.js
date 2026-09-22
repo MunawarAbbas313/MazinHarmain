@@ -101,13 +101,17 @@ const site = {
      more than any logo: a number can be checked against the registry,
      which is what a cautious customer actually wants.                       */
   credentials: [
-    { key: 'secp', name: 'SECP', sub: 'Registered', icon: 'building', ref: '' },
-    /* Distinct from DTS below: two credentials sharing one glyph is what
-       made the row read as clip-art. */
-    { key: 'fbr', name: 'FBR', sub: 'Registered', icon: 'doc', ref: '' },
-    { key: 'dts', name: 'DTS', sub: 'Licensed', icon: 'certificate', ref: '' },
-    { key: 'iata', name: 'IATA', sub: 'Accredited', icon: 'ticket', ref: '' },
-    { key: 'mora', name: 'MORA', sub: 'Approved', icon: 'kaaba', ref: '' },
+    /* `seal` is what shows inside the medallion. A typeset acronym is what a
+       real accreditation badge looks like; a generic glyph is what clip-art
+       looks like, which is what the client objected to. Where a genuine
+       logo file exists it replaces the medallion entirely. */
+    { key: 'secp', name: 'SECP', seal: 'SECP', sub: 'Registered', icon: 'building', ref: '' },
+    { key: 'fbr', name: 'FBR', seal: 'FBR', sub: 'Registered', icon: 'doc', ref: '' },
+    { key: 'dts', name: 'DTS', seal: 'DTS', sub: 'Licensed', icon: 'certificate', ref: '' },
+    { key: 'iata', name: 'IATA', seal: 'IATA', sub: 'Accredited', icon: 'ticket', ref: '' },
+    { key: 'mora', name: 'MORA', seal: 'MORA', sub: 'Approved', icon: 'kaaba', ref: '' },
+    /* Not an accreditation, so it keeps a glyph rather than pretending to a
+       seal it was never issued. */
     { key: 'hotel-partners', name: 'Hotel Partners', sub: 'Makkah & Madinah', icon: 'bed', ref: '' },
   ],
 

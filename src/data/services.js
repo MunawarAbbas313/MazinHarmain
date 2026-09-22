@@ -335,7 +335,7 @@ const services = [
        implying Mazin Haramain runs a fleet of its own. */
     slug: 'car-rental',
     heroImage: '/assets/img/car-rental.jpg',
-    heroImageAlt: 'A white Range Rover parked on a driveway',
+    heroImageAlt: 'A black Range Rover Sport photographed at dusk',
     url: '/services/car-rental/',
     icon: 'car',
     title: 'Car Rental',

@@ -91,13 +91,13 @@ const CURATED = [
   { file: 'hero-maldives-2560.jpg', id: 28843924, ...HERO_2X, alt: 'An island resort with overwater villas in the Maldives' },
 
   /* Service card photography, at FEATURE size so the cards stay sharp. */
-  { file: 'services/air-ticketing.jpg', id: 10062411, ...FEATURE, alt: 'An aircraft parked at an airport gate, seen through the terminal window' },
+  { file: 'services/air-ticketing.jpg', id: 32649171, ...FEATURE, alt: 'An airliner cabin with soft daylight through the windows' },
   { file: 'services/attestation.jpg',   id: 7654118, ...FEATURE, alt: 'A clerk stamping documents at an office desk' },
   { file: 'services/apostille.jpg',     id: 9858904, ...FEATURE, alt: 'A stamp resting on a legal document' },
   { file: 'services/power-of-attorney.jpg', id: 8730998, ...FEATURE, alt: 'A person signing legal documents at a desk' },
 
   /* Car rental, for the MyCab sister-company section and its service page. */
-  { file: 'car-rental.jpg',       id: 116675,   ...FEATURE, alt: 'A white Range Rover parked on a driveway' },
+  { file: 'car-rental.jpg',       id: 17571484, ...FEATURE, alt: 'A black Range Rover Sport photographed at dusk' },
 
   { file: 'destinations/turkey.jpg',         id: 13337127, ...CARD, alt: 'The Blue Mosque silhouetted against a sunset in Istanbul, Turkey' },
   { file: 'destinations/azerbaijan.jpg',     id: 17857195, ...CARD, alt: 'The Flame Towers and Baku cityscape at sunset, Azerbaijan' },

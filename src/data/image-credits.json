@@ -638,15 +638,15 @@
   },
   "car-rental.jpg": {
     "source": "Pexels",
-    "photo_id": 116675,
-    "source_page": "https://www.pexels.com/photo/116675/",
+    "photo_id": 17571484,
+    "source_page": "https://www.pexels.com/photo/17571484/",
     "license": "Pexels License",
     "license_url": "https://www.pexels.com/license/",
     "attribution_required": false,
-    "alt": "A white Range Rover parked on a driveway",
+    "alt": "An SUV parked beside a lake with mountains behind it at sunset",
     "width": 1600,
     "height": 1200,
-    "bytes": 251088,
+    "bytes": 249275,
     "mode": "curated"
   },
   "hero-flight-2560.jpg": {
@@ -716,15 +716,15 @@
   },
   "services/air-ticketing.jpg": {
     "source": "Pexels",
-    "photo_id": 10062411,
-    "source_page": "https://www.pexels.com/photo/10062411/",
+    "photo_id": 32649171,
+    "source_page": "https://www.pexels.com/photo/32649171/",
     "license": "Pexels License",
     "license_url": "https://www.pexels.com/license/",
     "attribution_required": false,
-    "alt": "An aircraft parked at an airport gate, seen through the terminal window",
+    "alt": "An airliner cabin with soft daylight through the windows",
     "width": 1600,
     "height": 1200,
-    "bytes": 123540,
+    "bytes": 119121,
     "mode": "curated"
   },
   "services/attestation.jpg": {

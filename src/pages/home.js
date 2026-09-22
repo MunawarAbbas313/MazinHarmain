@@ -323,7 +323,7 @@ function carRentalSection() {
           </div>
         </div>
         <div>
-          ${photo('/assets/img/car-rental.jpg', 'A white Range Rover parked on a driveway')}
+          ${photo('/assets/img/car-rental.jpg', 'A black Range Rover Sport photographed at dusk')}
         </div>
       </div>
     </div>
@@ -396,7 +396,9 @@ function trustSection() {
         <div class="trust-badge">
           ${b.logo
             ? `<img class="trust-badge__logo" src="${attr(b.logo)}" alt="${attr(b.name)}" loading="lazy" decoding="async">`
-            : icon(b.icon, { size: 26 })}
+            : b.seal
+              ? `<span class="trust-seal" aria-hidden="true">${esc(b.seal)}</span>`
+              : icon(b.icon, { size: 26 })}
           <strong>${b.name}</strong>
           <span>${b.sub}</span>
           ${b.ref ? `<span class="trust-badge__ref">${esc(b.ref)}</span>` : ''}

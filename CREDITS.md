@@ -8,7 +8,7 @@ Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
 - Images: **59**
-- Total weight: **12004 KB**
+- Total weight: **11998 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -32,7 +32,7 @@ npm run images -- --force           # everything
 
 | File | Dimensions | Size | Pexels source |
 |---|---|---|---|
-| `car-rental.jpg` | 1600×1200 | 245 KB | [#116675](https://www.pexels.com/photo/116675/) |
+| `car-rental.jpg` | 1600×1200 | 243 KB | [#17571484](https://www.pexels.com/photo/17571484/) |
 | `corporate-travel.jpg` | 1600×1200 | 181 KB | [#6050133](https://www.pexels.com/photo/6050133/) |
 | `destinations/azerbaijan.jpg` | 1200×900 | 91 KB | [#17857195](https://www.pexels.com/photo/17857195/) |
 | `destinations/dubai.jpg` | 1200×900 | 127 KB | [#17865557](https://www.pexels.com/photo/17865557/) |
@@ -86,7 +86,7 @@ npm run images -- --force           # everything
 | `hotels/madinah-hotels.jpg` | 1200×900 | 122 KB | [#34642005](https://www.pexels.com/photo/34642005/) |
 | `hotels/makkah-hotels.jpg` | 1200×900 | 177 KB | [#31339194](https://www.pexels.com/photo/31339194/) |
 | `hotels/worldwide-hotels.jpg` | 1200×900 | 163 KB | [#695193](https://www.pexels.com/photo/695193/) |
-| `services/air-ticketing.jpg` | 1600×1200 | 121 KB | [#10062411](https://www.pexels.com/photo/10062411/) |
+| `services/air-ticketing.jpg` | 1600×1200 | 116 KB | [#32649171](https://www.pexels.com/photo/32649171/) |
 | `services/apostille.jpg` | 1600×1200 | 114 KB | [#9858904](https://www.pexels.com/photo/9858904/) |
 | `services/attestation.jpg` | 1600×1200 | 160 KB | [#7654118](https://www.pexels.com/photo/7654118/) |
 | `services/power-of-attorney.jpg` | 1600×1200 | 157 KB | [#8730998](https://www.pexels.com/photo/8730998/) |

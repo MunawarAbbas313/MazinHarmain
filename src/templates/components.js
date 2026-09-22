@@ -499,7 +499,9 @@ function trustStrip() {
         <div class="trust-item">
           ${i.logo
             ? `<img class="trust-item__logo" src="${attr(i.logo)}" alt="${attr(i.name)}" loading="lazy" decoding="async">`
-            : icon(i.icon, { size: 30 })}
+            : i.seal
+              ? `<span class="trust-seal trust-seal--light" aria-hidden="true">${esc(i.seal)}</span>`
+              : icon(i.icon, { size: 30 })}
           <span class="trust-item__name">${esc(i.name)}</span>
           <span class="trust-item__sub">${esc(i.sub)}</span>
           ${i.ref ? `<span class="trust-item__ref">${esc(i.ref)}</span>` : ''}
