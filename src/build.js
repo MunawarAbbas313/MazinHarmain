@@ -12,6 +12,7 @@ const path = require('path');
 
 const site = require('./data/site');
 const redirects = require('./data/redirects');
+const { asset } = require('./lib/assets');
 
 const ROOT = path.join(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
@@ -258,9 +259,11 @@ function buildManifest() {
       background_color: '#faf7f0',
       theme_color: '#0a4a34',
       icons: [
-        { src: '/assets/img/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
-        { src: '/assets/img/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
-        { src: '/assets/img/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+        /* Hashed for the same reason as the favicons: regenerated artwork
+           has to actually reach a returning visitor. */
+        { src: asset('/assets/img/icon-192.png'), sizes: '192x192', type: 'image/png', purpose: 'any' },
+        { src: asset('/assets/img/icon-512.png'), sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        { src: asset('/assets/img/apple-touch-icon.png'), sizes: '180x180', type: 'image/png' },
       ],
     },
     null,
@@ -360,7 +363,16 @@ function run() {
      copy it to the root where browsers look for it by default. */
   const icoSrc = path.join(ASSETS, 'img', 'favicon.ico');
   if (fs.existsSync(icoSrc)) fs.copyFileSync(icoSrc, path.join(DIST, 'favicon.ico'));
-  else fs.writeFileSync(path.join(DIST, 'favicon.svg'), FAVICON, 'utf8');
+  /* Fallback when no .ico has been generated: prefer the real square mark
+     over the built-in placeholder, which is a different logo entirely. */
+  else {
+    const markSvg = path.join(ASSETS, 'img', 'logo-icon.svg');
+    fs.writeFileSync(
+      path.join(DIST, 'favicon.svg'),
+      fs.existsSync(markSvg) ? fs.readFileSync(markSvg, 'utf8') : FAVICON,
+      'utf8'
+    );
+  }
   fs.writeFileSync(path.join(DIST, 'site.webmanifest'), buildManifest(), 'utf8');
   fs.writeFileSync(path.join(DIST, '.htaccess'), HTACCESS, 'utf8');
   fs.writeFileSync(path.join(DIST, '_headers'), NETLIFY_HEADERS, 'utf8');

@@ -149,14 +149,21 @@ function servicesSection() {
 
 /* -------------------------------------------------------------- 4. Umrah */
 function umrahSection() {
+  /* All four tiers used to carry the same Kaaba icon, which said nothing and
+     read as decoration. They now show the tier's own hotel class as stars —
+     real information, straight from each tier's specs. */
   const tierCards = tiers
     .filter((t) => t.tier !== 'Custom')
     .map(
       (t) => `
           <a class="umrah-tier" href="/umrah-packages/${attr(t.slug)}/">
-            ${icon('kaaba', { size: 22 })}
+            <span class="umrah-tier__stars" role="img" aria-label="${attr(t.stars)} star hotels">
+              ${[1, 2, 3, 4, 5]
+                .map((n) => `<span class="umrah-tier__star${n <= t.stars ? ' is-on' : ''}">${icon('star', { size: 13 })}</span>`)
+                .join('')}
+            </span>
             <strong>${esc(t.tier)}</strong>
-            <span>${esc(t.subtitle)}</span>
+            <span class="umrah-tier__sub">${esc(t.subtitle)}</span>
           </a>`
     );
 

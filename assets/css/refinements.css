@@ -249,9 +249,8 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   transition: border-color .2s, transform .2s, box-shadow .2s;
 }
 .umrah-tier:hover { border-color: var(--gold-500); transform: translateY(-3px); box-shadow: var(--shadow-sm); }
-.umrah-tier svg { width: 22px; height: 22px; color: var(--gold-600); }
 .umrah-tier strong { font-size: .875rem; color: var(--ink); font-weight: 700; }
-.umrah-tier span { font-size: .6875rem; color: var(--muted-2); line-height: 1.4; }
+.umrah-tier > span:not(.umrah-tier__stars) { font-size: .6875rem; color: var(--muted-2); line-height: 1.4; }
 
 /* --------------------------------------------------------------------------
    6. VISA — flags left, passport photograph right
@@ -717,7 +716,12 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   z-index: 0;                    /* not -1: a negative index would sit under
                                     the footer's own background here */
   opacity: .2;
-  background-image: url('/assets/img/footer-watermark.png');
+  /* Renamed from footer-watermark.png when the artwork changed from Masjid
+     an-Nabawi to an international skyline. /assets/* is served immutable for
+     a year and CSS url() cannot carry the build's content hash, so a new
+     filename is the only way the change actually reaches a returning
+     visitor. */
+  background-image: url('/assets/img/footer-skyline.png');
   background-repeat: no-repeat;
   background-position: bottom right;
   background-size: cover;
@@ -1597,3 +1601,76 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 }
 .trust-badge__ref { color: var(--gold-400); }
 .trust-item__ref { color: var(--muted-2); }
+
+/* --------------------------------------------------------------------------
+   23. Icon treatment
+
+   The client's note was that the thin gold line icons "give a fake
+   professional vibe" — and at 22px with a 1.6px stroke, repeated six times
+   across a dark band, they did read as default clip-art.
+
+   Three fixes, none of them "add another icon":
+
+     Umrah tiers  — the four cards carried the SAME Kaaba glyph, which said
+                    nothing. They now show the tier's real hotel class as
+                    stars, so the graphic is information.
+     Service cards— the icon sits on a gold plate rather than a white one,
+                    so it reads as a deliberate badge instead of a sticker.
+     Credentials  — a rimmed plate with a heavier glyph, which is what makes
+                    a badge look issued rather than drawn.
+   -------------------------------------------------------------------------- */
+
+/* ---- Umrah tier stars --------------------------------------------------- */
+.umrah-tier__stars {
+  display: inline-flex;
+  gap: 1px;
+  margin-bottom: .1rem;
+}
+.umrah-tier__star { display: inline-flex; color: var(--line); }
+.umrah-tier__star.is-on { color: var(--gold-500); }
+.umrah-tier__star svg { width: 13px; height: 13px; }
+/* The old rule coloured every glyph in the card gold; scope it to the stars
+   now that the card has more than one kind of mark in it. */
+.umrah-tier__sub { font-size: .6875rem; color: var(--muted-2); line-height: 1.4; }
+
+/* ---- Service card badge ------------------------------------------------- */
+/* Gold plate, white glyph, heavier stroke. The white plate with a thin green
+   glyph read as an afterthought stuck onto the photograph. */
+.svc-card__icon {
+  background: linear-gradient(145deg, var(--gold-400) 0%, var(--gold-600) 100%);
+  border-color: var(--gold-600);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(6, 53, 40, .22);
+}
+.svc-card__icon svg { stroke-width: 1.9; }
+.svc-card:hover .svc-card__icon {
+  background: linear-gradient(145deg, var(--green-600) 0%, var(--green-800) 100%);
+  border-color: var(--green-700);
+  color: #fff;
+}
+
+/* ---- Credential badges -------------------------------------------------- */
+/* A rimmed plate under the glyph, so each credential reads as a seal rather
+   than a line drawing floating on the band. */
+.trust-badge > svg {
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(221, 184, 101, .45);
+  color: var(--gold-400);
+  stroke-width: 1.9;
+}
+.trust-item > svg {
+  width: 52px;
+  height: 52px;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--green-50);
+  border: 1px solid var(--green-100);
+  color: var(--green-700);
+  stroke-width: 1.9;
+}

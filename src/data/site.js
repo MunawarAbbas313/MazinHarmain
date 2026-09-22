@@ -102,7 +102,9 @@ const site = {
      which is what a cautious customer actually wants.                       */
   credentials: [
     { key: 'secp', name: 'SECP', sub: 'Registered', icon: 'building', ref: '' },
-    { key: 'fbr', name: 'FBR', sub: 'Registered', icon: 'certificate', ref: '' },
+    /* Distinct from DTS below: two credentials sharing one glyph is what
+       made the row read as clip-art. */
+    { key: 'fbr', name: 'FBR', sub: 'Registered', icon: 'doc', ref: '' },
     { key: 'dts', name: 'DTS', sub: 'Licensed', icon: 'certificate', ref: '' },
     { key: 'iata', name: 'IATA', sub: 'Accredited', icon: 'ticket', ref: '' },
     { key: 'mora', name: 'MORA', sub: 'Approved', icon: 'kaaba', ref: '' },

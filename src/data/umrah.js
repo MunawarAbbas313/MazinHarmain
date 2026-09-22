@@ -16,6 +16,9 @@ const tiers = [
   {
     slug: 'economy-umrah-packages',
     tier: 'Economy',
+    /* Highest hotel class in this tier's own specs below — the home page
+       renders it as stars, so it has to stay in step with them. */
+    stars: 3,
     title: 'Economy Umrah Packages',
     h1: 'Economy Umrah Packages from Pakistan',
     metaTitle: 'Economy Umrah Packages from Pakistan | Affordable Umrah',
@@ -51,6 +54,9 @@ const tiers = [
   {
     slug: 'executive-umrah-packages',
     tier: 'Executive',
+    /* Highest hotel class in this tier's own specs below — the home page
+       renders it as stars, so it has to stay in step with them. */
+    stars: 4,
     title: 'Executive Umrah Packages',
     h1: 'Executive Umrah Packages from Pakistan',
     metaTitle: 'Executive Umrah Packages from Pakistan | 3-4 Star Hotels',
@@ -86,6 +92,9 @@ const tiers = [
   {
     slug: 'premium-umrah-packages',
     tier: 'Premium',
+    /* Highest hotel class in this tier's own specs below — the home page
+       renders it as stars, so it has to stay in step with them. */
+    stars: 5,
     title: 'Premium Umrah Packages',
     h1: 'Premium Umrah Packages from Pakistan',
     metaTitle: 'Premium Umrah Packages from Pakistan | 5 Star Hotels Near Haram',
@@ -121,6 +130,9 @@ const tiers = [
   {
     slug: 'vip-umrah-packages',
     tier: 'VIP',
+    /* Highest hotel class in this tier's own specs below — the home page
+       renders it as stars, so it has to stay in step with them. */
+    stars: 5,
     title: 'VIP Umrah Packages',
     h1: 'VIP Umrah Packages from Pakistan',
     metaTitle: 'VIP Umrah Packages from Pakistan | Luxury Umrah, Haram-View Hotels',

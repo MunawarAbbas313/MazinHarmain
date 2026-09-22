@@ -47,8 +47,8 @@ const hasAsset = (name) => fsFor.existsSync(pathFor.join(ASSET_DIR, name));
    remove, so the footer now composes the new mark with the typeset
    wordmark instead of shipping the old picture. */
 const MARK_SRC = hasAsset('logo-mark.svg')
-  ? '/assets/img/logo-mark.svg'
-  : (hasAsset('logo-mark.png') ? '/assets/img/logo-mark.png' : '');
+  ? asset('/assets/img/logo-mark.svg')
+  : (hasAsset('logo-mark.png') ? asset('/assets/img/logo-mark.png') : '');
 const HAS_MARK = Boolean(MARK_SRC);
 
 /* The wide mark is roughly 2.2:1 — width/height are declared so the browser
@@ -59,7 +59,7 @@ const MARK_H = 212;
 /* Deep green letters disappear against the dark footer, so it gets the
    gold-filled reverse cut when that file exists. */
 const MARK_REVERSE_SRC = hasAsset('logo-mark-reverse.svg')
-  ? '/assets/img/logo-mark-reverse.svg'
+  ? asset('/assets/img/logo-mark-reverse.svg')
   : MARK_SRC;
 
 /* The wordmark, set in the brand's display face. Paired with the real
@@ -292,8 +292,8 @@ function organisationSchema() {
     name: site.name,
     alternateName: site.shortName,
     url: `${site.url}/`,
-    logo: `${site.url}/assets/img/icon-512.png`,
-    image: `${site.url}/assets/img/og-default.png`,
+    logo: `${site.url}${asset('/assets/img/icon-512.png')}`,
+    image: `${site.url}${asset('/assets/img/og-default.png')}`,
     description: site.description,
     slogan: site.tagline,
     email: site.email,
@@ -398,7 +398,7 @@ function breadcrumbNav(crumbs) {
 function layout(p) {
   const url = p.url || '/';
   const canonical = `${site.url}${url}`;
-  const ogImagePath = p.ogImage || '/assets/img/og-default.png';
+  const ogImagePath = p.ogImage || asset('/assets/img/og-default.png');
   const ogImage = `${site.url}${ogImagePath}`;
 
   const graph = [organisationSchema(), websiteSchema()];
@@ -491,9 +491,9 @@ function layout(p) {
 
   <!-- Icons -->
   <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/assets/img/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="icon" href="/assets/img/favicon-48.png" type="image/png" sizes="48x48">
-  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="icon" href="${asset('/assets/img/favicon-32.png')}" type="image/png" sizes="32x32">
+  <link rel="icon" href="${asset('/assets/img/favicon-48.png')}" type="image/png" sizes="48x48">
+  <link rel="apple-touch-icon" href="${asset('/assets/img/apple-touch-icon.png')}">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="alternate" type="application/rss+xml" title="Mazin Haramain — Travel Guides" href="/feed.xml">
 
