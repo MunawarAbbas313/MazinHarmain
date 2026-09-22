@@ -126,7 +126,10 @@ const site = {
     shortName: 'MyCab',
     url: 'https://mycabpakistan.com/',
     tagline: 'Rent a car with a driver, across Pakistan.',
-    uan: { label: '0311-111-2234', tel: '+923111112234' },
+    /* The car-rental line, supplied by the client September 2026. Car rental
+       is MyCab's service run from the same office, so the car-rental page
+       reaches this number rather than the agency's ticketing landline. */
+    uan: { label: '0306-111-2234', tel: '+923061112234', wa: '923061112234' },
     email: 'mycabpakistan@gmail.com',
     blurb:
       'Dedicated vehicles with a driver — airport pickups, city meetings, ' +

@@ -73,21 +73,22 @@ const TABS = [
   { key: 'hotels', label: 'Hotels', icon: 'hotel' },
 ];
 
-/* The city the applicant will submit in. It used to name the operators —
-   "VFS Global — Lahore", "TLScontact — Islamabad" — which asked the applicant
-   to know which company runs the centre for their destination. They rarely
-   do, and it is our job to work out anyway. The city is the part they do
-   know. Free text is still accepted. */
 /* Visa fees, appointment slots and document checklists are all per applicant,
    so the desk needs the count before it can answer anything. */
 const APPLICANTS = ['1 applicant', '2 applicants', '3 applicants', '4 applicants',
   '5 applicants', '6 applicants', '7–10 applicants', '11–20 applicants',
   'Group of 20+'];
 
+/* The centre the applicant will submit at, named by its city. It used to name
+   the operators — "VFS Global — Lahore", "TLScontact — Islamabad" — which
+   asked the applicant to know which company runs the centre for their
+   destination. They rarely do, and working that out is our job.
+
+   Three cities, because three is where the application centres actually are:
+   Islamabad, Lahore and Karachi. Free text is still accepted for the rare
+   case that is none of them. */
 const APPOINTMENT_CITIES = [
-  'Islamabad', 'Lahore', 'Karachi', 'Rawalpindi', 'Peshawar', 'Faisalabad',
-  'Multan', 'Sialkot', 'Quetta', 'Mirpur (AJK)', 'Abbottabad',
-  'Not sure — advise me',
+  'Islamabad', 'Lahore', 'Karachi', 'Not sure — advise me',
 ];
 
 /* The categories an appointment can be BOOKED for, which is a longer list
@@ -383,8 +384,8 @@ function appointmentsPanel(hidden) {
               control: select({ id: `${p}-type`, name: 'visaType', list: APPOINTMENT_VISA_TYPES, placeholder: 'Select a visa type' }),
             })}
             ${field({
-              id: `${p}-centre`, label: 'City', icon: 'building', combo: true,
-              control: input({ id: `${p}-centre`, name: 'centre', placeholder: 'Islamabad, Lahore, Karachi…', list: 'ts-centres', extra: comboAttrs(`${p}-centre`) }),
+              id: `${p}-centre`, label: 'Application Centre', icon: 'building', combo: true,
+              control: input({ id: `${p}-centre`, name: 'centre', placeholder: 'Islamabad, Lahore or Karachi', list: 'ts-centres', extra: comboAttrs(`${p}-centre`) }),
             })}
             ${field({
               id: `${p}-applicants`, label: 'Number of Applicants', icon: 'users',

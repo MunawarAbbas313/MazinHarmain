@@ -322,6 +322,12 @@ table { border-collapse: collapse; width: 100%; }
   padding: var(--sp-3) var(--sp-3);
   font-size: var(--fs-sm); font-weight: 600; color: var(--ink-2);
   border-radius: var(--radius-sm); white-space: nowrap;
+  /* The active underline below is absolutely positioned. It used to resolve
+     against .nav__item, until the mega-menu items were made position:static
+     so their panels could anchor to the nav — at which point the underline
+     resolved against the nav too and ruled a gold line across the whole
+     navigation. It belongs to the link, so the link is what positions it. */
+  position: relative;
 }
 .nav__link:hover, .nav__item:hover > .nav__link { color: var(--green-700); }
 .nav__link[aria-current="page"], .nav__link.is-active { color: var(--green-700); }

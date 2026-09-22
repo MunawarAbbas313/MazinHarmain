@@ -403,7 +403,7 @@
       cabin: 'Cabin', travellers: 'Travellers', directOnly: 'Preference',
       adults: 'Adults', children: 'Children', infants: 'Infants', airline: 'Preferred airline',
       packageType: 'Package', duration: 'Duration',
-      country: 'Destination', visaType: 'Visa type', centre: 'City',
+      country: 'Destination', visaType: 'Visa type', centre: 'Application centre',
       city: 'City / area', checkIn: 'Check in', checkOut: 'Check out',
       guests: 'Guests', rooms: 'Rooms', category: 'Hotel category',
       notes: 'Requirements', name: 'Name', applicants: 'Applicants', phone: 'WhatsApp',

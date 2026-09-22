@@ -67,18 +67,31 @@ function pageHero({ eyebrow, title, text, buttons = [], image, imageAlt }) {
 /* -------------------------------------------------------------------------
    Buttons
    ------------------------------------------------------------------------- */
+/* Most pages reach the agency's own desk. Car rental is the exception: it is
+   MyCab's service, run from the same office on its own line, so a visitor who
+   taps WhatsApp or Call there has to land on that line and not on ticketing.
+   Passing a contact swaps the number; passing nothing keeps the agency's. */
+const DESK = {
+  waNumber: site.whatsapp.number,
+  tel: site.phonePrimary.tel,
+  label: site.phonePrimary.label,
+};
+
+const waHref = (message, contact = DESK) =>
+  `https://wa.me/${contact.waNumber}?text=${encodeURIComponent(message)}`;
+
 const btn = {
   quote: (label = 'Get a Free Quote', size = '') =>
     `<a class="btn btn--gold${size}" href="/get-a-quote/">${esc(label)}</a>`,
 
-  whatsapp: (message, label = 'WhatsApp an Expert', size = '') =>
-    `<a class="btn btn--whatsapp${size}" href="${attr(site.waLink(message))}" target="_blank" rel="noopener">${icon('whatsapp', { size: 17 })} ${esc(label)}</a>`,
+  whatsapp: (message, label = 'WhatsApp an Expert', size = '', contact = DESK) =>
+    `<a class="btn btn--whatsapp${size}" href="${attr(waHref(message, contact))}" target="_blank" rel="noopener">${icon('whatsapp', { size: 17 })} ${esc(label)}</a>`,
 
-  call: (label = 'Call Now', size = '') =>
-    `<a class="btn btn--outline${size}" href="tel:${attr(site.phonePrimary.tel)}">${icon('phone', { size: 17 })} ${esc(label)}</a>`,
+  call: (label = 'Call Now', size = '', contact = DESK) =>
+    `<a class="btn btn--outline${size}" href="tel:${attr(contact.tel)}">${icon('phone', { size: 17 })} ${esc(label)}</a>`,
 
-  callLight: (label = 'Call Now', size = '') =>
-    `<a class="btn btn--outline-light${size}" href="tel:${attr(site.phonePrimary.tel)}">${icon('phone', { size: 17 })} ${esc(label)}</a>`,
+  callLight: (label = 'Call Now', size = '', contact = DESK) =>
+    `<a class="btn btn--outline-light${size}" href="tel:${attr(contact.tel)}">${icon('phone', { size: 17 })} ${esc(label)}</a>`,
 
   link: (url, label, variant = 'btn--outline', size = '') =>
     `<a class="btn ${variant}${size}" href="${attr(url)}">${esc(label)}</a>`,
@@ -455,14 +468,14 @@ ${
 /* -------------------------------------------------------------------------
    Sidebar building blocks
    ------------------------------------------------------------------------- */
-function contactSidebarCard(waMessage) {
+function contactSidebarCard(waMessage, contact = DESK) {
   return `
         <div class="sidebar-card sidebar-card--green">
           <h3>Speak to a Travel Consultant</h3>
           <p>Our team can confirm current availability, pricing and documentation requirements for your travel dates.</p>
           <div class="btn-row" style="margin-top:var(--sp-4)">
-            <a class="btn btn--whatsapp btn--sm btn--block" href="${attr(site.waLink(waMessage))}" target="_blank" rel="noopener">${icon('whatsapp', { size: 15 })} WhatsApp Us</a>
-            <a class="btn btn--outline-light btn--sm btn--block" href="tel:${attr(site.phonePrimary.tel)}">${icon('phone', { size: 15 })} ${esc(site.phonePrimary.label)}</a>
+            <a class="btn btn--whatsapp btn--sm btn--block" href="${attr(waHref(waMessage, contact))}" target="_blank" rel="noopener">${icon('whatsapp', { size: 15 })} WhatsApp Us</a>
+            <a class="btn btn--outline-light btn--sm btn--block" href="tel:${attr(contact.tel)}">${icon('phone', { size: 15 })} ${esc(contact.label)}</a>
             <a class="btn btn--gold btn--sm btn--block" href="/get-a-quote/">Get a Free Quote</a>
           </div>
         </div>`;
@@ -515,6 +528,7 @@ function trustStrip() {
 }
 
 module.exports = {
+  DESK,
   sectionHead, section, pageHero, btn, ctaButtons,
   serviceCard, iconCard, chip, mediaCard, packageCard, featureItem, stepItem, reviewCard,
   tickList, crossList, faqAccordion, faqSchema, serviceSchema,

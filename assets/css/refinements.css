@@ -54,8 +54,10 @@ button, input, select, textarea { font: inherit; }
 .grid > *, .split > *, .with-sidebar > * { min-width: 0; }
 .prose { line-height: 1.82; }
 
-/* Interior page hero gets a gold rule, matching the mockup's section edges */
-.page-hero { border-bottom: 3px solid var(--gold-500); }
+/* The interior page hero used to carry a 3px gold rule along its bottom.
+   Scroll past the hero on any inner page and that rule came to rest directly
+   under the sticky header, reading as a stray gold line ruled across the
+   whole navigation. Removed at the client's request. */
 .page-hero h1 { font-size: clamp(1.9rem, 3.6vw, 3.1rem); letter-spacing: -.022em; }
 .page-hero p { color: #d2e2d9; }
 .page-hero .eyebrow { color: var(--gold-400); }

@@ -104,6 +104,14 @@ function servicePage(s) {
     })
     .filter(Boolean);
 
+  /* Car rental is MyCab's service, run from the same office on its own line.
+     A visitor who taps WhatsApp or Call on that page wants the car desk, not
+     ticketing, so those buttons carry the partner's number. Every other
+     service page reaches the agency. */
+  const contact = s.slug === 'car-rental'
+    ? { waNumber: site.partner.uan.wa, tel: site.partner.uan.tel, label: site.partner.uan.label }
+    : c.DESK;
+
   const body = `
 ${c.pageHero({
     image: s.heroImage,
@@ -111,7 +119,11 @@ ${c.pageHero({
     eyebrow: s.title,
     title: s.h1,
     text: esc(s.lead),
-    buttons: [c.btn.quote('Get a Free Quote'), c.btn.whatsapp(wa), c.btn.callLight()],
+    buttons: [
+      c.btn.quote('Get a Free Quote'),
+      c.btn.whatsapp(wa, 'WhatsApp an Expert', '', contact),
+      c.btn.callLight('Call Now', '', contact),
+    ],
   })}
 ${WIDGET_TAB[s.slug] ? `
 ${searchWidget({ active: WIDGET_TAB[s.slug] })}
@@ -155,7 +167,7 @@ ${assuranceStrip(WIDGET_TAB[s.slug])}
         </div>
 
         <aside class="sidebar is-sticky">
-          ${c.contactSidebarCard(wa)}
+          ${c.contactSidebarCard(wa, contact)}
           ${related.length ? c.linkListCard('Related Services', orderServiceLinks(related)) : ''}
           <div class="sidebar-card sidebar-card--cream">
             <h3>Office Hours</h3>
