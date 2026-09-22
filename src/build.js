@@ -217,13 +217,9 @@ Sitemap: ${site.url}/sitemap.xml
 }
 
 /* ------------------------------------------------------- static extras */
-const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="8" fill="#0a4a34"/>
-  <path d="M24 9.5 33.5 15v11L24 31.5 14.5 26V15z" fill="none" stroke="#c79a3e" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M24 14c2.6 0 4.7 2.1 4.7 4.7 0 3.2-4.7 7.3-4.7 7.3s-4.7-4.1-4.7-7.3c0-2.6 2.1-4.7 4.7-4.7z" fill="#c79a3e"/>
-  <path d="M13 34.5h22M16 38.5h16" stroke="#c79a3e" stroke-width="2" stroke-linecap="round"/>
-</svg>
-`;
+/* A drawn placeholder favicon used to live here and ship whenever the real
+   .ico was missing. It was a different logo from the client's, and it reached
+   the browser tab silently. Deleted along with its fallback. */
 
 /* Branded fallback used wherever a photograph has not been supplied yet. */
 const PLACEHOLDER = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Mazin Haramain Tours and Travels">
@@ -363,17 +359,11 @@ function run() {
      copy it to the root where browsers look for it by default. */
   const icoSrc = path.join(ASSETS, 'img', 'favicon.ico');
   if (fs.existsSync(icoSrc)) fs.copyFileSync(icoSrc, path.join(DIST, 'favicon.ico'));
-  /* Fallback when no .ico has been generated: prefer the real square mark
-     over the built-in placeholder, which is a different logo entirely. */
-  else {
-    /* The stripped tab cut, not the detailed square — this is the favicon. */
-    const markSvg = path.join(ASSETS, 'img', 'logo-favicon.svg');
-    fs.writeFileSync(
-      path.join(DIST, 'favicon.svg'),
-      fs.existsSync(markSvg) ? fs.readFileSync(markSvg, 'utf8') : FAVICON,
-      'utf8'
-    );
-  }
+  /* There is deliberately NO fallback. The old one wrote a drawn placeholder
+     mark when the .ico was missing, which is how a logo that is not the
+     client's used to reach the tab without anything failing. A missing icon
+     is a visible, fixable absence; the wrong logo is not. Run `npm run icons`. */
+  else console.warn('  ! favicon.ico missing — run `npm run icons`');
   fs.writeFileSync(path.join(DIST, 'site.webmanifest'), buildManifest(), 'utf8');
   fs.writeFileSync(path.join(DIST, '.htaccess'), HTACCESS, 'utf8');
   fs.writeFileSync(path.join(DIST, '_headers'), NETLIFY_HEADERS, 'utf8');

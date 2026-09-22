@@ -12,7 +12,6 @@
                         actually reads at size comes from this file.
      logo-mark.png      the monogram alone, cut from the lockup's first ink
                         band. Header and footer.
-     logo-favicon.svg   a stripped square cut, for browser tabs only.
 
    This tool USED TO regenerate logo-mark.png from a drawn logo-mark.svg,
    and when the client supplied their artwork that older drawing silently
@@ -20,11 +19,14 @@
    failing. It now derives the monogram from the client's lockup instead, so
    running it can never replace their logo with ours.
 
-   The favicon stays a separate simplified cut because the client's artwork
-   carries a detailed globe, a swoosh and an aeroplane; at 16px all of that
-   collapses into mush. Their logo is used everywhere it can actually be
-   seen — header, footer, app icons, OG image — and the stripped cut only
-   where nothing detailed could survive.
+   The favicon used to be a separate simplified drawing of our own, on the
+   argument that the client's detailed globe, swoosh and aeroplane collapse
+   into mush at 16px. The client's answer was that their logo belongs in the
+   tab too, so it is cut from their artwork like everything else: a crop to
+   the MH letters with the globe behind them, which at 32px still reads as
+   their monogram. The aeroplane and the swoosh are left outside the crop
+   because at that size they are the parts that turn to mush. Nothing in this
+   tool draws brand artwork any more.
    ========================================================================== */
 
 const fs = require('fs');
@@ -35,15 +37,20 @@ const IMG = path.join(__dirname, '..', '..', 'assets', 'img');
 const read = (name) => fs.readFileSync(path.join(IMG, name));
 const kb = (n) => (n / 1024).toFixed(1) + 'KB';
 
-/** The 16px cut: no globe, and the letters spread into the space it leaves. */
-function favicon16(svg) {
-  return Buffer.from(
-    svg
-      .toString('utf8')
-      .replace(/<g id="fv-globe">[\s\S]*?<\/g>/, '')
-      .replace('x="7"', 'x="12"').replace('textLength="40"', 'textLength="46"')
-      .replace('x="77"', 'x="66"').replace('textLength="36"', 'textLength="42"')
-  );
+/* The tab crop, in logo-mark.png's own pixels: the MH letters with the globe
+   behind them, the aeroplane and the tail of the swoosh left out. Measured
+   against that file's 900x344 frame. */
+const FAVICON_CROP = { left: 150, top: 55, width: 555, height: 285 };
+
+/** One tab icon: the client's letters, centred on white. */
+async function faviconPng(mark, size) {
+  const inner = await sharp(mark).extract(FAVICON_CROP)
+    .resize(Math.round(size * 0.98), Math.round(size * 0.98),
+      { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .toBuffer();
+  return sharp({
+    create: { width: size, height: size, channels: 4, background: { r: 255, g: 255, b: 255, alpha: 1 } },
+  }).composite([{ input: inner, gravity: 'centre' }]).png({ compressionLevel: 9 }).toBuffer();
 }
 
 /**
@@ -75,7 +82,6 @@ function buildIco(images) {
 
 async function main() {
   const lockup = read('logo-lockup.png');
-  const fav = read('logo-favicon.svg');
 
   console.log('\nRegenerating icons\n' + '='.repeat(52));
 
@@ -104,19 +110,20 @@ async function main() {
     console.log(`  ${out.padEnd(24)} ${size}x${size}  ${kb(fs.statSync(path.join(IMG, out)).size)}`);
   }
 
-  /* ---- tabs: the stripped cut ---- */
+  /* ---- tabs: the client's letters ----
+     Cut from logo-mark.png, which was itself just written from the client's
+     lockup a few lines above, so the tab icon can never fall out of step with
+     the header. */
+  const markJustWritten = read('logo-mark.png');
   for (const size of [16, 32, 48]) {
-    const src = size <= 16 ? favicon16(fav) : fav;
     const out = `favicon-${size}.png`;
-    await sharp(src, { density: 1200 }).resize(size, size)
-      .png({ compressionLevel: 9 }).toFile(path.join(IMG, out));
+    fs.writeFileSync(path.join(IMG, out), await faviconPng(markJustWritten, size));
     console.log(`  ${out.padEnd(24)} ${size}x${size}  ${kb(fs.statSync(path.join(IMG, out)).size)}`);
   }
 
   const ico = buildIco(await Promise.all([16, 32, 48].map(async (size) => ({
     size,
-    png: await sharp(size <= 16 ? favicon16(fav) : fav, { density: 1200 })
-      .resize(size, size).png({ compressionLevel: 9 }).toBuffer(),
+    png: await faviconPng(markJustWritten, size),
   }))));
   fs.writeFileSync(path.join(IMG, 'favicon.ico'), ico);
   console.log(`  ${'favicon.ico'.padEnd(24)} 16/32/48  ${kb(ico.length)}`);

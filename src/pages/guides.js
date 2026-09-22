@@ -148,7 +148,7 @@ ${c.pageHero({ image: `/assets/img/guides/${g.slug}.jpg`, imageAlt: g.title, eye
         <article>
           ${guidesUr[g.slug]
             ? `<p class="lang-switch">
-            <a href="${attr(`${BASE}${g.slug}/urdu/`)}" hreflang="ur" lang="ur" dir="rtl">یہ مضمون اردو میں پڑھیے</a>
+            <a href="${attr(`${BASE}${g.slug}/urdu/`)}" hreflang="ur" lang="ur" dir="rtl">${icon('globe', { size: 16 })}<span>یہ مضمون اردو میں پڑھیے</span></a>
           </p>`
             : ''}
 
@@ -281,7 +281,7 @@ ${c.pageHero({
     <div class="container">
       <article class="article-ur">
         <p class="lang-switch">
-          <a href="${attr(enUrl)}" hreflang="en" lang="en" dir="ltr">Read this guide in English</a>
+          <a href="${attr(enUrl)}" hreflang="en" lang="en" dir="ltr">${icon('globe', { size: 16 })}<span>Read this guide in English</span></a>
         </p>
 
         <div class="prose">

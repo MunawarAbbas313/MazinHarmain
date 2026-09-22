@@ -119,7 +119,7 @@ function topbar() {
 </div>`;
 }
 
-function navItem(item, currentUrl) {
+function navItem(item, currentUrl, index = 0, total = 1) {
   const active = currentUrl === item.url || (item.url !== '/' && currentUrl.startsWith(item.url));
   const aria = currentUrl === item.url ? ' aria-current="page"' : '';
   const cls = active ? ' is-active' : '';
@@ -128,7 +128,19 @@ function navItem(item, currentUrl) {
     return `<li class="nav__item"><a class="nav__link${cls}" href="${attr(item.url)}"${aria}>${esc(item.label)}</a></li>`;
   }
 
-  const wide = item.children.length > 9 ? ' dropdown--wide' : '';
+  /* Two columns past nine children, three past sixteen — the twenty-three of
+     the Visa menus ran to a panel taller than the viewport in two.
+
+     The three-column panels are 660px, and no rule based on where the trigger
+     sits in the bar survives every viewport width: anchoring them to their own
+     trigger put them under the Get a Quote button at 1200px and off the left
+     edge of the screen at the next breakpoint. They anchor to the nav's right
+     edge instead — a fixed point inside the header, left of the button — so
+     they can neither collide with it nor leave the screen. The list item goes
+     position:static in CSS for that to resolve against the nav. */
+  const n = item.children.length;
+  const mega = n > 9;
+  const wide = n > 16 ? ' dropdown--wide dropdown--tall' : mega ? ' dropdown--wide' : '';
   const items = item.children
     .map((c) =>
       c.head
@@ -137,7 +149,7 @@ function navItem(item, currentUrl) {
     )
     .join('\n        ');
 
-  return `<li class="nav__item">
+  return `<li class="nav__item${mega ? ' nav__item--mega' : ''}">
         <a class="nav__link${cls}" href="${attr(item.url)}"${aria}>${esc(item.label)} ${icon('chevronDown', { cls: 'nav__caret', size: 9 })}</a>
         <ul class="dropdown${wide}">
         ${items}
@@ -152,7 +164,7 @@ function header(currentUrl) {
     ${logo()}
     <nav class="nav" aria-label="Primary">
       <ul class="nav__list">
-        ${nav.map((i) => navItem(i, currentUrl)).join('\n        ')}
+        ${nav.map((item, i) => navItem(item, currentUrl, i, nav.length)).join('\n        ')}
       </ul>
     </nav>
     <div class="header__actions">
@@ -177,9 +189,13 @@ function header(currentUrl) {
           if (!item.children) {
             return `<li><a href="${attr(item.url)}">${esc(item.label)}</a></li>`;
           }
+          /* The group headings used to be dropped here, which turned the Visa
+             menu into an undifferentiated run of twenty-two links with no
+             sign of where the categories ended and the countries began. */
           const subs = item.children
-            .filter((c) => !c.head)
-            .map((c) => `<li><a href="${attr(c.url)}">${esc(c.label)}</a></li>`)
+            .map((c) => (c.head
+              ? `<li><span class="m-sub__head">${esc(c.head)}</span></li>`
+              : `<li><a href="${attr(c.url)}">${esc(c.label)}</a></li>`))
             .join('');
           return `<li>
         <button class="m-toggle" type="button" aria-expanded="false">${esc(item.label)} <span class="m-toggle__icon">+</span></button>
@@ -470,9 +486,16 @@ function layout(p) {
     : '';
 
   /* Nastaliq is what Urdu is actually read in; the Latin stack cannot set
-     it. Loaded only on the pages that need it. */
+     it. Loaded only on the pages that need it.
+
+     notranslate goes with it. A reader who follows "read this guide in Urdu"
+     was landing on the Urdu page and having Chrome immediately translate it
+     back into English, banner and all — the one page on the site where an
+     automatic translation is certainly not what was asked for. */
   const urduFont = isUrdu
     ? `
+  <meta name="google" content="notranslate">` +
+      `
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>` +
       `
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap">`

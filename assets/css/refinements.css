@@ -70,6 +70,16 @@ button, input, select, textarea { font: inherit; }
 .nav__list { gap: 0; }
 .nav__link { padding-inline: .6rem; font-size: .8125rem; }
 .dropdown { max-height: calc(100vh - 140px); overflow-y: auto; }
+/* Three columns for the twenty-two-item country menus. In two they made a
+   panel taller than the viewport that also reached across into the header's
+   Get a Quote button. */
+.dropdown--tall { min-width: min(660px, 90vw); columns: 3; }
+/* The mega panels resolve against the nav, not against their own list item,
+   so they sit flush with the nav's right edge at every width — always inside
+   the header and always left of the Get a Quote button. */
+.nav { position: relative; }
+.nav__item--mega { position: static; }
+.nav__item--mega > .dropdown { left: auto; right: 0; }
 .mobile-nav { visibility: hidden; }
 .mobile-nav.is-open { visibility: visible; }
 .accordion__panel { visibility: hidden; }
@@ -1761,12 +1771,9 @@ button, input, select, textarea { font: inherit; }
   .hero__eyebrow { font-size: 1.15rem; margin-bottom: .7rem; }
 }
 
-/* Above 900px the aircraft banner below the hero carries the agency's name at
-   full size. Showing it here too put the name on the first screen twice.
-   Exactly one of the pair is ever visible — see .ts__banner. */
-@media (min-width: 901px) {
-  .page-home .hero__eyebrow { display: none; }
-}
+/* This was hidden above 901px for a while, because the aircraft banner below
+   also carries the agency's name and having it twice on one screen is a lot.
+   The client wants it in both places, so it stays. */
 
 
 
@@ -1847,23 +1854,34 @@ button, input, select, textarea { font: inherit; }
   line-height: 1.7;
 }
 
-/* The language switch, on both sides. */
+/* The language switch, on both sides. It was a pale tint with a hairline
+   border and read as a disabled chip — a reader scanning the page did not
+   see that the article exists in their language. It is now a filled brand
+   button with a globe, which is what it is. */
 .lang-switch { margin: 0 0 var(--sp-5); }
 .lang-switch a {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0 var(--sp-4);
-  border: 1px solid var(--line);
+  gap: var(--sp-2);
+  min-height: 46px;
+  padding: 0 var(--sp-5);
+  border: 1px solid var(--green-800);
   border-radius: var(--radius-pill);
-  background: var(--green-50);
-  color: var(--green-800);
+  background: linear-gradient(180deg, var(--green-700) 0%, var(--green-800) 100%);
+  color: #fff;
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
+  box-shadow: 0 2px 8px rgba(7, 48, 34, 0.18);
+  transition: background 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
+.lang-switch a svg { color: var(--gold-400); flex-shrink: 0; }
 .lang-switch a[lang="ur"] { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
-.lang-switch a:hover { border-color: var(--green-500); background: var(--green-100); }
+.lang-switch a:hover {
+  background: linear-gradient(180deg, var(--green-600) 0%, var(--green-700) 100%);
+  box-shadow: 0 4px 14px rgba(7, 48, 34, 0.26);
+}
+.lang-switch a:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
 
 /* ==========================================================================
    28. The search panel's backdrop
@@ -2013,8 +2031,19 @@ button, input, select, textarea { font: inherit; }
   color: var(--green-800);
 }
 
+/* Below 901px the banner is dropped altogether — photograph and title both.
+   At 390px the strip is 55px tall: too short to show the aircraft, too short
+   to show the name, so all it contributed was a band of smeared sky above the
+   form. The name is already in the hero directly above on those widths. The
+   form gets the space instead. */
 @media (max-width: 900px) {
   .ts__banner { display: none; }
+  .ts--photo {
+    padding: 0;
+    background: none;
+  }
+  .ts--photo .ts__backdrop { display: none; }
+  .ts--photo .ts__card { box-shadow: var(--shadow-lg); }
 }
 
 /* Above 901px the band opens on the name, not on sky. The top padding drops
@@ -2031,4 +2060,89 @@ button, input, select, textarea { font: inherit; }
     min-height: 13vw;
     margin-bottom: clamp(0.75rem, 1.4vw, 1.25rem);
   }
+}
+
+/* ---- The tab strip on a phone --------------------------------------------
+   Five tabs will not fit across 390px, so the strip scrolled sideways — and
+   a horizontally scrolling row with no affordance just looks like a cut-off
+   tab. "VISA" was sliced in half at the screen edge and nothing said there
+   was more to the right. Below 600px the strip stops pretending to be a row
+   of attached tabs and becomes a grid of buttons, with every option visible
+   and nothing to discover. The switch happens at 767px, not 600: five tabs
+   need most of 768px of row, and at 601px and again at 720px the last one was
+   still sliding off the edge with tens of pixels of hidden scroll. */
+@media (max-width: 767px) {
+  .ts__tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    /* The strip carried side padding to inset the attached tabs from the card.
+       As a grid that padding is what pushed 2px of it into a phantom scroll
+       at 320px. */
+    padding: 0;
+    margin-bottom: 8px;
+    overflow: visible;
+  }
+  .ts__tab {
+    justify-content: center;
+    /* min-width:0 and border-box together: the base rule sets flex:0 0 auto,
+       which a grid item ignores, but without these the 1px border pushed two
+       pixels of phantom scroll into the strip at 320px. */
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: 48px;
+    padding: 0 var(--sp-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  /* Five into two columns leaves one over; it takes the full width rather
+     than sitting as a lonely half. */
+  .ts__tab:last-child { grid-column: 1 / -1; }
+  .ts--photo .ts__tab:not(.is-active) { border-color: rgba(6, 46, 33, 0.12); }
+  .ts__card { border-radius: var(--radius-lg); }
+}
+
+/* The panel's notes box is rows="2", which is right on a desktop where the
+   placeholder fits on two lines. Narrow the column and the same sentence runs
+   to three or four, and the box clipped it mid-word — the reader saw half a
+   line of grey text cut across the bottom border. The box grows with the
+   viewport instead. */
+@media (max-width: 767px) {
+  .ts-panel .textarea { min-height: 8rem; }
+}
+@media (max-width: 420px) {
+  .ts-panel .textarea { min-height: 9.5rem; }
+}
+
+/* ---- Long submenus in the mobile drawer ----------------------------------
+   Visa and Visa Appointments each carry the client's twenty-one countries.
+   Opened in the drawer that is twenty-two links in one go: everything below
+   it — About Us, Contact, the call buttons — was pushed far off the bottom,
+   and the reader had no way of knowing the menu continued. A long submenu now
+   scrolls inside itself, so the items below it stay where they were. The cap
+   is generous enough that short submenus never scroll at all. */
+.m-sub.is-open {
+  max-height: min(46vh, 24rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* A hairline rail so a scrolled list reads as a list with more in it,
+     rather than as the menu having simply stopped. */
+  border-left: 2px solid var(--line-2);
+  padding-left: var(--sp-3);
+  margin-left: var(--sp-1);
+}
+.m-sub.is-open::-webkit-scrollbar { width: 4px; }
+.m-sub.is-open::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
+
+/* The group headings inside the mega-menu were only styled for the desktop
+   dropdown, so in the drawer "Countries" was indistinguishable from a link. */
+.m-sub .m-sub__head {
+  display: block;
+  padding: var(--sp-3) 0 var(--sp-1);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold-700);
 }

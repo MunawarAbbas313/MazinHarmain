@@ -92,9 +92,6 @@ ${each(HERO_SLIDES, (h) => `      <img class="hero__slide" data-src="${attr(h.sr
     <div class="container">
       <div class="hero__inner">
         <div class="hero__content">
-          ${/* CSS hides this above 900px, where the banner below carries the
-                name at full size. It stays on phones, where the banner title
-                is hidden and this is the only place the name appears. */ ''}
           <span class="hero__eyebrow">${esc(site.name)}</span>
           <h1>Fly With <span class="accent">Trust.</span></h1>
           <p class="hero__tagline">From Sacred Journeys to Global Destinations.</p>
