@@ -401,20 +401,21 @@
       tripType: 'Trip type', from: 'From', to: 'To',
       departDate: 'Departing', returnDate: 'Returning', itinerary: 'Itinerary',
       cabin: 'Cabin', travellers: 'Travellers', directOnly: 'Preference',
+      adults: 'Adults', children: 'Children', infants: 'Infants', airline: 'Preferred airline',
       packageType: 'Package', duration: 'Duration',
       country: 'Destination', visaType: 'Visa type', centre: 'City',
       city: 'City / area', checkIn: 'Check in', checkOut: 'Check out',
       guests: 'Guests', rooms: 'Rooms', category: 'Hotel category',
-      notes: 'Requirements', phone: 'WhatsApp',
+      notes: 'Requirements', name: 'Name', applicants: 'Applicants', phone: 'WhatsApp',
     };
     /* One order per tab, so the consultant reads the request in the order
        the visitor filled it in. */
     var ORDER = {
-      Flight: ['tripType', 'from', 'to', 'departDate', 'returnDate', 'itinerary', 'cabin', 'travellers', 'directOnly', 'phone'],
-      Umrah: ['packageType', 'duration', 'departDate', 'travellers', 'notes', 'phone'],
-      Visa: ['country', 'visaType', 'departDate', 'notes', 'phone'],
-      Appointment: ['country', 'visaType', 'centre', 'departDate', 'notes', 'phone'],
-      Hotel: ['city', 'checkIn', 'checkOut', 'guests', 'rooms', 'category', 'notes', 'phone'],
+      Flight: ['name', 'tripType', 'from', 'to', 'departDate', 'returnDate', 'adults', 'children', 'infants', 'cabin', 'airline', 'directOnly', 'itinerary', 'phone'],
+      Umrah: ['name', 'packageType', 'duration', 'departDate', 'travellers', 'notes', 'phone'],
+      Visa: ['name', 'country', 'visaType', 'applicants', 'departDate', 'notes', 'phone'],
+      Appointment: ['name', 'country', 'visaType', 'centre', 'applicants', 'departDate', 'notes', 'phone'],
+      Hotel: ['name', 'city', 'checkIn', 'checkOut', 'guests', 'rooms', 'category', 'notes', 'phone'],
     };
     /* "Departing" is right for a flight and wrong for the other three. */
     var LABEL_OVERRIDES = {

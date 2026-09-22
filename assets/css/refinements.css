@@ -1337,15 +1337,15 @@ button, input, select, textarea { font: inherit; }
 /* ---- Responsive -------------------------------------------------------- */
 @media (min-width: 640px) {
   .ts__body { padding: var(--sp-6); }
-  .ts-row--3, .ts-row--4, .ts-row--hotels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ts-row--2, .ts-row--3, .ts-row--4, .ts-row--hotels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* Three tracks: field, swap, field. From/To take the pair, the two dates
      take it again below, and the phone number runs the full width. */
   .ts-row--flights { grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr); }
-  .ts-row--flights > .ts-field:nth-child(1),
-  .ts-row--flights > .ts-field:nth-child(4) { grid-column: 1; }
-  .ts-row--flights > .ts-field:nth-child(3),
-  .ts-row--flights > .ts-field:nth-child(5) { grid-column: 3; }
-  .ts-row--flights > .ts-field:nth-child(6) { grid-column: 1 / -1; }
+  /* The row holds exactly three things now — from, the swap button, to — so
+     the old nth-child map for fields four to six is gone with the fields it
+     placed. */
+  .ts-row--flights > .ts-field:nth-child(1) { grid-column: 1; }
+  .ts-row--flights > .ts-field:nth-child(3) { grid-column: 3; }
   .ts-foot { flex-direction: row; align-items: center; justify-content: space-between; }
   .ts-submit { width: auto; min-width: 230px; }
 }
@@ -1353,12 +1353,16 @@ button, input, select, textarea { font: inherit; }
 @media (min-width: 992px) {
   .ts__brand { display: flex; }
   .ts-opts__spacer { display: block; flex: 1 1 auto; }
+  .ts-row--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ts-row--3 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .ts-row--4 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .ts-row--hotels { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .ts-row--hotels > .ts-field--wide { grid-column: span 2; }
+  /* Six tracks were for the six fields this row used to carry. It carries
+     three — from, swap, to — and the leftover tracks left the pair sitting in
+     the left half of the card with a third of it empty. */
   .ts-row--flights {
-    grid-template-columns: minmax(0, 1.15fr) 44px minmax(0, 1.15fr) minmax(0, 0.95fr) minmax(0, 0.95fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr);
   }
   .ts-row--flights > .ts-field:nth-child(n) { grid-column: auto; }
 }

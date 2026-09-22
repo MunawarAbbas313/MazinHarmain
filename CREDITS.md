@@ -8,7 +8,7 @@ Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
 - Images: **79**
-- Total weight: **22026 KB**
+- Total weight: **21777 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -59,8 +59,8 @@ npm run images -- --force           # everything
 | `guides/turkey-travel-guide-for-pakistani-tourists.jpg` | 1200×900 | 110 KB | [#5700576](https://www.pexels.com/photo/5700576/) |
 | `guides/uk-visit-visa-guide-from-pakistan.jpg` | 1200×900 | 136 KB | [#4173219](https://www.pexels.com/photo/4173219/) |
 | `guides/umrah-guide-for-pakistani-travellers.jpg` | 1200×900 | 269 KB | [#4118058](https://www.pexels.com/photo/4118058/) |
-| `hero-baku-2560.jpg` | 2560×1440 | 292 KB | [#18291079](https://www.pexels.com/photo/18291079/) |
-| `hero-baku.jpg` | 1600×900 | 129 KB | [#18291079](https://www.pexels.com/photo/18291079/) |
+| `hero-baku-2560.jpg` | 2560×1440 | 479 KB | [#8412720](https://www.pexels.com/photo/8412720/) |
+| `hero-baku.jpg` | 1600×900 | 224 KB | [#8412720](https://www.pexels.com/photo/8412720/) |
 | `hero-dubai-2560.jpg` | 2560×1440 | 914 KB | [#31084537](https://www.pexels.com/photo/31084537/) |
 | `hero-dubai.jpg` | 1600×900 | 431 KB | [#31084537](https://www.pexels.com/photo/31084537/) |
 | `hero-europe-2560.jpg` | 2560×1440 | 619 KB | [#11279691](https://www.pexels.com/photo/11279691/) |
@@ -70,10 +70,10 @@ npm run images -- --force           # everything
 | `hero-flight-2560.jpg` | 2560×1440 | 209 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
 | `hero-flight-768.jpg` | 768×432 | 21 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
 | `hero-flight.jpg` | 1920×1080 | 99 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
-| `hero-haram-2560.jpg` | 2560×1440 | 999 KB | [#38546878](https://www.pexels.com/photo/38546878/) |
-| `hero-haram.jpg` | 1600×900 | 438 KB | [#38546878](https://www.pexels.com/photo/38546878/) |
-| `hero-istanbul-2560.jpg` | 2560×1440 | 530 KB | [#18165242](https://www.pexels.com/photo/18165242/) |
-| `hero-istanbul.jpg` | 1600×900 | 216 KB | [#18165242](https://www.pexels.com/photo/18165242/) |
+| `hero-haram-2560.jpg` | 2560×1440 | 893 KB | [#26436662](https://www.pexels.com/photo/26436662/) |
+| `hero-haram.jpg` | 1600×900 | 390 KB | [#26436662](https://www.pexels.com/photo/26436662/) |
+| `hero-istanbul-2560.jpg` | 2560×1440 | 271 KB | [#15750300](https://www.pexels.com/photo/15750300/) |
+| `hero-istanbul.jpg` | 1600×900 | 99 KB | [#15750300](https://www.pexels.com/photo/15750300/) |
 | `hero-kaaba-1200.jpg` | 1200×675 | 289 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba-1600.jpg` | 1600×900 | 507 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba-768.jpg` | 768×432 | 125 KB | [#14440333](https://www.pexels.com/photo/14440333/) |

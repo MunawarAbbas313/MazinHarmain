@@ -76,7 +76,7 @@ const CURATED = [
   { file: 'hero-flight-1200.jpg', id: 1911388, w: 1200, h: 675,   alt: 'An airliner silhouetted against a sunset sky' },
   { file: 'hero-flight-1600.jpg', id: 1911388, w: 1600, h: 900,   alt: 'An airliner silhouetted against a sunset sky' },
   { file: 'hero-dubai.jpg',       id: 31084537, ...WIDE, alt: 'Dubai Marina seen from the air at night' },
-  { file: 'hero-istanbul.jpg',    id: 18165242, ...WIDE, alt: 'Istanbul seen from above the Bosphorus' },
+  { file: 'hero-istanbul.jpg',    id: 15750300, ...WIDE, alt: 'The Istanbul skyline at dusk, minarets and domes above the Bosphorus' },
   { file: 'hero-europe.jpg',      id: 11279691, ...WIDE, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives.jpg',    id: 28843924, ...WIDE, alt: 'An island resort with overwater villas in the Maldives' },
   { file: 'hero-paris.jpg',       id: 30133212, ...WIDE, alt: 'The Paris skyline with the Eiffel Tower seen from above' },
@@ -87,13 +87,13 @@ const CURATED = [
      because the destination pages still use them. */
   { file: 'hero-london.jpg',      id: 36156076, ...WIDE, alt: 'Big Ben and Westminster Bridge over the Thames at sunset' },
   { file: 'hero-newyork.jpg',     id: 33619969, ...WIDE, alt: 'The Brooklyn Bridge and the Manhattan skyline at sunset' },
-  { file: 'hero-baku.jpg',        id: 18291079, ...WIDE, alt: "Baku's illuminated skyline and the Flame Towers at night" },
+  { file: 'hero-baku.jpg',        id: 8412720,  ...WIDE, alt: "Baku at dusk, the Flame Towers above the Caspian" },
 
   /* Makkah and Madinah rejoin the rotation. The original complaint was that
      the Kaaba was the ONLY thing the home page showed, not that it should be
      absent — with seven other frames alongside it, the agency reads as both
      the Umrah specialist and the worldwide operator it is. */
-  { file: 'hero-haram.jpg',       id: 38546878, ...WIDE, alt: 'Masjid al-Haram in Makkah seen from the air at sunset' },
+  { file: 'hero-haram.jpg',       id: 26436662, ...WIDE, alt: 'The Kaaba at night, pilgrims performing tawaf in Masjid al-Haram' },
   { file: 'hero-nabawi.jpg',      id: 33169796, ...WIDE, alt: 'Al-Masjid an-Nabawi in Madinah' },
 
   /* 2560-wide copies of every hero frame. A 1920 image on a 1440px viewport
@@ -102,14 +102,14 @@ const CURATED = [
      "losing its pixels" the client reported. */
   { file: 'hero-flight-2560.jpg',   id: 1911388,  ...HERO_2X, alt: 'An airliner silhouetted against a sunset sky' },
   { file: 'hero-dubai-2560.jpg',    id: 31084537, ...HERO_2X, alt: 'Dubai Marina seen from the air at night' },
-  { file: 'hero-istanbul-2560.jpg', id: 18165242, ...HERO_2X, alt: 'Istanbul seen from above the Bosphorus' },
+  { file: 'hero-istanbul-2560.jpg', id: 15750300, ...HERO_2X, alt: 'The Istanbul skyline at dusk, minarets and domes above the Bosphorus' },
   { file: 'hero-europe-2560.jpg',   id: 11279691, ...HERO_2X, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives-2560.jpg', id: 28843924, ...HERO_2X, alt: 'An island resort with overwater villas in the Maldives' },
   { file: 'hero-paris-2560.jpg',    id: 30133212, ...HERO_2X, alt: 'The Paris skyline with the Eiffel Tower seen from above' },
   { file: 'hero-london-2560.jpg',   id: 36156076, ...HERO_2X, alt: 'Big Ben and Westminster Bridge over the Thames at sunset' },
   { file: 'hero-newyork-2560.jpg',  id: 33619969, ...HERO_2X, alt: 'The Brooklyn Bridge and the Manhattan skyline at sunset' },
-  { file: 'hero-baku-2560.jpg',     id: 18291079, ...HERO_2X, alt: "Baku's illuminated skyline and the Flame Towers at night" },
-  { file: 'hero-haram-2560.jpg',    id: 38546878, ...HERO_2X, alt: 'Masjid al-Haram in Makkah seen from the air at sunset' },
+  { file: 'hero-baku-2560.jpg',     id: 8412720,  ...HERO_2X, alt: "Baku at dusk, the Flame Towers above the Caspian" },
+  { file: 'hero-haram-2560.jpg',    id: 26436662, ...HERO_2X, alt: 'The Kaaba at night, pilgrims performing tawaf in Masjid al-Haram' },
   { file: 'hero-nabawi-2560.jpg',   id: 33169796, ...HERO_2X, alt: 'Al-Masjid an-Nabawi in Madinah' },
 
   /* Service card photography, at FEATURE size so the cards stay sharp. */

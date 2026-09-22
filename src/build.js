@@ -51,10 +51,30 @@ function outputPathFor(page) {
   return clean ? path.join(DIST, clean, 'index.html') : path.join(DIST, 'index.html');
 }
 
+/* ------------------------------------------------------------------------
+   Cache-busting, applied to the finished HTML rather than asked of every
+   template.
+
+   /assets/* is served with `max-age=31536000, immutable`, so a URL the
+   browser has already seen is never fetched again for a year. Only the brand
+   artwork was going through asset(); every photograph was emitted as a bare
+   path. Replacing a photograph therefore changed nothing for anyone who had
+   already loaded the page — they kept the old picture indefinitely, which is
+   exactly what kept happening during the September 2026 review.
+
+   Doing it here means a template cannot forget. Already-hashed URLs are left
+   alone, and so is anything that is not a real file on disk.
+   ------------------------------------------------------------------------ */
+const ASSET_URL = /(["'(])(\/assets\/[A-Za-z0-9._\/-]+?\.(?:jpg|jpeg|png|gif|svg|webp|avif|ico|css|js|woff2?|mp4|webm|json|txt|xml|pdf))(?=["')\s])/g;
+
+function versionAssets(html) {
+  return html.replace(ASSET_URL, (match, open, url) => open + asset(url));
+}
+
 function writePage(page) {
   const file = outputPathFor(page);
   ensureDir(path.dirname(file));
-  fs.writeFileSync(file, page.html, 'utf8');
+  fs.writeFileSync(file, versionAssets(page.html), 'utf8');
   return file;
 }
 

@@ -29,6 +29,31 @@ const CABINS = ['Economy', 'Premium Economy', 'Business', 'First'];
 const PAX = ['1 Passenger', '2 Passengers', '3 Passengers', '4 Passengers', '5 Passengers',
   '6 Passengers', '7–10 Passengers', '11–20 Passengers', 'Group of 20+'];
 
+/* Airlines quote per passenger TYPE, not per head: an infant under two is a
+   fraction of an adult fare and a child between two and eleven is its own
+   band. A single "Passengers" count made every family quote a guess, and the
+   desk had to write back and ask. The bands are the airlines' own. */
+const ADULTS = ['1 Adult', '2 Adults', '3 Adults', '4 Adults', '5 Adults', '6 Adults',
+  '7 Adults', '8 Adults', '9 Adults', '10+ Adults'];
+const CHILDREN = ['No children', '1 Child', '2 Children', '3 Children', '4 Children',
+  '5 Children', '6+ Children'];
+const INFANTS = ['No infants', '1 Infant', '2 Infants', '3 Infants', '4+ Infants'];
+
+/* The carriers that actually fly the agency's routes out of Pakistan. Free
+   text is not offered here because a preference is only useful if we can
+   ticket it; anything else goes in the notes box. */
+const AIRLINES = [
+  'No preference',
+  'Pakistan International Airlines', 'AirSial', 'Airblue', 'Fly Jinnah', 'Serene Air',
+  'Emirates', 'Etihad Airways', 'Qatar Airways', 'Saudia', 'flynas', 'flydubai',
+  'Air Arabia', 'Gulf Air', 'Kuwait Airways', 'Oman Air', 'Turkish Airlines',
+  'Pegasus Airlines', 'Azerbaijan Airlines', 'Uzbekistan Airways',
+  'British Airways', 'Virgin Atlantic', 'Lufthansa', 'KLM', 'Air France',
+  'Swiss', 'Austrian Airlines', 'Iberia', 'ITA Airways', 'LOT Polish Airlines',
+  'Aeroflot', 'China Southern', 'Thai Airways', 'Malaysia Airlines',
+  'Singapore Airlines', 'Cathay Pacific', 'SriLankan Airlines',
+];
+
 const TRIP_TYPES = [
   { value: 'Return', label: 'Return' },
   { value: 'One Way', label: 'One Way' },
@@ -53,6 +78,12 @@ const TABS = [
    to know which company runs the centre for their destination. They rarely
    do, and it is our job to work out anyway. The city is the part they do
    know. Free text is still accepted. */
+/* Visa fees, appointment slots and document checklists are all per applicant,
+   so the desk needs the count before it can answer anything. */
+const APPLICANTS = ['1 applicant', '2 applicants', '3 applicants', '4 applicants',
+  '5 applicants', '6 applicants', '7–10 applicants', '11–20 applicants',
+  'Group of 20+'];
+
 const APPOINTMENT_CITIES = [
   'Islamabad', 'Lahore', 'Karachi', 'Rawalpindi', 'Peshawar', 'Faisalabad',
   'Multan', 'Sialkot', 'Quetta', 'Mirpur (AJK)', 'Abbottabad',
@@ -65,6 +96,21 @@ const APPOINTMENT_CITIES = [
    — but the appointment desk still secures a slot at the centre whatever the
    category, so they belong here and nowhere else. The visa tab keeps the
    three services in src/data/visa-types.js. */
+/* The client's twenty-one lead the list; every other country follows under
+   its own heading. Asking for "the complete country list, not just one" and
+   asking for the twenty-one to be the list are the same request read at
+   different moments — an optgroup satisfies both. */
+function countryOptions(lead) {
+  const leadNames = lead.map((c) => c.name);
+  const seen = new Set(leadNames.map((n) => n.toLowerCase()));
+  const rest = WORLD_COUNTRIES.filter((c) => !seen.has(c.toLowerCase())).sort();
+  return [
+    { group: 'Most requested', items: leadNames },
+    { group: 'All countries', items: rest },
+    { group: ' ', items: ['Another country'] },
+  ];
+}
+
 const APPOINTMENT_VISA_TYPES = [
   'Visit Visa', 'Tourist Visa', 'Business Visa',
   'Work Visa', 'Study Visa', 'Family Reunion Visa',
@@ -94,6 +140,14 @@ function options(list, { placeholder = '', selected = '' } = {}) {
   const head = placeholder ? `<option value="">${esc(placeholder)}</option>` : '';
   return head + list
     .map((o) => {
+      /* { group, items } renders an <optgroup>. The country lists run to two
+         hundred entries, and the twenty-one the client named have to stay at
+         the top without the rest being cut — a heading is what separates
+         them. */
+      if (o && o.group) {
+        return `<optgroup label="${attr(o.group)}">` +
+          options(o.items, { selected }) + '</optgroup>';
+      }
       const value = typeof o === 'string' ? o : o.value;
       const label = typeof o === 'string' ? o : o.label;
       return `<option value="${attr(value)}"${value === selected ? ' selected' : ''}>${esc(label)}</option>`;
@@ -134,6 +188,20 @@ function input({ id, name, type = 'text', placeholder = '', list = '', extra = '
 function select({ id, name, list, placeholder = '', selected = '', extra = '' }) {
   return `<select class="ts-input ts-input--select" id="${attr(id)}" name="${attr(name)}"` +
     `${extra ? ` ${extra}` : ''}>${options(list, { placeholder, selected })}</select>`;
+}
+
+/** Name field — every panel carries one. The desk was receiving requests
+    with a number and no name on them. */
+function nameField(p) {
+  return field({
+    id: `${p}-name`,
+    label: 'Your Name',
+    icon: 'userTie',
+    required: true,
+    errorFor: 'name',
+    error: 'Please tell us your name.',
+    control: input({ id: `${p}-name`, name: 'name', placeholder: 'Full name', extra: 'autocomplete="name"' }),
+  });
 }
 
 /** Phone field — every panel ends with the same one. */
@@ -181,8 +249,12 @@ function flightsPanel(hidden) {
             <div class="ts-opts__spacer"></div>
             <label class="sr-only" for="${p}-cabin">Cabin class</label>
             <select class="ts-mini" id="${p}-cabin" name="cabin">${options(CABINS)}</select>
-            <label class="sr-only" for="${p}-pax">Passengers</label>
-            <select class="ts-mini" id="${p}-pax" name="travellers">${options(PAX)}</select>
+            <label class="sr-only" for="${p}-adults">Adults, twelve and over</label>
+            <select class="ts-mini" id="${p}-adults" name="adults">${options(ADULTS)}</select>
+            <label class="sr-only" for="${p}-children">Children, two to eleven</label>
+            <select class="ts-mini" id="${p}-children" name="children">${options(CHILDREN)}</select>
+            <label class="sr-only" for="${p}-infants">Infants, under two</label>
+            <select class="ts-mini" id="${p}-infants" name="infants">${options(INFANTS)}</select>
             <label class="ts-check" for="${p}-direct">
               <input type="checkbox" id="${p}-direct" name="directOnly" value="Direct flights only">
               <span>Direct only</span>
@@ -201,6 +273,16 @@ function flightsPanel(hidden) {
               errorFor: 'to', error: 'Where are you flying to?',
               control: input({ id: `${p}-to`, name: 'to', placeholder: 'City or airport', list: 'ts-airports', extra: comboAttrs(`${p}-to`) }),
             })}
+          </div>
+
+          ${/* A second, ordinary row. The row above is a three-column grid
+                built around the 44px swap button, and every field placed in it
+                is positioned by an explicit nth-child rule. Adding a field to
+                it dropped that field into the swap button's 44px column: the
+                airline select came out one icon wide with its label broken
+                across four lines. Everything that is not from/swap/to lives
+                here instead, where the grid is uniform. */ ''}
+          <div class="ts-row ts-row--4">
             ${field({
               id: `${p}-depart`, label: 'Departing', icon: 'calendar', required: true,
               errorFor: 'departDate', error: 'Please choose a departure date.',
@@ -210,7 +292,12 @@ function flightsPanel(hidden) {
               id: `${p}-return`, label: 'Returning', icon: 'calendar', cls: 'ts-field--return',
               control: input({ id: `${p}-return`, name: 'returnDate', type: 'date', extra: 'data-ts-today data-ts-return' }),
             })}
+            ${nameField(p)}
             ${phoneField(p)}
+            ${field({
+              id: `${p}-airline`, label: 'Preferred Airline', icon: 'plane',
+              control: select({ id: `${p}-airline`, name: 'airline', list: AIRLINES, selected: 'No preference' }),
+            })}
           </div>
 
           ${/* Always shown. It used to appear only for Multi-City, which hid
@@ -220,9 +307,9 @@ function flightsPanel(hidden) {
             <label for="${p}-itinerary">Itinerary &amp; Special Requests</label>
             <textarea class="textarea" id="${p}-itinerary" name="itinerary" rows="2"
               data-ts-itinerary
-              data-ph-default="Preferred airline, stopover limits, seat or meal requirements, extra baggage for Zamzam…"
+              data-ph-default="Stopover limits, seat or meal requirements, extra baggage for Zamzam, a budget to work to…"
               data-ph-multi="e.g. Islamabad → Jeddah 12 Mar, Madinah → Istanbul 19 Mar, Istanbul → Islamabad 24 Mar"
-              placeholder="Preferred airline, stopover limits, seat or meal requirements, extra baggage for Zamzam…"></textarea>
+              placeholder="Stopover limits, seat or meal requirements, extra baggage for Zamzam, a budget to work to…"></textarea>
           </div>
 
           ${panelFoot({
@@ -259,6 +346,7 @@ function umrahPanel(hidden) {
               id: `${p}-pax`, label: 'Travellers', icon: 'users',
               control: select({ id: `${p}-pax`, name: 'travellers', list: PAX, selected: '1 Passenger' }),
             })}
+            ${nameField(p)}
             ${phoneField(p)}
           </div>
 
@@ -279,7 +367,7 @@ function umrahPanel(hidden) {
 function appointmentsPanel(hidden) {
   const p = 'tsa';
   /* The client's twenty-one, and nothing else. */
-  const countryNames = [...appointmentCountries.map((c) => c.name), 'Another country'];
+  const countryNames = countryOptions(appointmentCountries);
   return `
         <form class="ts-panel" id="ts-panel-appointments" role="tabpanel" aria-labelledby="ts-tab-appointments"
               data-ts-panel="appointments" data-ts-kind="Appointment" novalidate${hidden ? ' hidden' : ''}>
@@ -299,16 +387,21 @@ function appointmentsPanel(hidden) {
               control: input({ id: `${p}-centre`, name: 'centre', placeholder: 'Islamabad, Lahore, Karachi…', list: 'ts-centres', extra: comboAttrs(`${p}-centre`) }),
             })}
             ${field({
+              id: `${p}-applicants`, label: 'Number of Applicants', icon: 'users',
+              control: select({ id: `${p}-applicants`, name: 'applicants', list: APPLICANTS, selected: '1 applicant' }),
+            })}
+            ${field({
               id: `${p}-date`, label: 'Earliest Date You Can Travel', icon: 'calendar',
               control: input({ id: `${p}-date`, name: 'departDate', type: 'date', extra: 'data-ts-today' }),
             })}
+            ${nameField(p)}
             ${phoneField(p)}
           </div>
 
           <div class="ts-extra">
             <label for="${p}-notes">Anything We Should Know</label>
             <textarea class="textarea" id="${p}-notes" name="notes" rows="2"
-              placeholder="Number of applicants, whether the file is already prepared, dates you cannot attend, a deadline you are working to…"></textarea>
+              placeholder="Whether the file is already prepared, dates you cannot attend, a deadline you are working to…"></textarea>
           </div>
 
           ${panelFoot({
@@ -321,7 +414,7 @@ function appointmentsPanel(hidden) {
 
 function visaPanel(hidden) {
   const p = 'tsv';
-  const countryNames = [...countries.map((c) => c.name), 'Another country'];
+  const countryNames = countryOptions(countries);
   return `
         <form class="ts-panel" id="ts-panel-visa" role="tabpanel" aria-labelledby="ts-tab-visa"
               data-ts-panel="visa" data-ts-kind="Visa" novalidate${hidden ? ' hidden' : ''}>
@@ -341,6 +434,11 @@ function visaPanel(hidden) {
               id: `${p}-date`, label: 'Intended Travel Date', icon: 'calendar',
               control: input({ id: `${p}-date`, name: 'departDate', type: 'date', extra: 'data-ts-today' }),
             })}
+            ${field({
+              id: `${p}-applicants`, label: 'Number of Applicants', icon: 'users',
+              control: select({ id: `${p}-applicants`, name: 'applicants', list: APPLICANTS, selected: '1 applicant' }),
+            })}
+            ${nameField(p)}
             ${phoneField(p)}
           </div>
 
@@ -390,6 +488,7 @@ function hotelsPanel(hidden) {
               id: `${p}-cat`, label: 'Hotel Category', icon: 'star', combo: true,
               control: input({ id: `${p}-cat`, name: 'category', placeholder: 'Any category — or type your own', list: 'ts-hotel-categories', extra: comboAttrs(`${p}-cat`) }),
             })}
+            ${nameField(p)}
             ${phoneField(p)}
           </div>
 
