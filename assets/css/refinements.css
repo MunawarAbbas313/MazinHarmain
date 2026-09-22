@@ -683,19 +683,22 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 .logo__img { display: block; width: auto; }
 .logo__img--footer { height: 118px; max-width: 300px; object-fit: contain; }
 
-/* The supplied monogram, sized to sit beside the wordmark */
+/* The monogram, sized to sit beside the wordmark. The mark is a wide
+   free-standing lockup (about 2.2:1), so height drives it and width follows.
+   Slightly shorter than the old square badge because the same height now
+   buys a much wider object. */
 .logo__mark--img {
   width: auto;
-  height: 50px;
+  height: 44px;
   object-fit: contain;
   flex-shrink: 0;
 }
-.logo--footer .logo__mark--img { height: 62px; }
+.logo--footer .logo__mark--img { height: 52px; }
 .logo--header { align-items: center; }
 .logo--footer { align-items: flex-start; }
 
 @media (max-width: 767px) {
-  .logo__mark--img { height: 42px; }
+  .logo__mark--img { height: 36px; }
   .logo__img--footer { height: 94px; }
 }
 
@@ -1551,3 +1554,46 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   /* Three across: nine cards fill the grid exactly. */
   .svc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-6); }
 }
+
+/* --------------------------------------------------------------------------
+   22. Accreditation marks
+
+   Styles the real logos that assets/img/credentials/ will hold. They are not
+   in the repo yet — see that folder's README — so these rules are inert
+   until the client supplies the artwork, at which point the strips swap from
+   the gold line icon to the mark with no further change.
+
+   Third-party logos arrive in every colour and aspect there is, so they are
+   boxed to a fixed height and contained rather than trusted to behave.
+   -------------------------------------------------------------------------- */
+.trust-badge__logo,
+.trust-item__logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+/* Dark band on the home page: most official marks are dark-on-white, so they
+   sit on a light plate rather than disappearing into the green. */
+.trust-badge__logo {
+  height: 34px;
+  padding: 5px 9px;
+  background: #fff;
+  border-radius: var(--radius-sm);
+}
+/* The cream trust strip needs no plate. */
+.trust-item__logo { height: 38px; }
+
+/* The licence or registration number, when site.credentials carries one.
+   Tabular figures so a column of them lines up. */
+.trust-badge__ref,
+.trust-item__ref {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-xs);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+  opacity: .75;
+}
+.trust-badge__ref { color: var(--gold-400); }
+.trust-item__ref { color: var(--muted-2); }

@@ -86,6 +86,29 @@ const site = {
      to a pre-filled WhatsApp message + mailto so no lead is ever lost.       */
   formEndpoint: '',
 
+  /* ---- Credentials -------------------------------------------------------
+     One source of truth for the trust strip on the home page and the one in
+     components.trustStrip().
+
+     `key` names the logo file the strip will use the moment it exists:
+       assets/img/credentials/<key>.svg   (preferred)
+       assets/img/credentials/<key>.png
+     Until then the gold line icon stands in, so the section never shows a
+     broken image. See that folder's README for why the real marks have to
+     be supplied by the client rather than fetched.
+
+     `ref` is the licence or registration number. Filling it in is worth
+     more than any logo: a number can be checked against the registry,
+     which is what a cautious customer actually wants.                       */
+  credentials: [
+    { key: 'secp', name: 'SECP', sub: 'Registered', icon: 'building', ref: '' },
+    { key: 'fbr', name: 'FBR', sub: 'Registered', icon: 'certificate', ref: '' },
+    { key: 'dts', name: 'DTS', sub: 'Licensed', icon: 'certificate', ref: '' },
+    { key: 'iata', name: 'IATA', sub: 'Accredited', icon: 'ticket', ref: '' },
+    { key: 'mora', name: 'MORA', sub: 'Approved', icon: 'kaaba', ref: '' },
+    { key: 'hotel-partners', name: 'Hotel Partners', sub: 'Makkah & Madinah', icon: 'bed', ref: '' },
+  ],
+
   /* ---- Sister company ----------------------------------------------------
      MyCab Pakistan runs the vehicles. Not an arm's-length advertiser: their
      published address is this same office (Safdar Mansion, 2nd floor) and

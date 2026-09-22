@@ -92,6 +92,9 @@ const CURATED = [
 
   /* Service card photography, at FEATURE size so the cards stay sharp. */
   { file: 'services/air-ticketing.jpg', id: 10062411, ...FEATURE, alt: 'An aircraft parked at an airport gate, seen through the terminal window' },
+  { file: 'services/attestation.jpg',   id: 7654118, ...FEATURE, alt: 'A clerk stamping documents at an office desk' },
+  { file: 'services/apostille.jpg',     id: 9858904, ...FEATURE, alt: 'A stamp resting on a legal document' },
+  { file: 'services/power-of-attorney.jpg', id: 8730998, ...FEATURE, alt: 'A person signing legal documents at a desk' },
 
   /* Car rental, for the MyCab sister-company section and its service page. */
   { file: 'car-rental.jpg',       id: 116675,   ...FEATURE, alt: 'A white Range Rover parked on a driveway' },

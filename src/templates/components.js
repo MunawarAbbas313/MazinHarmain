@@ -6,6 +6,7 @@
 const site = require('../data/site');
 const icon = require('../lib/icons');
 const { esc, attr, each, slugify } = require('../lib/html');
+const { firstAsset } = require('../lib/assets');
 const { flagImg } = require('../data/flags');
 
 /* -------------------------------------------------------------------------
@@ -481,23 +482,27 @@ function linkListCard(title, links) {
    Trust strip
    ------------------------------------------------------------------------- */
 function trustStrip() {
-  const items = [
-    { icon: 'building', name: 'SECP Registered', sub: 'Company registration' },
-    { icon: 'doc', name: 'FBR Registered', sub: 'Tax compliance' },
-    { icon: 'award', name: 'DTS Licensed', sub: 'Dept. of Tourist Services' },
-    { icon: 'plane', name: 'IATA Accredited', sub: 'Air ticketing' },
-    { icon: 'kaaba', name: 'MORA Approved', sub: 'Religious travel' },
-    { icon: 'hotel', name: 'Hotel Partners', sub: 'Makkah &amp; Madinah' },
-  ];
+  /* Same credentials, same file-drop mechanism, as the home page strip. */
+  const items = site.credentials.map((c) => ({
+    ...c,
+    logo: firstAsset([
+      `/assets/img/credentials/${c.key}.svg`,
+      `/assets/img/credentials/${c.key}.png`,
+    ]),
+  }));
+
   return `
       <div class="trust-grid">
         ${each(
           items,
           (i) => `
         <div class="trust-item">
-          ${icon(i.icon, { size: 30 })}
-          <span class="trust-item__name">${i.name}</span>
-          <span class="trust-item__sub">${i.sub}</span>
+          ${i.logo
+            ? `<img class="trust-item__logo" src="${attr(i.logo)}" alt="${attr(i.name)}" loading="lazy" decoding="async">`
+            : icon(i.icon, { size: 30 })}
+          <span class="trust-item__name">${esc(i.name)}</span>
+          <span class="trust-item__sub">${esc(i.sub)}</span>
+          ${i.ref ? `<span class="trust-item__ref">${esc(i.ref)}</span>` : ''}
         </div>`
         )}
       </div>

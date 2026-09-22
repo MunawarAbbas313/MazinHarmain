@@ -23,6 +23,7 @@ const c = require('../templates/components');
 const { searchWidget } = require('../templates/search-widget');
 const icon = require('../lib/icons');
 const { esc, attr, each, formatDate } = require('../lib/html');
+const { firstAsset } = require('../lib/assets');
 
 const { bySlug, homepageServiceOrder } = require('../data/services');
 const { tiers } = require('../data/umrah');
@@ -359,14 +360,17 @@ function whySection() {
 
 /* ---------------------------------------------------------------- 9. Trust */
 function trustSection() {
-  const badges = [
-    { icon: 'building', name: 'SECP', sub: 'Registered' },
-    { icon: 'certificate', name: 'FBR',  sub: 'Registered' },
-    { icon: 'certificate', name: 'DTS',  sub: 'Licensed' },
-    { icon: 'ticket',   name: 'IATA', sub: 'Accredited' },
-    { icon: 'kaaba',    name: 'MORA', sub: 'Approved' },
-    { icon: 'bed',      name: 'Hotel Partners', sub: 'Makkah &amp; Madinah' },
-  ];
+  /* Real accreditation marks the moment they are in the repo; the gold line
+     icon until then. See assets/img/credentials/README.md — these belong to
+     SECP, FBR, DTS, IATA and MORA, so the client supplies them rather than
+     us lifting them off a website. */
+  const badges = site.credentials.map((c) => ({
+    ...c,
+    logo: firstAsset([
+      `/assets/img/credentials/${c.key}.svg`,
+      `/assets/img/credentials/${c.key}.png`,
+    ]),
+  }));
 
   return `
   <section class="section trust-band">
@@ -383,9 +387,12 @@ function trustSection() {
           badges,
           (b) => `
         <div class="trust-badge">
-          ${icon(b.icon, { size: 26 })}
+          ${b.logo
+            ? `<img class="trust-badge__logo" src="${attr(b.logo)}" alt="${attr(b.name)}" loading="lazy" decoding="async">`
+            : icon(b.icon, { size: 26 })}
           <strong>${b.name}</strong>
           <span>${b.sub}</span>
+          ${b.ref ? `<span class="trust-badge__ref">${esc(b.ref)}</span>` : ''}
         </div>`
         )}
       </div>

@@ -51,6 +51,17 @@ const MARK_SRC = hasAsset('logo-mark.svg')
   : (hasAsset('logo-mark.png') ? '/assets/img/logo-mark.png' : '');
 const HAS_MARK = Boolean(MARK_SRC);
 
+/* The wide mark is roughly 2.2:1 — width/height are declared so the browser
+   reserves the right box before it loads and the header does not jump. */
+const MARK_W = 460;
+const MARK_H = 212;
+
+/* Deep green letters disappear against the dark footer, so it gets the
+   gold-filled reverse cut when that file exists. */
+const MARK_REVERSE_SRC = hasAsset('logo-mark-reverse.svg')
+  ? '/assets/img/logo-mark-reverse.svg'
+  : MARK_SRC;
+
 /* The wordmark, set in the brand's display face. Paired with the real
    monogram in the header, because the full stacked lockup is unreadable at
    header height — the "MAZIN HARAMAIN" line would render around 10px. */
@@ -67,8 +78,9 @@ function logo(linked = true, variant = 'header') {
     /* Monogram + typeset wordmark, in the header and the footer alike. The
        wordmark is live text in the real display face, which beats any
        rasterised lockup for sharpness and for screen readers. */
-    inner = `<img class="logo__mark logo__mark--img" src="${MARK_SRC}" ` +
-      `alt="" width="120" height="120" ` +
+    const src = variant === 'footer' ? MARK_REVERSE_SRC : MARK_SRC;
+    inner = `<img class="logo__mark logo__mark--img" src="${src}" ` +
+      `alt="" width="${MARK_W}" height="${MARK_H}" ` +
       `loading="${variant === 'header' ? 'eager' : 'lazy'}" decoding="async">${wordmark}`;
   } else {
     /* Placeholder until the artwork is supplied. */
@@ -280,7 +292,7 @@ function organisationSchema() {
     name: site.name,
     alternateName: site.shortName,
     url: `${site.url}/`,
-    logo: `${site.url}/assets/img/logo-mark.png`,
+    logo: `${site.url}/assets/img/icon-512.png`,
     image: `${site.url}/assets/img/og-default.png`,
     description: site.description,
     slogan: site.tagline,

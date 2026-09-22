@@ -401,6 +401,230 @@ const services = [
     related: ['/services/airport-transfers/', '/destinations/', '/corporate-travel/', '/services/ziyarat-tours/'],
   },
 
+  {
+    /* ---- Document attestation ------------------------------------------
+       Added September 2026: the client listed attestation, apostille and
+       power-of-attorney work among the services the site was not showing.
+
+       The procedural detail below (HEC for degrees, IBCC for board
+       certificates, NADRA-issued personal documents, MOFA last before the
+       embassy) reflects how the chain normally runs, but attestation rules
+       and camp-office arrangements change without much notice. Every page
+       in this group says so on the page itself, and the client should check
+       the specifics against current MOFA guidance before launch. */
+    slug: 'document-attestation',
+    heroImage: '/assets/img/services/attestation.jpg',
+    heroImageAlt: 'A clerk stamping documents at an office desk',
+    url: '/services/document-attestation/',
+    icon: 'stamp',
+    title: 'Document Attestation',
+    blurb: 'MOFA, HEC, IBCC & embassy attestation',
+    h1: 'Document Attestation from Pakistan — MOFA, HEC, IBCC & Embassy',
+    metaTitle: 'Document Attestation Services in Islamabad | MOFA, HEC & IBCC',
+    metaDescription:
+      'Document attestation from Pakistan — degrees through HEC, board certificates through IBCC, NADRA personal documents, then MOFA and the destination embassy. Islamabad-based, with the order of steps handled for you.',
+    lead: 'Attestation fails on sequence more often than on paperwork. Get the order wrong and the document comes back unstamped, having cost you a fortnight.',
+    intro: [
+      'Attestation is a chain, and every link has to be in the right order. A university degree is verified by the <strong>Higher Education Commission</strong> before anyone else will touch it. A matriculation or intermediate certificate goes through the <strong>Inter Board Committee of Chairmen</strong> instead. Personal documents &mdash; birth, marriage, death, family registration &mdash; are only accepted in their <strong>NADRA-issued</strong> form, which catches people out who are holding a handwritten municipal certificate from thirty years ago.',
+      'Only once that first verification is done does the <strong>Ministry of Foreign Affairs</strong> attest the document, and only after MOFA will the destination country&rsquo;s embassy legalise it. Skip a step and the file is returned. Present the wrong version of a document and it is returned. Neither refusal comes with much explanation.',
+      'We run the sequence for you: working out which authority your particular document needs, getting it into the right form first, and moving it through MOFA and the embassy in the correct order. For documents going to a country that is party to the Hague Convention, an <a href="/services/apostille/">apostille</a> may replace embassy legalisation entirely &mdash; which is faster, and worth checking before you start.',
+    ],
+    features: [
+      { icon: 'award', title: 'Educational Documents', text: 'Degrees, transcripts and diplomas through HEC; matriculation and intermediate certificates through IBCC.' },
+      { icon: 'users', title: 'Personal Documents', text: 'NADRA birth, marriage, death and family registration certificates, in the form MOFA will accept.' },
+      { icon: 'briefcase', title: 'Commercial Documents', text: 'Invoices, certificates of origin and company papers, via the Chamber of Commerce where required.' },
+      { icon: 'building', title: 'MOFA Attestation', text: 'Submission and collection at the Ministry of Foreign Affairs, including the camp offices.' },
+      { icon: 'globe', title: 'Embassy Legalisation', text: 'The final stamp from the destination mission, once MOFA attestation is in place.' },
+      { icon: 'doc', title: 'Translation', text: 'Certified translation arranged where the receiving country will not accept English or Urdu.' },
+    ],
+    includes: [
+      'Assessment of which authority each of your documents actually needs',
+      'Confirmation that personal documents are in NADRA-issued form before submission',
+      'HEC verification for university degrees and transcripts',
+      'IBCC attestation for matriculation and intermediate certificates',
+      'MOFA attestation, including camp-office submission',
+      'Embassy or consulate legalisation for the destination country',
+      'Certified translation where the receiving authority requires it',
+      'Tracking, collection and secure return of your originals',
+    ],
+    notice:
+      'Attestation requirements, fee schedules and camp-office arrangements are set by the authorities concerned and change from time to time. We confirm the current process for your specific documents and destination before you commit to anything, and we never hold your originals longer than the step in hand requires.',
+    process: [
+      { title: 'Send Us the List', text: 'Tell us what each document is and which country it is going to. Photographs of the documents are enough to start.' },
+      { title: 'We Map the Chain', text: 'You get the actual sequence for your documents, the authorities involved, the realistic timeline and the total cost.' },
+      { title: 'Verification First', text: 'HEC, IBCC, NADRA or the Chamber of Commerce, depending on the document. Nothing goes to MOFA before this is done.' },
+      { title: 'MOFA, Then the Embassy', text: 'Attestation at the Ministry, then legalisation at the destination mission — or an apostille where that applies instead.' },
+    ],
+    faqs: [
+      {
+        q: 'How long does document attestation take in Pakistan?',
+        a: '<p>For a straightforward set — a degree and a couple of NADRA certificates going to one country — a fortnight to three weeks is a fair expectation once verification is complete. HEC verification is usually the slowest link, particularly if the issuing university is slow to respond, and that part is outside anyone\'s control. We give you a timeline for your specific documents rather than a general one, and tell you which step is likely to hold things up.</p>',
+      },
+      {
+        q: 'Do I need HEC or IBCC attestation?',
+        a: '<p>It depends on who issued the document. University degrees, transcripts and diplomas go through the Higher Education Commission. Matriculation and intermediate certificates go through the Inter Board Committee of Chairmen instead, because they were issued by a board rather than a university. People often assume one covers both and lose time finding out otherwise.</p>',
+      },
+      {
+        q: 'Will MOFA attest my old handwritten birth certificate?',
+        a: '<p>Almost certainly not. Personal documents are expected in their NADRA-issued form — a computerised birth registration certificate rather than a union council or municipal record from decades ago. If you are holding the older version, the first step is obtaining the NADRA equivalent, and that is worth starting before anything else because it gates the whole chain.</p>',
+      },
+      {
+        q: 'Do I have to hand over my original documents?',
+        a: '<p>Yes. Attestation is a physical stamp on the document itself, so the originals have to travel. We keep the time we hold them to what the step actually requires, give you a receipt listing exactly what we have, and return everything together. If you need a document for something else mid-process, say so at the start and we will sequence around it.</p>',
+      },
+      {
+        q: 'Can you attest documents for someone who is abroad?',
+        a: '<p>Often, yes — this is a large part of the work. If your originals are in Pakistan with family, they can be handed to us here while you stay where you are. Where a signature or an authority to act is needed from you, that is usually handled with a <a href="/services/power-of-attorney/">power of attorney</a> executed at the Pakistani mission in your country.</p>',
+      },
+    ],
+    related: ['/services/apostille/', '/services/power-of-attorney/', '/visa-services/', '/services/visa-appointment-booking/'],
+  },
+
+  {
+    /* ---- Apostille ------------------------------------------------------
+       Pakistan acceded to the Hague Apostille Convention and it came into
+       force for Pakistan in March 2023, with MOFA as the Competent
+       Authority. That is recent enough that a lot of people — and some
+       employers — still assume embassy legalisation is the only route, which
+       is the confusion this page exists to clear up. Worth re-checking the
+       current member-state list before launch. */
+    slug: 'apostille',
+    heroImage: '/assets/img/services/apostille.jpg',
+    heroImageAlt: 'A stamp resting on a legal document',
+    url: '/services/apostille/',
+    icon: 'certificate',
+    title: 'Apostille Services',
+    blurb: 'Hague Convention certification',
+    h1: 'Apostille Services in Pakistan — Hague Convention Certification',
+    metaTitle: 'Apostille Services in Islamabad | Hague Convention Attestation Pakistan',
+    metaDescription:
+      'Apostille certification for Pakistani documents under the Hague Convention — one MOFA certificate accepted across member states, with no embassy legalisation needed. Degrees, NADRA certificates and commercial papers.',
+    lead: 'If your document is going to a Hague Convention country, one certificate can replace the whole embassy queue. A great many people still do not know that.',
+    intro: [
+      'An apostille is a single certificate that makes a public document valid in every other country party to the Hague Apostille Convention. No embassy stamp, no consular queue, no separate legalisation for each destination &mdash; one certificate, recognised across the membership.',
+      'Pakistan joined the Convention relatively recently, with the <strong>Ministry of Foreign Affairs</strong> acting as the Competent Authority that issues the apostille. Because it is a recent change, plenty of people &mdash; and some overseas employers and universities &mdash; are still working from the older assumption that embassy legalisation is the only route. Sometimes they are right, because the destination is not a member; often they are not.',
+      'The first question is therefore always the same: is the receiving country a party to the Convention, and will the receiving institution accept an apostille? We check both before recommending a route, because being sent down the apostille path by mistake costs exactly as much time as being sent down the embassy path by mistake. Where an apostille does not apply, the work becomes ordinary <a href="/services/document-attestation/">document attestation</a>.',
+    ],
+    features: [
+      { icon: 'globe', title: 'Member-State Check', text: 'We confirm whether your destination is party to the Convention before anything is submitted.' },
+      { icon: 'award', title: 'Educational Documents', text: 'Degrees and transcripts, after HEC or IBCC verification as the document requires.' },
+      { icon: 'users', title: 'Personal Documents', text: 'NADRA birth, marriage and family registration certificates.' },
+      { icon: 'briefcase', title: 'Commercial Papers', text: 'Company documents, powers of attorney and certificates of origin.' },
+      { icon: 'building', title: 'MOFA Competent Authority', text: 'The apostille itself, issued by the Ministry of Foreign Affairs.' },
+      { icon: 'clock', title: 'Faster Than Legalisation', text: 'One certificate rather than a separate embassy step for each destination.' },
+    ],
+    includes: [
+      'Confirmation that the destination country accepts an apostille',
+      'A check on whether the receiving institution will accept one',
+      'Underlying verification through HEC, IBCC or NADRA first',
+      'The apostille certificate issued by MOFA',
+      'Certified translation where the destination requires it',
+      'The ordinary attestation route instead, where an apostille does not apply',
+      'Tracking and secure return of your originals',
+      'A written note of what was issued, for your own records',
+    ],
+    notice:
+      'The list of Hague Convention member states changes as countries join, and an individual university, employer or court can still ask for something in addition to an apostille. We verify the current position for your destination before starting, but the receiving institution has the final say on what it will accept.',
+    process: [
+      { title: 'Tell Us the Destination', text: 'The country and, where you know it, the institution asking for the document. Both matter.' },
+      { title: 'We Confirm the Route', text: 'Apostille or embassy legalisation, with the reason stated plainly rather than assumed.' },
+      { title: 'Underlying Verification', text: 'HEC, IBCC or NADRA first, exactly as with ordinary attestation. The apostille sits on top of that.' },
+      { title: 'MOFA Issues the Apostille', text: 'The certificate is attached and your originals come back to you.' },
+    ],
+    faqs: [
+      {
+        q: 'What is the difference between an apostille and attestation?',
+        a: '<p>An apostille is one certificate accepted by every country in the Hague Convention. Attestation, in the older sense, is a chain that ends with the specific destination country\'s embassy stamping your document — which means doing it again if you later need the same document for somewhere else. Where an apostille is available it is usually faster and cheaper; where the destination is not a member, it is not an option at all.</p>',
+      },
+      {
+        q: 'Does Pakistan issue apostilles?',
+        a: '<p>Yes. Pakistan is a party to the Hague Apostille Convention and the Ministry of Foreign Affairs is the Competent Authority that issues the certificate. This is a recent enough change that some employers and institutions abroad are still asking for embassy legalisation out of habit, so it is worth asking them directly what they will accept before you choose a route.</p>',
+      },
+      {
+        q: 'Do I still need HEC or IBCC verification for an apostille?',
+        a: '<p>Generally yes. The apostille certifies the document and the signature on it; it does not replace the underlying verification that a degree or board certificate is genuine. In practice the chain looks much the same up to the last step, and then an apostille is issued instead of the document going on to an embassy.</p>',
+      },
+      {
+        q: 'Is an apostille accepted everywhere?',
+        a: '<p>Only in countries party to the Convention — which is most of Europe, and a great many others, but not all. And membership is not quite the end of it: an individual university or licensing body can still ask for a translation, a notarisation or a copy certified some particular way. We check the country, and we encourage you to ask the receiving institution too.</p>',
+      },
+    ],
+    related: ['/services/document-attestation/', '/services/power-of-attorney/', '/visa-services/', '/services/visa-appointment-booking/'],
+  },
+
+  {
+    /* ---- Power of attorney ---------------------------------------------
+       The overseas-Pakistani case is the common one: a POA executed at a
+       Pakistani mission abroad, then attested by MOFA so it can be used
+       here. Written from that direction because that is who asks. */
+    slug: 'power-of-attorney',
+    heroImage: '/assets/img/services/power-of-attorney.jpg',
+    heroImageAlt: 'A person signing legal documents at a desk',
+    url: '/services/power-of-attorney/',
+    icon: 'doc',
+    title: 'Power of Attorney',
+    blurb: 'Drafting & attestation for overseas Pakistanis',
+    h1: 'Power of Attorney Attestation for Overseas Pakistanis',
+    metaTitle: 'Power of Attorney Attestation Pakistan | Overseas Pakistani POA Services',
+    metaDescription:
+      'Power of attorney attestation for overseas Pakistanis — drafting, execution at the Pakistani mission abroad, MOFA attestation and use in Pakistan for property, banking and court matters.',
+    lead: 'A power of attorney is the difference between handling something from abroad and having to fly home for it.',
+    intro: [
+      'If you live abroad and something in Pakistan needs signing &mdash; a property sale, a bank matter, a case in court, a transfer at the registry &mdash; a power of attorney lets somebody you trust here act for you. It is one of the most useful documents an overseas Pakistani can hold, and one of the easiest to get wrong.',
+      'The usual route runs the other way from most attestation work. The document is drafted to cover the specific act, executed and attested at the <strong>Pakistani embassy or consulate</strong> in the country where you live, and then attested by the <strong>Ministry of Foreign Affairs</strong> after it arrives in Pakistan so that the registry, bank or court here will accept it.',
+      'Two things cause most of the trouble. The first is scope: a power of attorney drafted too narrowly will not cover the act when it comes to it, and one drafted too broadly may be refused, or grant far more authority than you intended. The second is that the institution receiving it &mdash; a particular sub-registrar, a particular bank &mdash; may have its own view on wording and attestation. We would rather establish that at the drafting stage than after your document has crossed a continent.',
+    ],
+    features: [
+      { icon: 'doc', title: 'Drafting', text: 'Wording scoped to the actual act, whether that is a sale, a transfer or representation in a case.' },
+      { icon: 'globe', title: 'Execution Abroad', text: 'Guidance on attestation at the Pakistani mission in your country of residence.' },
+      { icon: 'building', title: 'MOFA Attestation', text: 'Attestation on arrival in Pakistan, so local institutions will accept it.' },
+      { icon: 'handshake', title: 'Special or General', text: 'A special power for one transaction, or a general power where the matter genuinely needs it.' },
+      { icon: 'shield', title: 'Revocation', text: 'Assistance with revoking a power of attorney that is no longer wanted.' },
+      { icon: 'stamp', title: 'Registration', text: 'Guidance where the document has to be registered, as property matters usually require.' },
+    ],
+    includes: [
+      'A discussion of what the attorney actually needs to be able to do',
+      'Drafting scoped to that, rather than a generic template',
+      'A note of which Pakistani mission to attend and what to take',
+      'MOFA attestation once the executed document reaches Pakistan',
+      'Guidance on registration where the transaction requires it',
+      'Certified translation where a document is executed in another language',
+      'Assistance with revocation if circumstances change',
+      'A written record of the steps completed',
+    ],
+    notice:
+      'We provide documentation and attestation assistance, not legal advice, and we are not a law firm. For a contested matter, a large property transaction or anything with a dispute attached, take independent legal advice on the wording before executing it — and confirm with the specific registry, bank or court what they will accept.',
+    process: [
+      { title: 'Tell Us the Act', text: 'What needs doing in Pakistan, by whom, and whether the receiving institution has said anything about its requirements.' },
+      { title: 'Draft and Review', text: 'You see the wording before anything is signed, with the scope explained in plain terms.' },
+      { title: 'Execute at the Mission', text: 'You attend the Pakistani embassy or consulate where you live, with a checklist of what to bring.' },
+      { title: 'MOFA and Onward Use', text: 'The executed document is attested here and delivered to your attorney, ready to use.' },
+    ],
+    faqs: [
+      {
+        q: 'How does an overseas Pakistani make a power of attorney?',
+        a: '<p>The document is drafted for the specific act, then signed and attested at the Pakistani embassy or consulate in the country where you live — in person, with your passport and usually your CNIC or NICOP. It is then sent to Pakistan and attested by the Ministry of Foreign Affairs, after which your attorney can use it. We prepare the draft and handle the Pakistan end.</p>',
+      },
+      {
+        q: 'Special or general power of attorney?',
+        a: '<p>A special power covers one defined act — selling a particular property, operating a particular account. A general power grants broad authority over your affairs. For most purposes a special power is the right choice and the safer one, because it limits what can be done in your name. A general power is occasionally necessary, and should not be given lightly or to someone you do not entirely trust.</p>',
+      },
+      {
+        q: 'Does a power of attorney need to be registered?',
+        a: '<p>For property transactions, usually yes, and an unregistered document is a common reason for a transfer stalling at the sub-registrar. Requirements vary by province and by the nature of the transaction. We tell you whether registration applies to your matter, because it changes both the timeline and what the wording needs to contain.</p>',
+      },
+      {
+        q: 'Can I cancel a power of attorney?',
+        a: '<p>Yes. A power of attorney can be revoked, and where the original was registered the revocation generally needs to be registered too, with notice given to the attorney and to anyone relying on it — a bank or a registry. Do not simply stop mentioning it: until it is properly revoked, it may still be acted upon.</p>',
+      },
+      {
+        q: 'How long does the whole process take?',
+        a: '<p>Drafting is quick, often a day or two. The part outside our control is the appointment at the Pakistani mission where you live, which varies enormously by country and season. Once the executed document reaches Pakistan, MOFA attestation is typically a few working days. We give you a realistic estimate for your country rather than a best case.</p>',
+      },
+    ],
+    related: ['/services/document-attestation/', '/services/apostille/', '/visa-services/', '/contact/'],
+  },
+
   /* ---- Hub cards: full sections live under their own URL trees --------- */
   {
     slug: 'umrah-packages', url: '/umrah-packages/', icon: 'kaaba', hub: true,

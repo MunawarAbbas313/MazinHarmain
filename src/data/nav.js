@@ -24,6 +24,9 @@ const nav = [
       { label: 'Travel Insurance', url: '/services/travel-insurance/' },
       { label: 'Airport Transfers', url: '/services/airport-transfers/' },
       { label: 'Car Rental', url: '/services/car-rental/' },
+      { label: 'Document Attestation', url: '/services/document-attestation/' },
+      { label: 'Apostille Services', url: '/services/apostille/' },
+      { label: 'Power of Attorney', url: '/services/power-of-attorney/' },
     ],
   },
   {
@@ -115,6 +118,9 @@ const footerNav = {
       { label: 'Travel Insurance', url: '/services/travel-insurance/' },
       { label: 'Airport Transfers', url: '/services/airport-transfers/' },
       { label: 'Car Rental', url: '/services/car-rental/' },
+      { label: 'Document Attestation', url: '/services/document-attestation/' },
+      { label: 'Apostille Services', url: '/services/apostille/' },
+      { label: 'Power of Attorney', url: '/services/power-of-attorney/' },
     ],
   },
   company: {

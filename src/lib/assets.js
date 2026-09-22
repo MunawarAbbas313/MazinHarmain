@@ -40,4 +40,27 @@ function asset(url) {
   return out;
 }
 
-module.exports = { asset };
+/**
+ * Does an asset exist in the repo? Checked at build time rather than guessed
+ * at, so dropping a file in and rebuilding is the whole installation step.
+ * Returns the public URL (hashed) or '' when the file is not there.
+ */
+function assetIfPresent(url) {
+  try {
+    fs.accessSync(path.join(ROOT, url.replace(/^\/+/, '')));
+  } catch (_) {
+    return '';
+  }
+  return asset(url);
+}
+
+/** First of several candidate paths that actually exists, else ''. */
+function firstAsset(urls) {
+  for (const url of urls) {
+    const hit = assetIfPresent(url);
+    if (hit) return hit;
+  }
+  return '';
+}
+
+module.exports = { asset, assetIfPresent, firstAsset };

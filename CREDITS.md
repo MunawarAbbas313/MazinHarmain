@@ -7,8 +7,8 @@ permitted, no attribution required, no permission needed**.
 Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
-- Images: **56**
-- Total weight: **11574 KB**
+- Images: **59**
+- Total weight: **12004 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -87,4 +87,7 @@ npm run images -- --force           # everything
 | `hotels/makkah-hotels.jpg` | 1200×900 | 177 KB | [#31339194](https://www.pexels.com/photo/31339194/) |
 | `hotels/worldwide-hotels.jpg` | 1200×900 | 163 KB | [#695193](https://www.pexels.com/photo/695193/) |
 | `services/air-ticketing.jpg` | 1600×1200 | 121 KB | [#10062411](https://www.pexels.com/photo/10062411/) |
+| `services/apostille.jpg` | 1600×1200 | 114 KB | [#9858904](https://www.pexels.com/photo/9858904/) |
+| `services/attestation.jpg` | 1600×1200 | 160 KB | [#7654118](https://www.pexels.com/photo/7654118/) |
+| `services/power-of-attorney.jpg` | 1600×1200 | 157 KB | [#8730998](https://www.pexels.com/photo/8730998/) |
 | `visa-services.jpg` | 1600×1200 | 262 KB | [#7235894](https://www.pexels.com/photo/7235894/) |
