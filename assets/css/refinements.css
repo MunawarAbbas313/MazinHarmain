@@ -1912,3 +1912,44 @@ button, input, select, textarea { font: inherit; }
 @media (prefers-reduced-motion: no-preference) {
   .ts--photo .ts__backdrop img { will-change: auto; }
 }
+
+/* ---- The banner title on the search backdrop ---------------------------
+   The client's reference puts the agency's name on the left of the banner
+   with the aircraft to its right. It sits in the photograph's top strip —
+   the same strip the aircraft needs — so it is constrained to the left half
+   and hidden below 900px, where that strip is too short to hold both and the
+   header lockup is only a scroll away in any case. */
+.ts__banner {
+  max-width: 34rem;
+  margin-bottom: clamp(1.25rem, 3vw, 2.25rem);
+  color: var(--green-900);
+}
+.ts__banner-eyebrow {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  /* Gold on a sunlit cloud is gold on gold. The darker step is what keeps
+     this line legible against the brightest part of the photograph. */
+  color: var(--gold-700);
+}
+.ts__banner-name {
+  margin: 0.35rem 0 0.2rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4.4vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--green-900);
+}
+.ts__banner-tagline {
+  display: block;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  font-style: italic;
+  color: var(--green-800);
+}
+
+@media (max-width: 900px) {
+  .ts__banner { display: none; }
+}

@@ -97,7 +97,19 @@ const nav = [
   },
   /* Promoted out of the Services dropdown to top level — the client's most
      requested service and the one they felt the site hid. */
-  { label: 'Visa Appointments', url: '/services/visa-appointment-booking/' },
+  {
+    /* Top level at the client's request. It carries the same twenty-one
+       countries as the Visa menu and the form's dropdown: the client looks
+       for them here, under the words "visa appointment", not only under
+       "Visa". */
+    label: 'Visa Appointments',
+    url: '/services/visa-appointment-booking/',
+    children: [
+      { label: 'Book an Appointment', url: '/services/visa-appointment-booking/' },
+      { head: 'Countries' },
+      ...countryLinks,
+    ],
+  },
   /* Corporate and Travel Guides came off the top row: ten items crowded the
      header and the client asked for fewer. Both keep their place in the
      Services dropdown and the footer, so nothing is unreachable. */

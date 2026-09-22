@@ -398,10 +398,22 @@ function searchWidget({ active = 'flights', overlap = true, title = '', backdrop
            sizes="100vw" alt="" width="1600" height="900" decoding="async" fetchpriority="low">
     </div>` : '';
 
+  /* The client's reference banner carries a title beside the aircraft. It is
+     live text, not baked into the JPEG, so it stays selectable, translatable
+     and readable to a screen reader, and so the agency's name is never a
+     picture of its name. */
+  const banner = backdrop ? `
+      <div class="ts__banner">
+        <span class="ts__banner-eyebrow">Explore the world with</span>
+        <p class="ts__banner-name">${esc(site.name)}</p>
+        <span class="ts__banner-tagline">Your journey, our commitment.</span>
+      </div>` : '';
+
   return `
   <div class="ts${overlap ? ' ts--overlap' : ''}${backdrop ? ' ts--photo' : ''}">
     ${photo}
     <div class="container">
+      ${banner}
       ${title ? `<h2 class="ts__title">${esc(title)}</h2>` : ''}
       ${/* The tab strip sits OUTSIDE the card, so the tabs read as tabs —
             attached to the panel, with the page showing between and beside
