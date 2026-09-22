@@ -410,7 +410,11 @@ function searchWidget({ active = 'flights', overlap = true, title = '', backdrop
       </div>` : '';
 
   return `
-  <div class="ts${overlap ? ' ts--overlap' : ''}${backdrop ? ' ts--photo' : ''}">
+  ${/* data-ts lives on the OUTER block, not on the card. The tab strip sits
+        outside the card, and main.js scopes its tab lookup to the data-ts
+        element — with the hook on the card it found no tabs, returned early,
+        and every tab showed the Umrah panel. */ ''}
+  <div class="ts${overlap ? ' ts--overlap' : ''}${backdrop ? ' ts--photo' : ''}" data-ts data-ts-active="${attr(active)}">
     ${photo}
     <div class="container">
       ${banner}
@@ -425,7 +429,7 @@ function searchWidget({ active = 'flights', overlap = true, title = '', backdrop
                 aria-selected="${t.key === active}" tabindex="${t.key === active ? '0' : '-1'}"
                 data-ts-tab="${attr(t.key)}">${icon(t.icon, { size: 18 })} <span>${esc(t.label)}</span></button>`)}
       </div>
-      <div class="ts__card" data-ts data-ts-active="${attr(active)}">
+      <div class="ts__card">
         <div class="ts__body">
           ${panels}
         </div>

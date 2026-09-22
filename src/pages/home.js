@@ -55,6 +55,10 @@ const HERO_SLIDES = [
   { src: '/assets/img/hero-baku.jpg', wide: '/assets/img/hero-baku-2560.jpg' },
   { src: '/assets/img/hero-paris.jpg', wide: '/assets/img/hero-paris-2560.jpg' },
   { src: '/assets/img/hero-maldives.jpg', wide: '/assets/img/hero-maldives-2560.jpg' },
+  /* The aircraft banner the client asked for. It no longer has a band of its
+     own — the form sits on the hero now — so it rotates through here, which
+     is where the form's own backdrop lands every ninth frame anyway. */
+  { src: '/assets/img/search-backdrop.jpg', wide: '/assets/img/search-backdrop-2560.jpg' },
 ];
 
 /** Photo with the branded placeholder as an automatic fallback. */
@@ -525,9 +529,12 @@ function mapSection() {
 function render() {
   const body = [
     hero(),
-    /* Opens on the first tab in the client's order, over the photograph the
-       client's reference design puts behind the form. */
-    searchWidget({ active: 'umrah', backdrop: true }),
+    /* Opens on the first tab in the client's order. No photograph of its own:
+       it is pulled up over the hero, so the form sits ON the hero's picture
+       the way the client's reference sits on its banner. A second full-width
+       photograph underneath the hero made the top of the page read as two
+       slabs stacked rather than one screen. */
+    searchWidget({ active: 'umrah' }),
     servicesSection(),
     umrahSection(),
     visaSection(),

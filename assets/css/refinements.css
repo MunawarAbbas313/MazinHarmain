@@ -686,7 +686,18 @@ button, input, select, textarea { font: inherit; }
   object-fit: contain;
   flex-shrink: 0;
 }
-.logo--footer .logo__mark--img { height: 52px; }
+/* The supplied mark is 60% transparent — the globe's interior and the
+   counters of the MH are holes, not white. On the header's white it reads as
+   a green monogram on a light globe; dropped straight onto the dark footer
+   the same file reads as a different mark entirely, which is why the two did
+   not match. It gets the light ground it was drawn for. */
+.logo--footer .logo__mark--img {
+  height: 46px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 6px 10px;
+  box-sizing: content-box;
+}
 .logo--header { align-items: center; }
 .logo--footer { align-items: flex-start; }
 
@@ -967,10 +978,18 @@ button, input, select, textarea { font: inherit; }
    correctly to a screen reader.
    -------------------------------------------------------------------------- */
 .ts { position: relative; z-index: 5; }
-/* The panel used to be pulled up over the hero. The client asked for it to
-   come down, and with the tab strip now sitting above the card there is a
-   row of tabs that would have been pulled over the photograph too. */
+/* On the inner pages the panel simply follows the page hero. */
 .ts--overlap { margin-top: var(--sp-8); }
+
+/* On the home page it is pulled UP onto the hero, so the tab strip sits on
+   the photograph and the card straddles its lower edge — the arrangement in
+   the client's reference. A second full-width photograph below the hero was
+   the alternative, and it read as two slabs stacked with a lot of empty sky
+   going to waste. One lift value drives both halves so they cannot drift:
+   the hero opens up exactly as much room as the panel takes back. */
+.page-home { --ts-lift: clamp(4.5rem, 8vw, 7rem); }
+.page-home .hero__inner { padding-bottom: calc(var(--ts-lift) + clamp(1.5rem, 3vw, 2.75rem)); }
+.page-home .ts--overlap { margin-top: calc(var(--ts-lift) * -1); }
 .ts__title {
   font-size: var(--fs-2xl);
   text-align: center;
@@ -1334,6 +1353,8 @@ button, input, select, textarea { font: inherit; }
 
 @media (min-width: 1200px) {
   .ts--overlap { margin-top: var(--sp-10); }
+  /* Re-stated so the generic rule above does not cancel the home lift. */
+  .page-home .ts--overlap { margin-top: calc(var(--ts-lift) * -1); }
 }
 
 /* Below the two-column breakpoint the swap control has no pair of columns
@@ -1347,10 +1368,10 @@ button, input, select, textarea { font: inherit; }
   }
   .ts-row--flights > .ts-swap:active { transform: rotate(90deg) scale(0.94); }
   .ts__tab { padding: 0 var(--sp-3); font-size: var(--fs-xs); }
-  /* No overlap on a phone. The hero's trust strip sits at the bottom of the
-     hero there, and pulling the card up covered 24px of it — the second row
-     of links was half-hidden behind the panel. */
+  /* A gentler lift on a phone, where the hero is tall and narrow and a big
+     pull would push the card over the headline. */
   .ts--overlap { margin-top: var(--sp-6); }
+  .page-home { --ts-lift: 2.25rem; }
 }
 
 @media print {
@@ -1743,6 +1764,8 @@ button, input, select, textarea { font: inherit; }
   .hero__eyebrow { font-size: 1.15rem; margin-bottom: .7rem; }
 }
 
+
+
 /* "051-8465006-7" was breaking after the second hyphen and dropping the "7"
    onto its own line. A phone number is one token. */
 .topbar a { white-space: nowrap; }
@@ -1856,13 +1879,13 @@ button, input, select, textarea { font: inherit; }
    photograph is its own panel, not a continuation of the hero.
    ========================================================================== */
 .ts--photo {
-  /* The gap between the hero and this band used to be page white, which read
-     as a hard white stripe between two photographs. It is the same cream as
-     the services section below, and the photograph fades into it at the top
-     and bottom, so the band sits between the two rather than being wedged
-     between them. */
+  /* No gap at all. A white stripe between the hero and this band read as a
+     seam; a cream one still read as a seam. The two photographs now meet
+     directly, so the hero and the search panel are one continuous first
+     screen rather than two pasted-together sections. The band still fades
+     into cream at the BOTTOM, where it has to hand over to the services
+     section. */
   margin-top: 0;
-  border-top: clamp(1.25rem, 2.5vw, 2rem) solid var(--cream);
   /* A PERCENTAGE, not a rem clamp: the photograph scales with the viewport
      width, so a fixed cap lets the aircraft slide down behind the card on a
      wide screen. The aircraft's underside sits at 29% of the photograph's
@@ -1898,11 +1921,14 @@ button, input, select, textarea { font: inherit; }
     /* Light at the top, where the aircraft is and must stay readable;
        stronger at the bottom, where the band has to hand over cleanly to the
        cream section below it. */
+    /* Dark at the very top so it continues out of the hero instead of
+       starting against it, clear through the middle where the aircraft is,
+       cream at the bottom to meet the services section. */
     linear-gradient(180deg,
-      var(--cream) 0%,
-      rgba(250, 248, 243, 0.55) 4%,
-      rgba(253, 248, 238, 0.10) 16%,
-      rgba(253, 248, 238, 0.22) 50%,
+      rgba(7, 48, 34, 0.78) 0%,
+      rgba(7, 48, 34, 0.30) 7%,
+      rgba(253, 248, 238, 0.06) 18%,
+      rgba(253, 248, 238, 0.20) 50%,
       rgba(250, 248, 243, 0.80) 92%,
       var(--cream) 100%);
 }
