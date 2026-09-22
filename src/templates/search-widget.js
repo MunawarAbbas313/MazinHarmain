@@ -388,27 +388,22 @@ function searchWidget({ active = 'flights', overlap = true, title = '' } = {}) {
   <div class="ts${overlap ? ' ts--overlap' : ''}">
     <div class="container">
       ${title ? `<h2 class="ts__title">${esc(title)}</h2>` : ''}
+      ${/* The tab strip sits OUTSIDE the card, so the tabs read as tabs —
+            attached to the panel, with the page showing between and beside
+            them — rather than as a toolbar inside a white box. */ ''}
+      <div class="ts__tabs" role="tablist" aria-label="What are you looking for?">
+        ${each(TABS, (t) => `
+        <button class="ts__tab${t.key === active ? ' is-active' : ''}" type="button" role="tab"
+                id="ts-tab-${attr(t.key)}" aria-controls="ts-panel-${attr(t.key)}"
+                aria-selected="${t.key === active}" tabindex="${t.key === active ? '0' : '-1'}"
+                data-ts-tab="${attr(t.key)}">${icon(t.icon, { size: 18 })} <span>${esc(t.label)}</span></button>`)}
+      </div>
       <div class="ts__card" data-ts data-ts-active="${attr(active)}">
-        <div class="ts__head">
-          <div class="ts__tabs" role="tablist" aria-label="What are you looking for?">
-            ${each(TABS, (t) => `
-            <button class="ts__tab${t.key === active ? ' is-active' : ''}" type="button" role="tab"
-                    id="ts-tab-${attr(t.key)}" aria-controls="ts-panel-${attr(t.key)}"
-                    aria-selected="${t.key === active}" tabindex="${t.key === active ? '0' : '-1'}"
-                    data-ts-tab="${attr(t.key)}">${icon(t.icon, { size: 18 })} <span>${esc(t.label)}</span></button>`)}
-          </div>
-          <div class="ts__brand">
-            <span class="ts__brand-name">${esc(site.shortName)}</span>
-            <span class="ts__brand-sub">Travel Desk &middot; Islamabad</span>
-          </div>
-        </div>
         <div class="ts__body">
           ${panels}
         </div>
       </div>
     </div>
-    ${/* No-JS fallback for the three comboboxes. main.js removes the `list`
-          attribute when it upgrades them, so these never double up. */ ''}
     <datalist id="ts-airports">${each(AIRPORTS, (a) => `<option value="${attr(a)}"></option>`)}</datalist>
     <datalist id="ts-hotel-cities">${each(HOTEL_PLACES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
     <datalist id="ts-hotel-categories">${each(HOTEL_CATEGORIES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>

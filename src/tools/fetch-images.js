@@ -57,7 +57,7 @@ const CURATED = [
   { file: 'hero-kaaba-1600.jpg',  id: 14440333, w: 1600, h: 900, alt: 'Pilgrims performing tawaf around the Kaaba at Masjid al-Haram in Makkah' },
   { file: 'hero-madinah.jpg',     id: 34246953, ...HERO, alt: 'Al-Masjid an-Nabawi in Madinah illuminated at twilight' },
   { file: 'hero-umrah.jpg',       id: 4118058,  ...WIDE, alt: 'Pilgrims gathered around the Kaaba at night during Umrah' },
-  { file: 'visa-services.jpg',    id: 7235894,  ...FEATURE, alt: 'A passport, compass and travel planner laid out on a world map' },
+  { file: 'visa-services.jpg',    id: 28574518, ...FEATURE, alt: 'National flags of several countries flying side by side' },
 
   /* ---- Home hero rotation ------------------------------------------------
      The client asked the home page to stop leading on the Kaaba: the agency
@@ -102,7 +102,7 @@ const CURATED = [
   { file: 'hero-nabawi-2560.jpg',   id: 33169796, ...HERO_2X, alt: 'Al-Masjid an-Nabawi in Madinah' },
 
   /* Service card photography, at FEATURE size so the cards stay sharp. */
-  { file: 'services/air-ticketing.jpg', id: 32649171, ...FEATURE, alt: 'An airliner cabin with soft daylight through the windows' },
+  { file: 'services/air-ticketing.jpg', id: 6544058,  ...FEATURE, alt: 'Travellers moving past the departure screens in an airport terminal' },
   { file: 'services/attestation.jpg',   id: 7654118, ...FEATURE, alt: 'A clerk stamping documents at an office desk' },
   { file: 'services/apostille.jpg',     id: 9858904, ...FEATURE, alt: 'A stamp resting on a legal document' },
   { file: 'services/power-of-attorney.jpg', id: 8730998, ...FEATURE, alt: 'A person signing legal documents at a desk' },

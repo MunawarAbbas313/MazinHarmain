@@ -989,7 +989,10 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
    correctly to a screen reader.
    -------------------------------------------------------------------------- */
 .ts { position: relative; z-index: 5; }
-.ts--overlap { margin-top: -2.75rem; }
+/* The panel used to be pulled up over the hero. The client asked for it to
+   come down, and with the tab strip now sitting above the card there is a
+   row of tabs that would have been pulled over the photograph too. */
+.ts--overlap { margin-top: var(--sp-8); }
 .ts__title {
   font-size: var(--fs-2xl);
   text-align: center;
@@ -1001,27 +1004,18 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  /* NOT overflow:hidden — the type-ahead dropdown has to escape the card.
-     The tab strip clips itself instead, on .ts__head below. */
+  /* NOT overflow:hidden — the type-ahead dropdown has to escape the card. */
 }
 
-/* ---- Tab strip --------------------------------------------------------- */
-.ts__head {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: var(--sp-4);
-  background: var(--cream);
-  border-bottom: 1px solid var(--line);
-  /* Rounds the tab strip to the card's top corners now that the card
-     itself no longer clips its children. */
-  border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
-  overflow: hidden;
-}
-
+/* ---- Tab strip ----------------------------------------------------------
+   Attached tabs above the card, as in the client's reference: the strip has
+   no background of its own, so the page shows between and beside the tabs
+   and each one reads as a tab rather than as a segment of a toolbar.
+   -------------------------------------------------------------------------- */
 .ts__tabs {
   display: flex;
-  gap: 2px;
+  gap: 4px;
+  padding: 0 var(--sp-2);
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -1033,11 +1027,12 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   align-items: center;
   gap: var(--sp-2);
   flex: 0 0 auto;
-  min-height: 52px;
-  padding: 0 clamp(0.85rem, 2.4vw, 1.5rem);
-  border: 0;
-  border-bottom: 3px solid transparent;
-  background: transparent;
+  min-height: 50px;
+  padding: 0 clamp(0.9rem, 2.4vw, 1.6rem);
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: rgba(255, 255, 255, 0.82);
   font: inherit;
   font-size: var(--fs-sm);
   font-weight: 700;
@@ -1046,44 +1041,25 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   color: var(--muted);
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+  backdrop-filter: blur(3px);
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
 }
 .ts__tab svg { color: var(--muted-2); transition: color 0.2s var(--ease); }
-.ts__tab:hover { color: var(--green-700); background: rgba(255, 255, 255, 0.6); }
+.ts__tab:hover { color: var(--green-700); background: #fff; }
 .ts__tab:hover svg { color: var(--green-600); }
-/* The selected tab is filled, not underlined. The client asked for it to
-   colour in the way the Return / One Way / Multi-City control does, so the
-   two selection styles in the panel now read the same. */
+
+/* Selected: filled, the same way the trip-type control fills. */
 .ts__tab.is-active {
   color: #fff;
   background: linear-gradient(180deg, var(--green-700) 0%, var(--green-800) 100%);
-  border-bottom-color: var(--gold-500);
+  border-color: var(--green-800);
 }
 .ts__tab.is-active svg { color: var(--gold-400); }
-.ts__tab.is-active:hover { color: #fff; background: linear-gradient(180deg, var(--green-600) 0%, var(--green-800) 100%); }
+.ts__tab.is-active:hover {
+  color: #fff;
+  background: linear-gradient(180deg, var(--green-600) 0%, var(--green-800) 100%);
+}
 .ts__tab:focus-visible { outline: 3px solid var(--gold-500); outline-offset: -3px; }
-
-.ts__brand {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 var(--sp-6);
-  border-left: 1px solid var(--line);
-  text-align: right;
-}
-.ts__brand-name {
-  font-family: var(--font-display);
-  font-size: var(--fs-sm);
-  font-weight: 700;
-  color: var(--green-800);
-  line-height: 1.3;
-}
-.ts__brand-sub {
-  font-size: 0.6875rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted-2);
-}
 
 /* ---- Panel body -------------------------------------------------------- */
 .ts__body { padding: var(--sp-5); }
@@ -1379,7 +1355,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 }
 
 @media (min-width: 1200px) {
-  .ts--overlap { margin-top: -3.25rem; }
+  .ts--overlap { margin-top: var(--sp-10); }
 }
 
 /* Below the two-column breakpoint the swap control has no pair of columns
@@ -1396,7 +1372,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   /* No overlap on a phone. The hero's trust strip sits at the bottom of the
      hero there, and pulling the card up covered 24px of it — the second row
      of links was half-hidden behind the panel. */
-  .ts--overlap { margin-top: var(--sp-5); }
+  .ts--overlap { margin-top: var(--sp-6); }
 }
 
 @media print {

@@ -8,7 +8,7 @@ Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
 - Images: **65**
-- Total weight: **18071 KB**
+- Total weight: **18280 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -92,8 +92,8 @@ npm run images -- --force           # everything
 | `hotels/madinah-hotels.jpg` | 1600×1200 | 169 KB | [#33169796](https://www.pexels.com/photo/33169796/) |
 | `hotels/makkah-hotels.jpg` | 1600×1200 | 548 KB | [#38546878](https://www.pexels.com/photo/38546878/) |
 | `hotels/worldwide-hotels.jpg` | 1600×1200 | 275 KB | [#695193](https://www.pexels.com/photo/695193/) |
-| `services/air-ticketing.jpg` | 1600×1200 | 116 KB | [#32649171](https://www.pexels.com/photo/32649171/) |
+| `services/air-ticketing.jpg` | 1600×1200 | 351 KB | [#6544058](https://www.pexels.com/photo/6544058/) |
 | `services/apostille.jpg` | 1600×1200 | 114 KB | [#9858904](https://www.pexels.com/photo/9858904/) |
 | `services/attestation.jpg` | 1600×1200 | 160 KB | [#7654118](https://www.pexels.com/photo/7654118/) |
 | `services/power-of-attorney.jpg` | 1600×1200 | 157 KB | [#8730998](https://www.pexels.com/photo/8730998/) |
-| `visa-services.jpg` | 1600×1200 | 262 KB | [#7235894](https://www.pexels.com/photo/7235894/) |
+| `visa-services.jpg` | 1600×1200 | 237 KB | [#28574518](https://www.pexels.com/photo/28574518/) |

@@ -508,15 +508,15 @@
   },
   "visa-services.jpg": {
     "source": "Pexels",
-    "photo_id": 7235894,
-    "source_page": "https://www.pexels.com/photo/7235894/",
+    "photo_id": 28574518,
+    "source_page": "https://www.pexels.com/photo/28574518/",
     "license": "Pexels License",
     "license_url": "https://www.pexels.com/license/",
     "attribution_required": false,
-    "alt": "A passport, compass and travel planner laid out on a world map",
+    "alt": "National flags of several countries flying side by side",
     "width": 1600,
     "height": 1200,
-    "bytes": 268250,
+    "bytes": 242260,
     "mode": "curated"
   },
   "destinations/uzbekistan.jpg": {
@@ -716,15 +716,15 @@
   },
   "services/air-ticketing.jpg": {
     "source": "Pexels",
-    "photo_id": 32649171,
-    "source_page": "https://www.pexels.com/photo/32649171/",
+    "photo_id": 6544058,
+    "source_page": "https://www.pexels.com/photo/6544058/",
     "license": "Pexels License",
     "license_url": "https://www.pexels.com/license/",
     "attribution_required": false,
-    "alt": "An airliner cabin with soft daylight through the windows",
+    "alt": "Travellers moving past the departure screens in an airport terminal",
     "width": 1600,
     "height": 1200,
-    "bytes": 119121,
+    "bytes": 359303,
     "mode": "curated"
   },
   "services/attestation.jpg": {
