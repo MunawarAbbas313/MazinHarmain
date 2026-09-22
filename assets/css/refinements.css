@@ -95,6 +95,23 @@ button, input, select, textarea { font: inherit; }
   .header__actions .btn { display: inline-flex; }
 }
 
+/* Small phones: the header cannot hold the logo, the quote button and the
+   menu toggle at once, and because .header__actions must not shrink (or the
+   button wraps) the overflow lands on the page — 28px of it at 320px.
+   The sticky bottom bar already carries Call, WhatsApp and Get Quote, so the
+   header button is the redundant one. */
+@media (max-width: 420px) {
+  .header__actions .btn { display: none; }
+  /* Even without the button the header was 28px over at 320px: the wide
+     mark plus the wordmark plus the menu toggle do not fit 288px of
+     container. Everything in the lockup steps down a size. */
+  .header__inner { gap: var(--sp-2); }
+  .logo--header { gap: .45rem; }
+  .logo__mark--img { height: 32px; }
+  .logo__name { font-size: .8125rem; letter-spacing: .01em; }
+  .logo__sub { font-size: .5rem; letter-spacing: .1em; margin-top: 2px; }
+}
+
 /* --------------------------------------------------------------------------
    2. HERO — full-bleed photograph, dark overlay weighted to the left
    -------------------------------------------------------------------------- */
@@ -1366,7 +1383,10 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   }
   .ts-row--flights > .ts-swap:active { transform: rotate(90deg) scale(0.94); }
   .ts__tab { padding: 0 var(--sp-3); font-size: var(--fs-xs); }
-  .ts--overlap { margin-top: -1.5rem; }
+  /* No overlap on a phone. The hero's trust strip sits at the bottom of the
+     hero there, and pulling the card up covered 24px of it — the second row
+     of links was half-hidden behind the panel. */
+  .ts--overlap { margin-top: var(--sp-5); }
 }
 
 @media print {
@@ -1734,4 +1754,30 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
    mark the extra width suits them. */
 @media (min-width: 992px) {
   .trust-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* --------------------------------------------------------------------------
+   25. Phone corrections
+
+   From real device screenshots rather than emulation — two things the
+   overflow check could not see because nothing actually left the viewport.
+   -------------------------------------------------------------------------- */
+
+/* The agency plate ran to THREE lines at 390px. It is a nameplate; it should
+   read as one line on a phone, so the type and the tracking step down. */
+@media (max-width: 560px) {
+  .hero__eyebrow {
+    font-size: .6875rem;
+    letter-spacing: .08em;
+    padding: .4rem .7rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* "051-8465006-7" was breaking after the second hyphen and dropping the "7"
+   onto its own line. A phone number is one token. */
+.topbar a { white-space: nowrap; }
+@media (max-width: 480px) {
+  .topbar__right { gap: var(--sp-3); }
+  .topbar a { font-size: .6875rem; }
 }
