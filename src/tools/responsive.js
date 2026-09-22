@@ -54,7 +54,27 @@ const PAGES = [
 ];
 
 /* The CSS breakpoints are 479 / 520 / 767 / 991 / 1199, so test each side. */
-const WIDTHS = [320, 360, 390, 414, 480, 600, 768, 820, 992, 1024, 1200, 1280, 1440, 1920];
+const ALL_WIDTHS = [320, 360, 390, 414, 480, 600, 768, 820, 992, 1024, 1200, 1280, 1440, 1920];
+
+/* Optional width filter, the same shape as `npm run audit -- 390`:
+ *   npm run responsive -- 992          just that width
+ *   npm run responsive -- 992,1024     several
+ *   npm run responsive -- 992+         that width and everything above
+ * The full sweep opens a browser context per width and has been killed by
+ * the OS for memory on this machine partway through; running it in halves
+ * is the workaround, and being able to re-check one breakpoint after a fix
+ * is worth having anyway. */
+const WIDTHS = (() => {
+  const arg = process.argv.slice(2).find((a) => !a.startsWith('--'));
+  if (!arg) return ALL_WIDTHS;
+  if (arg.endsWith('+')) {
+    const from = Number(arg.slice(0, -1));
+    return ALL_WIDTHS.filter((w) => w >= from);
+  }
+  const wanted = new Set(arg.split(',').map(Number));
+  const picked = ALL_WIDTHS.filter((w) => wanted.has(w));
+  return picked.length ? picked : ALL_WIDTHS;
+})();
 
 (async () => {
   console.log(`\nResponsive audit`);

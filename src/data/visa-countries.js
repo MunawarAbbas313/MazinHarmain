@@ -642,4 +642,17 @@ const otherCountries = countries
   .filter((c) => !c.popular && !c.schengen)
   .sort((a, b) => a.order - b.order);
 
-module.exports = { countries, popularCountries, schengenCountries, otherCountries, SCHENGEN_NOTE };
+/* Exported in priority order, not declaration order. `order` already carried
+   the client's list (Italy first) but the raw array did not use it, so the
+   visa-appointment country dropdown was still leading with the old UK/USA/
+   Canada run. Everything that iterates countries now gets the client's
+   order, with the rest following. */
+const byPriority = [...countries].sort((a, b) => a.order - b.order);
+
+module.exports = {
+  countries: byPriority,
+  popularCountries,
+  schengenCountries,
+  otherCountries,
+  SCHENGEN_NOTE,
+};

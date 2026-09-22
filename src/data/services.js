@@ -660,19 +660,21 @@ const services = [
 
 /** The eight cards shown on the homepage, in the order the brief specifies. */
 const homepageServiceOrder = [
-  /* Nine, three across — the grid fills exactly, so every card can be a
-     proper image card instead of the cramped icon rows the client called
-     "average". Travel insurance came off the home page to make room; it
-     keeps its place in the Services menu, the services hub and the footer. */
-  'air-ticketing',
+  /* The client's own order, given September 2026, and the same order the
+     Services menu, the services hub and the footer column now use. Nine,
+     three across, so the grid fills exactly.
+
+     Corporate Travel came off the home grid to make room for Ziyarat Tours;
+     it keeps its top-level place in the Services menu and the footer. */
   'umrah-packages',
-  'visa-services',
   'visa-appointment-booking',
+  'visa-services',
+  'air-ticketing',
   'hotel-reservations',
   'international-tours',
-  'corporate-travel',
   'car-rental',
   'hajj-services',
+  'ziyarat-tours',
 ];
 
 const bySlug = (slug) => services.find((s) => s.slug === slug);

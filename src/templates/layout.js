@@ -46,21 +46,29 @@ const hasAsset = (name) => fsFor.existsSync(pathFor.join(ASSET_DIR, name));
    still carries the arch, crescent, Kaaba and dome the client asked to
    remove, so the footer now composes the new mark with the typeset
    wordmark instead of shipping the old picture. */
-const MARK_SRC = hasAsset('logo-mark.svg')
-  ? asset('/assets/img/logo-mark.svg')
-  : (hasAsset('logo-mark.png') ? asset('/assets/img/logo-mark.png') : '');
-const HAS_MARK = Boolean(MARK_SRC);
+/* The client's own artwork, supplied September 2026, keyed off its white
+   ground so it sits on any background.
+
+   Two cuts, because one does not serve both ends of the page:
+     logo-lockup.png  the full lockup, monogram over the wordmark. The header
+                      is white, so this is the artwork exactly as drawn.
+     logo-mark.png    the monogram alone. The footer is dark green and the
+                      lockup's wordmark is dark green too — legible, but only
+                      just. There it pairs with the typeset wordmark, which
+                      is already styled white and gold for that background. */
+const LOCKUP_SRC = hasAsset('logo-lockup.png') ? asset('/assets/img/logo-lockup.png') : '';
+const MARK_SRC = hasAsset('logo-mark.png')
+  ? asset('/assets/img/logo-mark.png')
+  : (hasAsset('logo-mark.svg') ? asset('/assets/img/logo-mark.svg') : '');
+const HAS_MARK = Boolean(MARK_SRC || LOCKUP_SRC);
 
 /* The wide mark is roughly 2.2:1 — width/height are declared so the browser
    reserves the right box before it loads and the header does not jump. */
 const MARK_W = 460;
 const MARK_H = 212;
 
-/* Deep green letters disappear against the dark footer, so it gets the
-   gold-filled reverse cut when that file exists. */
-const MARK_REVERSE_SRC = hasAsset('logo-mark-reverse.svg')
-  ? asset('/assets/img/logo-mark-reverse.svg')
-  : MARK_SRC;
+/* The reverse SVG cut is no longer used: the supplied monogram is already
+   green-and-gold on transparency and reads on the dark footer as drawn. */
 
 /* The wordmark, set in the brand's display face. Paired with the real
    monogram in the header, because the full stacked lockup is unreadable at
@@ -75,12 +83,13 @@ function logo(linked = true, variant = 'header') {
   let inner;
 
   if (HAS_MARK) {
-    /* Monogram + typeset wordmark, in the header and the footer alike. The
-       wordmark is live text in the real display face, which beats any
-       rasterised lockup for sharpness and for screen readers. */
-    const src = variant === 'footer' ? MARK_REVERSE_SRC : MARK_SRC;
-    inner = `<img class="logo__mark logo__mark--img" src="${src}" ` +
-      `alt="" width="${MARK_W}" height="${MARK_H}" ` +
+    /* Monogram plus typeset wordmark, in both the header and the footer.
+       The supplied lockup stacks its wordmark under the monogram, so at the
+       74px header height that wordmark renders about 10px tall and cannot be
+       read. Live text in the display face solves that, and on the dark
+       footer it also beats the lockup's own dark-green lettering. */
+    inner = `<img class="logo__mark logo__mark--img" src="${MARK_SRC || LOCKUP_SRC}" ` +
+      `alt="" width="920" height="424" ` +
       `loading="${variant === 'header' ? 'eager' : 'lazy'}" decoding="async">${wordmark}`;
   } else {
     /* Placeholder until the artwork is supplied. */

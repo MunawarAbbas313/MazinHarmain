@@ -147,25 +147,24 @@ button, input, select, textarea { font: inherit; }
 }
 .hero__inner { position: relative; padding-block: clamp(3rem, 6vw, 5.25rem) 0; }
 .hero__content { max-width: 620px; }
-/* The agency name above the headline. The client asked twice for this to be
-   bigger and "highlighted", so it is now a bordered gold plate rather than
-   loose text — at 12px/600 it read as a caption instead of as the company.
-   Tracking eases off as the size climbs, because wide letter-spacing at
-   bold weight starts to come apart. */
+/* The agency name above the headline. It was a bordered gold plate in
+   uppercase; the client asked for the border gone, the size up and the face
+   changed. It now uses the brand display serif — the same family as the
+   supplied logo's wordmark — at its natural case, which carries the size
+   without the tracking coming apart the way uppercase does. */
 .hero__eyebrow {
-  display: inline-block;
+  display: block;
   color: var(--gold-400);
-  font-size: clamp(.9375rem, 1.5vw, 1.1875rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.95rem);
   font-weight: 700;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-  margin-bottom: 1.3rem;
-  padding: .55rem 1.15rem;
-  background: rgba(199, 154, 62, .16);
-  border: 1px solid rgba(221, 184, 101, .42);
-  border-left: 3px solid var(--gold-500);
-  border-radius: 4px;
-  backdrop-filter: blur(2px);
+  letter-spacing: .012em;
+  line-height: 1.25;
+  text-transform: none;
+  margin-bottom: .9rem;
+  padding: 0;
+  background: none;
+  border: 0;
 }
 .hero h1 {
   color: #fff; font-size: clamp(2.35rem, 4.4vw, 3.75rem);
@@ -705,7 +704,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
    buys a much wider object. */
 .logo__mark--img {
   width: auto;
-  height: 44px;
+  height: 46px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -1158,7 +1157,12 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   color: var(--ink-2);
   cursor: pointer;
 }
-.ts-check input { width: 18px; height: 18px; accent-color: var(--green-700); cursor: pointer; }
+/* 24x24, not 18x18. The consent checkbox was already raised to this in
+   section 18 for WCAG 2.5.8 and the widget's "Direct only" box reintroduced
+   the same problem — caught by npm run responsive at 992/1024/1200. The
+   label around it is a large target either way, but the control itself has
+   to clear the floor. */
+.ts-check input { width: 24px; height: 24px; accent-color: var(--green-700); cursor: pointer; }
 .ts-check:has(input:checked) { border-color: var(--green-500); background: var(--green-50); color: var(--green-800); }
 
 /* ---- Field grid -------------------------------------------------------- */
@@ -1178,7 +1182,9 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--muted);
+  /* Dark green rather than grey, at the client's request — the labels now
+     sit in the brand colour instead of reading as secondary text. */
+  color: var(--green-800);
 }
 .ts-field .req { color: var(--danger); }
 .ts-field .field__error { font-size: var(--fs-xs); line-height: 1.45; }
@@ -1264,7 +1270,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--green-800);
 }
 
 /* ---- Type-ahead dropdown ------------------------------------------------
@@ -1607,7 +1613,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
      at 58px with 8px padding the circular ones rendered about 42px across,
      which lost it. */
   height: 74px;
-  max-width: 170px;
+  max-width: 100%;
   padding: 5px 7px;
   box-sizing: border-box;
   background: #fff;
@@ -1615,7 +1621,17 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   object-fit: contain;
 }
 /* The cream trust strip needs no plate. */
-.trust-item__logo { height: 78px; max-width: 180px; padding: 4px; box-sizing: border-box; object-fit: contain; }
+/* max-width has to be relative, not a fixed 180px: in the two-column grid at
+   320px each cell is about 140px, and a wide lockup like FBR's (240x33) at
+   78px tall wants 567px before any cap. Caught by npm run responsive on the
+   About page. */
+.trust-item__logo {
+  height: 78px;
+  max-width: 100%;
+  padding: 4px;
+  box-sizing: border-box;
+  object-fit: contain;
+}
 
 /* The licence or registration number, when site.credentials carries one.
    Tabular figures so a column of them lines up. */
@@ -1766,12 +1782,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 /* The agency plate ran to THREE lines at 390px. It is a nameplate; it should
    read as one line on a phone, so the type and the tracking step down. */
 @media (max-width: 560px) {
-  .hero__eyebrow {
-    font-size: .6875rem;
-    letter-spacing: .08em;
-    padding: .4rem .7rem;
-    margin-bottom: 1rem;
-  }
+  .hero__eyebrow { font-size: 1.15rem; margin-bottom: .7rem; }
 }
 
 /* "051-8465006-7" was breaking after the second hyphen and dropping the "7"
@@ -1780,4 +1791,35 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 @media (max-width: 480px) {
   .topbar__right { gap: var(--sp-3); }
   .topbar a { font-size: .6875rem; }
+}
+
+/* --------------------------------------------------------------------------
+   26. The supplied logo
+
+   The client's own artwork replaced the drawn mark in September 2026. The
+   header carries the full lockup, which already contains the wordmark, so it
+   is sized on height alone and the typeset wordmark is not rendered beside
+   it. The footer keeps monogram + typeset wordmark, because the lockup's own
+   lettering is dark green and the footer is too.
+   -------------------------------------------------------------------------- */
+.logo__lockup {
+  display: block;
+  width: auto;
+  height: 54px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+@media (min-width: 1200px) { .logo__lockup { height: 60px; } }
+@media (max-width: 560px)  { .logo__lockup { height: 42px; } }
+@media (max-width: 420px)  { .logo__lockup { height: 36px; } }
+
+/* The cabin and passenger selects were 38px tall — under the 44px floor the
+   rest of the site holds to, and flagged by npm run responsive at 360-414px.
+   The segmented trip-type control and the Direct-only pill match them, so
+   all three grow together and the row stays aligned. */
+@media (pointer: coarse), (max-width: 640px) {
+  .ts-mini,
+  .ts-check,
+  .ts-seg__opt label { min-height: 44px; }
+  .ts-seg { padding: 2px; }
 }

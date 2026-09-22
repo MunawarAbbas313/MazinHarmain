@@ -12,9 +12,16 @@ const { searchWidget, assuranceStrip } = require('../templates/search-widget');
 
 /* ------------------------------------------------------------------- Hub */
 function hubPage() {
-  const cards = services.map((s) =>
-    c.iconCard({ url: s.url, icon: s.icon, title: s.title, text: s.blurb })
-  );
+  /* Same order as the home grid and the menus: the client's nine first,
+     then everything else in the order it is declared. */
+  const { homepageServiceOrder } = require('../data/services');
+  const rank = (slug) => {
+    const i = homepageServiceOrder.indexOf(slug);
+    return i === -1 ? homepageServiceOrder.length + services.findIndex((x) => x.slug === slug) : i;
+  };
+  const cards = [...services]
+    .sort((a, b) => rank(a.slug) - rank(b.slug))
+    .map((s) => c.iconCard({ url: s.url, icon: s.icon, title: s.title, text: s.blurb }));
 
   const body = `
 ${c.pageHero({
