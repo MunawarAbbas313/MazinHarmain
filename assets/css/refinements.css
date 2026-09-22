@@ -1890,13 +1890,15 @@ button, input, select, textarea { font: inherit; }
      only solid part of it. */
   margin-top: clamp(1.5rem, 3vw, 2.5rem);
   background: var(--cream);
-  /* A PERCENTAGE, not a rem clamp: the photograph scales with the viewport
-     width, so a fixed cap lets the aircraft slide down behind the card on a
-     wide screen. The aircraft's underside sits at 29% of the photograph's
-     height, ie 0.163 x viewport width, and 11% plus the tab strip clears it
-     down to 320px. Above 900px the banner title adds its own height on top,
-     which is why this does not need to be larger there. */
-  padding: 11% 0 clamp(2.5rem, 5vw, 4rem);
+  /* Below 901px the banner title is hidden, so this padding alone has to
+     clear the aircraft. It is a PERCENTAGE because the photograph scales with
+     the viewport width — a rem cap lets the aircraft slide down behind the
+     card on a wide screen. The aircraft's underside sits at 25% of the
+     photograph's height, ie 0.141 x viewport width; 15% clears it at every
+     width. Above 901px the title block takes over that job and this drops to
+     almost nothing, so the name starts at the top of the band rather than
+     after a screenful of empty sky. */
+  padding: 15% 0 clamp(2rem, 4vw, 3rem);
   isolation: isolate;
 }
 
@@ -2013,4 +2015,20 @@ button, input, select, textarea { font: inherit; }
 
 @media (max-width: 900px) {
   .ts__banner { display: none; }
+}
+
+/* Above 901px the band opens on the name, not on sky. The top padding drops
+   to almost nothing and the title block is given the aircraft's height with
+   the words centred inside it, so the strip above the tabs is exactly as tall
+   as the aircraft needs and not a pixel more. 13vw covers the aircraft's
+   underside (0.141 x width) together with the small top padding. */
+@media (min-width: 901px) {
+  .ts--photo { padding-top: clamp(1.25rem, 1.8vw, 2.25rem); }
+  .ts__banner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 13vw;
+    margin-bottom: clamp(0.75rem, 1.4vw, 1.25rem);
+  }
 }

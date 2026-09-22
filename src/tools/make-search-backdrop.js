@@ -41,11 +41,12 @@ const SKY_ID = 35558117;
 const cdn = (id, w) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
-/* Where the aircraft sits in the finished frame, as fractions of it. Taken
-   off the client's reference: the aircraft is about a third of the banner
-   tall and sits right of centre, high enough that the form clears it. */
-const PLANE_HEIGHT = 0.24;
-const PLANE_CENTRE = { x: 0.62, y: 0.17 };
+/* Where the aircraft sits in the finished frame, as fractions of it. The
+   client wants it in the right-hand corner with the name starting at the very
+   top of the band and no spare sky anywhere, so it is smaller than the
+   reference's and pushed well right, clear of the name on the left. */
+const PLANE_HEIGHT = 0.19;
+const PLANE_CENTRE = { x: 0.82, y: 0.155 };
 
 const OUTPUTS = [
   { file: 'search-backdrop.jpg', w: 1600, h: 900 },
