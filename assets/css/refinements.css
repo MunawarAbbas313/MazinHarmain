@@ -1803,3 +1803,59 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   .ts-seg__opt label { min-height: 44px; }
   .ts-seg { padding: 2px; }
 }
+
+/* --------------------------------------------------------------------------
+   27. Urdu
+
+   Urdu articles are right-to-left and set in Nastaliq, which the Latin stack
+   cannot render at all. The font is loaded only on those pages (see
+   layout.js) and everything here is scoped to them, so the English site is
+   untouched.
+
+   Nastaliq needs far more line height than a Latin face: its descenders
+   sweep down and to the left, and at normal leading successive lines collide.
+   -------------------------------------------------------------------------- */
+.is-urdu .article-ur,
+.is-urdu .prose,
+.is-urdu .accordion {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  line-height: 2.35;
+  text-align: right;
+}
+.is-urdu .prose h2,
+.is-urdu .prose h3 {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  line-height: 2;
+  text-align: right;
+}
+.is-urdu .prose ul,
+.is-urdu .prose ol { padding-right: 1.4rem; padding-left: 0; }
+.is-urdu .accordion__btn { text-align: right; flex-direction: row-reverse; }
+.is-urdu .breadcrumbs { direction: rtl; }
+
+/* Anything deliberately left in English inside an Urdu page — the footnote,
+   the switch back — reverts to the Latin stack and direction. */
+.is-urdu [lang="en"] {
+  font-family: var(--font-body);
+  direction: ltr;
+  text-align: left;
+  line-height: 1.7;
+}
+
+/* The language switch, on both sides. */
+.lang-switch { margin: 0 0 var(--sp-5); }
+.lang-switch a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--green-50);
+  color: var(--green-800);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+.lang-switch a[lang="ur"] { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
+.lang-switch a:hover { border-color: var(--green-500); background: var(--green-100); }

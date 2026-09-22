@@ -5,18 +5,26 @@
 
    Run:  npm run icons
 
-   Three source files, because one mark cannot serve every size:
+   Sources:
 
-     logo-mark.svg      the wide lockup (about 2.2:1). Header and footer.
-     logo-icon.svg      square, full detail — badge rim, flight arc,
-                        aeroplane, photographic globe, both letters.
-                        Apple touch icon and the 192/512 app icons.
-     logo-favicon.svg   square, stripped right back. Tabs only.
+     logo-lockup.png    THE CLIENT'S OWN ARTWORK, keyed off its white ground.
+                        The monogram over the wordmark. Everything the eye
+                        actually reads at size comes from this file.
+     logo-mark.png      the monogram alone, cut from the lockup's first ink
+                        band. Header and footer.
+     logo-favicon.svg   a stripped square cut, for browser tabs only.
 
-   The favicon is its own cut because logo-icon.svg turns to mush at 16px —
-   which is precisely what the client reported seeing in the tab. At 16px
-   even this cut drops its globe: the disc is three pixels across there and
-   welds the M and the H into a single blob.
+   This tool USED TO regenerate logo-mark.png from a drawn logo-mark.svg,
+   and when the client supplied their artwork that older drawing silently
+   overwrote it — the header went back to the drawn mark without anything
+   failing. It now derives the monogram from the client's lockup instead, so
+   running it can never replace their logo with ours.
+
+   The favicon stays a separate simplified cut because the client's artwork
+   carries a detailed globe, a swoosh and an aeroplane; at 16px all of that
+   collapses into mush. Their logo is used everywhere it can actually be
+   seen — header, footer, app icons, OG image — and the stripped cut only
+   where nothing detailed could survive.
    ========================================================================== */
 
 const fs = require('fs');
@@ -66,11 +74,35 @@ function buildIco(images) {
 }
 
 async function main() {
-  const mark = read('logo-mark.svg');
-  const icon = read('logo-icon.svg');
+  const lockup = read('logo-lockup.png');
   const fav = read('logo-favicon.svg');
 
-  console.log('\nRegenerating icons from the SVG sources\n' + '='.repeat(52));
+  console.log('\nRegenerating icons\n' + '='.repeat(52));
+
+  /* ---- the monogram, cut from the client's lockup ---- */
+  /* The lockup's ink bands are the monogram, then the two wordmark lines;
+     the monogram ends at y451, so 458 clears it with a margin. */
+  const monogram = await sharp(lockup).extract({ left: 0, top: 0, width: 1200, height: 458 })
+    .trim({ threshold: 2 }).toBuffer();
+  await sharp(monogram).resize({ width: 900, withoutEnlargement: true })
+    .png({ palette: true, quality: 92, compressionLevel: 9 })
+    .toFile(path.join(IMG, 'logo-mark.png'));
+  console.log(`  ${'logo-mark.png'.padEnd(24)} 900w      ${kb(fs.statSync(path.join(IMG, 'logo-mark.png')).size)}`);
+
+  /* ---- app icons: the monogram on the brand green, letterboxed ---- */
+  for (const [out, size] of [['apple-touch-icon.png', 180], ['icon-192.png', 192], ['icon-512.png', 512]]) {
+    const pad = Math.round(size * 0.12);
+    const inner = await sharp(monogram)
+      .resize(size - pad * 2, size - pad * 2, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .toBuffer();
+    const plate = Buffer.from(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}">` +
+      `<rect width="${size}" height="${size}" rx="${Math.round(size * 0.22)}" fill="#ffffff"/></svg>`
+    );
+    await sharp(plate).composite([{ input: inner, gravity: 'centre' }])
+      .png({ compressionLevel: 9 }).toFile(path.join(IMG, out));
+    console.log(`  ${out.padEnd(24)} ${size}x${size}  ${kb(fs.statSync(path.join(IMG, out)).size)}`);
+  }
 
   /* ---- tabs: the stripped cut ---- */
   for (const size of [16, 32, 48]) {
@@ -89,20 +121,31 @@ async function main() {
   fs.writeFileSync(path.join(IMG, 'favicon.ico'), ico);
   console.log(`  ${'favicon.ico'.padEnd(24)} 16/32/48  ${kb(ico.length)}`);
 
-  /* ---- app icons: the detailed square ---- */
-  for (const [out, size] of [['apple-touch-icon.png', 180], ['icon-192.png', 192], ['icon-512.png', 512]]) {
-    await sharp(icon, { density: 900 }).resize(size, size)
-      .png({ compressionLevel: 9 }).toFile(path.join(IMG, out));
-    console.log(`  ${out.padEnd(24)} ${size}x${size}  ${kb(fs.statSync(path.join(IMG, out)).size)}`);
-  }
+  /* ---- OG image ----
+     The sharing card. It had fallen out of the regeneration path entirely
+     and was still the placeholder from before the brand existed — a generic
+     hexagon on green, no company name — which is what anyone sharing the
+     site on WhatsApp or Facebook was showing.
 
-  /* ---- raster fallback for the wide lockup ---- */
-  await sharp(mark, { density: 900 }).resize({ width: 920 })
-    .png({ compressionLevel: 9 }).toFile(path.join(IMG, 'logo-mark.png'));
-  console.log(`  ${'logo-mark.png'.padEnd(24)} 920w      ${kb(fs.statSync(path.join(IMG, 'logo-mark.png')).size)}`);
+     Built on cream rather than green so the lockup's own dark-green wordmark
+     reads, and with no typeset text at all: the artwork already carries the
+     company name, and sharp has no access to the site's display face, so any
+     text added here would be set in a substitute. */
+  const OG_W = 1200;
+  const OG_H = 630;
+  const lock = await sharp(lockup).resize({ width: 820, withoutEnlargement: true }).toBuffer();
+  const ground = Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${OG_W}" height="${OG_H}">` +
+    `<rect width="${OG_W}" height="${OG_H}" fill="#faf8f3"/>` +
+    `<rect y="${OG_H - 14}" width="${OG_W}" height="14" fill="#0d5238"/>` +
+    `<rect y="${OG_H - 18}" width="${OG_W}" height="4" fill="#c79a3e"/></svg>`
+  );
+  await sharp(ground).composite([{ input: lock, gravity: 'centre' }])
+    .png({ compressionLevel: 9 }).toFile(path.join(IMG, 'og-default.png'));
+  console.log(`  ${'og-default.png'.padEnd(24)} ${OG_W}x${OG_H}  ${kb(fs.statSync(path.join(IMG, 'og-default.png')).size)}`);
 
-  console.log('\nDone. Remember that /assets/* is served immutable — the build');
-  console.log('hashes these URLs, so a rebuild is what actually ships them.\n');
+  console.log('\nDone. /assets/* is served immutable — the build hashes these');
+  console.log('URLs, so a rebuild is what actually ships them.\n');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

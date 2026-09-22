@@ -12,6 +12,7 @@ const guides = require('../data/guides');
 
 const BASE = '/travel-guides/';
 const crumbBase = { label: 'Travel Guides', url: BASE };
+const guidesUr = require('../data/guides-ur');
 
 const categories = [...new Set(guides.map((g) => g.category))];
 
@@ -145,6 +146,12 @@ ${c.pageHero({ image: `/assets/img/guides/${g.slug}.jpg`, imageAlt: g.title, eye
     <div class="container">
       <div class="with-sidebar">
         <article>
+          ${guidesUr[g.slug]
+            ? `<p class="lang-switch">
+            <a href="${attr(`${BASE}${g.slug}/urdu/`)}" hreflang="ur" lang="ur" dir="rtl">یہ مضمون اردو میں پڑھیے</a>
+          </p>`
+            : ''}
+
           <div class="article-meta">
             <span>${icon('calendar', { size: 13 })} Published ${esc(formatDate(g.date))}</span>
             <span>${icon('clock', { size: 13 })} ${g.readTime} min read</span>
@@ -217,6 +224,7 @@ ${c.ctaBand({ waMessage: wa })}`;
     url,
     html: layout({
       url,
+      ...(guidesUr[g.slug] ? { altLang: `${BASE}${g.slug}/urdu/` } : {}),
       title: g.metaTitle,
       description: g.metaDescription,
       ogType: 'article',
@@ -247,4 +255,93 @@ ${c.ctaBand({ waMessage: wa })}`;
   };
 }
 
-module.exports = () => [indexPage(), ...guides.map(articlePage)];
+/* ---- Urdu -----------------------------------------------------------------
+   An article gets an Urdu page only when src/data/guides-ur.js has an entry
+   for its slug, so the translations can be added a few at a time without
+   ever leaving a link pointing at nothing.
+   -------------------------------------------------------------------------- */
+function urduPage(g) {
+  const ur = guidesUr[g.slug];
+  if (!ur) return null;
+
+  const enUrl = `${BASE}${g.slug}/`;
+  const url = `${enUrl}urdu/`;
+  const wa = `السلام علیکم، میں ${ur.title} کے بارے میں معلومات چاہتا ہوں۔`;
+
+  const body = `
+${c.pageHero({
+    image: `/assets/img/guides/${g.slug}.jpg`,
+    imageAlt: g.title,
+    eyebrow: 'اردو',
+    title: ur.title,
+    text: esc(ur.excerpt),
+  })}
+
+  <section class="section">
+    <div class="container">
+      <article class="article-ur">
+        <p class="lang-switch">
+          <a href="${attr(enUrl)}" hreflang="en" lang="en" dir="ltr">Read this guide in English</a>
+        </p>
+
+        <div class="prose">
+          ${ur.body}
+        </div>
+
+        ${
+          ur.faqs && ur.faqs.length
+            ? `<h2>عام سوالات</h2>
+        ${c.faqAccordion(ur.faqs, `ur-${g.slug}`)}`
+            : ''
+        }
+
+        <p class="form-note" lang="en" dir="ltr">
+          This Urdu translation is provided for convenience. Where it differs from the
+          <a href="${attr(enUrl)}">English version</a>, the English text is the one we maintain.
+        </p>
+      </article>
+    </div>
+  </section>
+
+${c.ctaBand({ waMessage: wa })}`;
+
+  return {
+    url,
+    html: layout({
+      url,
+      lang: 'ur',
+      altLang: enUrl,
+      title: `${ur.title} | ${site.shortName}`,
+      description: ur.excerpt,
+      ogType: 'article',
+      ogImage: `/assets/img/guides/${g.slug}.jpg`,
+      ogImageAlt: g.title,
+      crumbs: [crumbBase, { label: ur.title, url }],
+      body,
+      schema: [
+        {
+          '@type': 'Article',
+          headline: ur.title,
+          description: ur.excerpt,
+          url: `${site.url}${url}`,
+          datePublished: g.date,
+          dateModified: g.date,
+          inLanguage: 'ur-PK',
+          articleSection: g.category,
+          author: { '@id': `${site.url}/#organization` },
+          publisher: { '@id': `${site.url}/#organization` },
+          mainEntityOfPage: { '@type': 'WebPage', '@id': `${site.url}${url}` },
+        },
+      ],
+      waMessage: wa,
+    }),
+    priority: '0.6',
+    changefreq: 'monthly',
+  };
+}
+
+module.exports = () => [
+  indexPage(),
+  ...guides.map(articlePage),
+  ...guides.map(urduPage).filter(Boolean),
+];

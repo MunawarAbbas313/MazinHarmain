@@ -57,9 +57,7 @@ const hasAsset = (name) => fsFor.existsSync(pathFor.join(ASSET_DIR, name));
                       just. There it pairs with the typeset wordmark, which
                       is already styled white and gold for that background. */
 const LOCKUP_SRC = hasAsset('logo-lockup.png') ? asset('/assets/img/logo-lockup.png') : '';
-const MARK_SRC = hasAsset('logo-mark.png')
-  ? asset('/assets/img/logo-mark.png')
-  : (hasAsset('logo-mark.svg') ? asset('/assets/img/logo-mark.svg') : '');
+const MARK_SRC = hasAsset('logo-mark.png') ? asset('/assets/img/logo-mark.png') : '';
 const HAS_MARK = Boolean(MARK_SRC || LOCKUP_SRC);
 
 /* The wide mark is roughly 2.2:1 — width/height are declared so the browser
@@ -454,16 +452,42 @@ function layout(p) {
     ? `\n  <meta name="google-site-verification" content="${attr(site.analytics.googleSiteVerification)}">`
     : '';
 
+  /* Urdu pages are right-to-left and need their own lang. Everything else
+     stays en-PK, so pages that do not ask for this are untouched. */
+  const isUrdu = p.lang === 'ur';
+  const htmlLang = isUrdu ? 'ur-PK' : 'en-PK';
+  const htmlDir = isUrdu ? ' dir="rtl"' : '';
+
+  /* Tell search engines the two language versions are the same article, so
+     neither is treated as a duplicate of the other. */
+  const altLinks = p.altLang
+    ? `
+  <link rel="alternate" hreflang="en-pk" href="${site.url}${attr(isUrdu ? p.altLang : url)}">` +
+      `
+  <link rel="alternate" hreflang="ur-pk" href="${site.url}${attr(isUrdu ? url : p.altLang)}">` +
+      `
+  <link rel="alternate" hreflang="x-default" href="${site.url}${attr(isUrdu ? p.altLang : url)}">`
+    : '';
+
+  /* Nastaliq is what Urdu is actually read in; the Latin stack cannot set
+     it. Loaded only on the pages that need it. */
+  const urduFont = isUrdu
+    ? `
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>` +
+      `
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap">`
+    : '';
+
   return `<!DOCTYPE html>
-<html lang="en-PK">
+<html lang="${htmlLang}"${htmlDir}>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>${esc(p.title)}</title>
   <meta name="description" content="${attr(p.description)}">
   <link rel="canonical" href="${attr(canonical)}">
-  <link rel="alternate" hreflang="en-pk" href="${attr(canonical)}">
-  <link rel="alternate" hreflang="x-default" href="${attr(canonical)}">
+${altLinks ? '' : `  <link rel="alternate" hreflang="en-pk" href="${attr(canonical)}">
+  <link rel="alternate" hreflang="x-default" href="${attr(canonical)}">`}
   <meta name="robots" content="${p.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">${verification}
   <meta name="author" content="${attr(site.name)}">
   <meta name="geo.region" content="PK-IS">
@@ -519,9 +543,12 @@ function layout(p) {
        photography-led homepage layout. Order matters. -->
   <link rel="stylesheet" href="${asset('/assets/css/refinements.css')}">
 
-  <script type="application/ld+json">${jsonLd}</script>${ga}
+  <script type="application/ld+json">${jsonLd}</script>${altLinks}${urduFont}${ga}
 </head>
-<body${p.bodyClass ? ` class="${attr(p.bodyClass)}"` : ''}>
+<body${(() => {
+  const cls = [p.bodyClass, isUrdu ? 'is-urdu' : ''].filter(Boolean).join(' ');
+  return cls ? ` class="${attr(cls)}"` : '';
+})()}>
   <a class="skip-link" href="#main">Skip to main content</a>
 ${header(url)}
 ${breadcrumbNav(p.crumbs)}
