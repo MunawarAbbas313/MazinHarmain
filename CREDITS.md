@@ -8,7 +8,7 @@ Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
 - Images: **59**
-- Total weight: **11998 KB**
+- Total weight: **15494 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -34,19 +34,19 @@ npm run images -- --force           # everything
 |---|---|---|---|
 | `car-rental.jpg` | 1600×1200 | 243 KB | [#17571484](https://www.pexels.com/photo/17571484/) |
 | `corporate-travel.jpg` | 1600×1200 | 181 KB | [#6050133](https://www.pexels.com/photo/6050133/) |
-| `destinations/azerbaijan.jpg` | 1200×900 | 91 KB | [#17857195](https://www.pexels.com/photo/17857195/) |
-| `destinations/dubai.jpg` | 1200×900 | 127 KB | [#17865557](https://www.pexels.com/photo/17865557/) |
-| `destinations/europe.jpg` | 1200×900 | 172 KB | [#15452274](https://www.pexels.com/photo/15452274/) |
-| `destinations/georgia.jpg` | 1200×900 | 190 KB | [#31773992](https://www.pexels.com/photo/31773992/) |
-| `destinations/malaysia.jpg` | 1200×900 | 221 KB | [#462671](https://www.pexels.com/photo/462671/) |
-| `destinations/maldives.jpg` | 1200×900 | 195 KB | [#30037393](https://www.pexels.com/photo/30037393/) |
-| `destinations/saudi-arabia.jpg` | 1200×900 | 114 KB | [#6099936](https://www.pexels.com/photo/6099936/) |
-| `destinations/singapore.jpg` | 1200×900 | 147 KB | [#1842332](https://www.pexels.com/photo/1842332/) |
-| `destinations/sri-lanka.jpg` | 1200×900 | 213 KB | [#4769075](https://www.pexels.com/photo/4769075/) |
-| `destinations/thailand.jpg` | 1200×900 | 135 KB | [#15199399](https://www.pexels.com/photo/15199399/) |
-| `destinations/turkey.jpg` | 1200×900 | 117 KB | [#13337127](https://www.pexels.com/photo/13337127/) |
-| `destinations/united-kingdom.jpg` | 1200×900 | 90 KB | [#460672](https://www.pexels.com/photo/460672/) |
-| `destinations/uzbekistan.jpg` | 1200×900 | 261 KB | [#19439173](https://www.pexels.com/photo/19439173/) |
+| `destinations/azerbaijan.jpg` | 1600×1200 | 152 KB | [#17857195](https://www.pexels.com/photo/17857195/) |
+| `destinations/dubai.jpg` | 1600×1200 | 431 KB | [#30554306](https://www.pexels.com/photo/30554306/) |
+| `destinations/europe.jpg` | 1600×1200 | 168 KB | [#10719465](https://www.pexels.com/photo/10719465/) |
+| `destinations/georgia.jpg` | 1600×1200 | 306 KB | [#31773992](https://www.pexels.com/photo/31773992/) |
+| `destinations/malaysia.jpg` | 1600×1200 | 368 KB | [#462671](https://www.pexels.com/photo/462671/) |
+| `destinations/maldives.jpg` | 1600×1200 | 323 KB | [#30037393](https://www.pexels.com/photo/30037393/) |
+| `destinations/saudi-arabia.jpg` | 1600×1200 | 198 KB | [#6099936](https://www.pexels.com/photo/6099936/) |
+| `destinations/singapore.jpg` | 1600×1200 | 251 KB | [#1842332](https://www.pexels.com/photo/1842332/) |
+| `destinations/sri-lanka.jpg` | 1600×1200 | 376 KB | [#4769075](https://www.pexels.com/photo/4769075/) |
+| `destinations/thailand.jpg` | 1600×1200 | 228 KB | [#15199399](https://www.pexels.com/photo/15199399/) |
+| `destinations/turkey.jpg` | 1600×1200 | 333 KB | [#6798525](https://www.pexels.com/photo/6798525/) |
+| `destinations/united-kingdom.jpg` | 1600×1200 | 145 KB | [#460672](https://www.pexels.com/photo/460672/) |
+| `destinations/uzbekistan.jpg` | 1600×1200 | 452 KB | [#19439173](https://www.pexels.com/photo/19439173/) |
 | `guides/best-hotels-near-masjid-al-haram.jpg` | 1200×900 | 177 KB | [#31339194](https://www.pexels.com/photo/31339194/) |
 | `guides/best-hotels-near-masjid-an-nabawi.jpg` | 1200×900 | 193 KB | [#27347927](https://www.pexels.com/photo/27347927/) |
 | `guides/dubai-visa-guide-from-pakistan.jpg` | 1200×900 | 334 KB | [#18069692](https://www.pexels.com/photo/18069692/) |
@@ -59,8 +59,8 @@ npm run images -- --force           # everything
 | `guides/turkey-travel-guide-for-pakistani-tourists.jpg` | 1200×900 | 110 KB | [#5700576](https://www.pexels.com/photo/5700576/) |
 | `guides/uk-visit-visa-guide-from-pakistan.jpg` | 1200×900 | 136 KB | [#4173219](https://www.pexels.com/photo/4173219/) |
 | `guides/umrah-guide-for-pakistani-travellers.jpg` | 1200×900 | 269 KB | [#4118058](https://www.pexels.com/photo/4118058/) |
-| `hero-dubai-2560.jpg` | 2560×1440 | 405 KB | [#17865557](https://www.pexels.com/photo/17865557/) |
-| `hero-dubai.jpg` | 1600×900 | 165 KB | [#17865557](https://www.pexels.com/photo/17865557/) |
+| `hero-dubai-2560.jpg` | 2560×1440 | 914 KB | [#31084537](https://www.pexels.com/photo/31084537/) |
+| `hero-dubai.jpg` | 1600×900 | 431 KB | [#31084537](https://www.pexels.com/photo/31084537/) |
 | `hero-europe-2560.jpg` | 2560×1440 | 619 KB | [#11279691](https://www.pexels.com/photo/11279691/) |
 | `hero-europe.jpg` | 1600×900 | 239 KB | [#11279691](https://www.pexels.com/photo/11279691/) |
 | `hero-flight-1200.jpg` | 1200×675 | 41 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
@@ -78,14 +78,14 @@ npm run images -- --force           # everything
 | `hero-maldives-2560.jpg` | 2560×1440 | 298 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
 | `hero-maldives.jpg` | 1600×900 | 125 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
 | `hero-umrah.jpg` | 1600×900 | 373 KB | [#4118058](https://www.pexels.com/photo/4118058/) |
-| `hotels/baku-hotels.jpg` | 1200×900 | 123 KB | [#15236595](https://www.pexels.com/photo/15236595/) |
-| `hotels/dubai-hotels.jpg` | 1200×900 | 216 KB | [#31033420](https://www.pexels.com/photo/31033420/) |
-| `hotels/europe-hotels.jpg` | 1200×900 | 120 KB | [#19609871](https://www.pexels.com/photo/19609871/) |
-| `hotels/istanbul-hotels.jpg` | 1200×900 | 261 KB | [#27634399](https://www.pexels.com/photo/27634399/) |
-| `hotels/london-hotels.jpg` | 1200×900 | 156 KB | [#31147777](https://www.pexels.com/photo/31147777/) |
-| `hotels/madinah-hotels.jpg` | 1200×900 | 122 KB | [#34642005](https://www.pexels.com/photo/34642005/) |
-| `hotels/makkah-hotels.jpg` | 1200×900 | 177 KB | [#31339194](https://www.pexels.com/photo/31339194/) |
-| `hotels/worldwide-hotels.jpg` | 1200×900 | 163 KB | [#695193](https://www.pexels.com/photo/695193/) |
+| `hotels/baku-hotels.jpg` | 1600×1200 | 198 KB | [#15236595](https://www.pexels.com/photo/15236595/) |
+| `hotels/dubai-hotels.jpg` | 1600×1200 | 359 KB | [#31033420](https://www.pexels.com/photo/31033420/) |
+| `hotels/europe-hotels.jpg` | 1600×1200 | 226 KB | [#19609871](https://www.pexels.com/photo/19609871/) |
+| `hotels/istanbul-hotels.jpg` | 1600×1200 | 373 KB | [#7487202](https://www.pexels.com/photo/7487202/) |
+| `hotels/london-hotels.jpg` | 1600×1200 | 253 KB | [#31147777](https://www.pexels.com/photo/31147777/) |
+| `hotels/madinah-hotels.jpg` | 1600×1200 | 169 KB | [#33169796](https://www.pexels.com/photo/33169796/) |
+| `hotels/makkah-hotels.jpg` | 1600×1200 | 548 KB | [#38546878](https://www.pexels.com/photo/38546878/) |
+| `hotels/worldwide-hotels.jpg` | 1600×1200 | 275 KB | [#695193](https://www.pexels.com/photo/695193/) |
 | `services/air-ticketing.jpg` | 1600×1200 | 116 KB | [#32649171](https://www.pexels.com/photo/32649171/) |
 | `services/apostille.jpg` | 1600×1200 | 114 KB | [#9858904](https://www.pexels.com/photo/9858904/) |
 | `services/attestation.jpg` | 1600×1200 | 160 KB | [#7654118](https://www.pexels.com/photo/7654118/) |

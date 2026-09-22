@@ -48,7 +48,7 @@ function hubPage() {
   const body = `
 ${c.pageHero({
     image: '/assets/img/destinations/turkey.jpg',
-    imageAlt: 'The Blue Mosque at sunset in Istanbul, Turkey',
+    imageAlt: 'The Istanbul skyline and boats on the Bosphorus at golden sunset',
     eyebrow: 'International Tours',
     title: 'Explore the World With Mazin Haramain',
     text: 'Customised and group tour packages to the destinations Pakistani travellers ask for most &mdash; with flights, hotels, transfers, guided tours and visa assistance arranged together.',

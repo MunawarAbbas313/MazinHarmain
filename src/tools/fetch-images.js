@@ -75,7 +75,7 @@ const CURATED = [
   { file: 'hero-flight-768.jpg',  id: 1911388, w: 768,  h: 432,   alt: 'An airliner silhouetted against a sunset sky' },
   { file: 'hero-flight-1200.jpg', id: 1911388, w: 1200, h: 675,   alt: 'An airliner silhouetted against a sunset sky' },
   { file: 'hero-flight-1600.jpg', id: 1911388, w: 1600, h: 900,   alt: 'An airliner silhouetted against a sunset sky' },
-  { file: 'hero-dubai.jpg',       id: 17865557, ...WIDE, alt: 'The Dubai skyline with the Burj Khalifa, United Arab Emirates' },
+  { file: 'hero-dubai.jpg',       id: 31084537, ...WIDE, alt: 'Dubai Marina seen from the air at night' },
   { file: 'hero-istanbul.jpg',    id: 18165242, ...WIDE, alt: 'Istanbul seen from above the Bosphorus' },
   { file: 'hero-europe.jpg',      id: 11279691, ...WIDE, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives.jpg',    id: 28843924, ...WIDE, alt: 'An island resort with overwater villas in the Maldives' },
@@ -85,7 +85,7 @@ const CURATED = [
      soft on most modern laptops and phones — which is exactly the
      "losing its pixels" the client reported. */
   { file: 'hero-flight-2560.jpg',   id: 1911388,  ...HERO_2X, alt: 'An airliner silhouetted against a sunset sky' },
-  { file: 'hero-dubai-2560.jpg',    id: 17865557, ...HERO_2X, alt: 'The Dubai skyline with the Burj Khalifa, United Arab Emirates' },
+  { file: 'hero-dubai-2560.jpg',    id: 31084537, ...HERO_2X, alt: 'Dubai Marina seen from the air at night' },
   { file: 'hero-istanbul-2560.jpg', id: 18165242, ...HERO_2X, alt: 'Istanbul seen from above the Bosphorus' },
   { file: 'hero-europe-2560.jpg',   id: 11279691, ...HERO_2X, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives-2560.jpg', id: 28843924, ...HERO_2X, alt: 'An island resort with overwater villas in the Maldives' },
@@ -99,26 +99,26 @@ const CURATED = [
   /* Car rental, for the MyCab sister-company section and its service page. */
   { file: 'car-rental.jpg',       id: 17571484, ...FEATURE, alt: 'A black Range Rover Sport photographed at dusk' },
 
-  { file: 'destinations/turkey.jpg',         id: 13337127, ...CARD, alt: 'The Blue Mosque silhouetted against a sunset in Istanbul, Turkey' },
-  { file: 'destinations/azerbaijan.jpg',     id: 17857195, ...CARD, alt: 'The Flame Towers and Baku cityscape at sunset, Azerbaijan' },
-  { file: 'destinations/dubai.jpg',          id: 17865557, ...CARD, alt: 'Aerial view of the Dubai skyline with the Burj Khalifa' },
-  { file: 'destinations/malaysia.jpg',       id: 462671,   ...CARD, alt: 'The Petronas Twin Towers illuminated at night in Kuala Lumpur' },
-  { file: 'destinations/thailand.jpg',       id: 15199399, ...CARD, alt: 'The Grand Palace at Wat Phra Kaew in Bangkok, Thailand' },
-  { file: 'destinations/maldives.jpg',       id: 30037393, ...CARD, alt: 'Luxury overwater villas above a turquoise lagoon in the Maldives' },
-  { file: 'destinations/united-kingdom.jpg', id: 460672,   ...CARD, alt: 'Big Ben and Westminster Bridge over the Thames at sunset in London' },
-  { file: 'destinations/europe.jpg',         id: 15452274, ...CARD, alt: 'Aerial view of the Paris cityscape with the Eiffel Tower' },
-  { file: 'destinations/singapore.jpg',      id: 1842332,  ...CARD, alt: 'Marina Bay Sands and the Helix Bridge illuminated at night in Singapore' },
+  { file: 'destinations/turkey.jpg',         id: 6798525,  ...FEATURE, alt: 'The Istanbul skyline and boats on the Bosphorus at golden sunset' },
+  { file: 'destinations/azerbaijan.jpg',     id: 17857195, ...FEATURE, alt: 'The Flame Towers and Baku cityscape at sunset, Azerbaijan' },
+  { file: 'destinations/dubai.jpg',          id: 30554306, ...FEATURE, alt: 'Dubai Marina lit up at night' },
+  { file: 'destinations/malaysia.jpg',       id: 462671,   ...FEATURE, alt: 'The Petronas Twin Towers illuminated at night in Kuala Lumpur' },
+  { file: 'destinations/thailand.jpg',       id: 15199399, ...FEATURE, alt: 'The Grand Palace at Wat Phra Kaew in Bangkok, Thailand' },
+  { file: 'destinations/maldives.jpg',       id: 30037393, ...FEATURE, alt: 'Luxury overwater villas above a turquoise lagoon in the Maldives' },
+  { file: 'destinations/united-kingdom.jpg', id: 460672,   ...FEATURE, alt: 'Big Ben and Westminster Bridge over the Thames at sunset in London' },
+  { file: 'destinations/europe.jpg',         id: 10719465, ...FEATURE, alt: 'The Eiffel Tower against a vivid sunrise over Paris' },
+  { file: 'destinations/singapore.jpg',      id: 1842332,  ...FEATURE, alt: 'Marina Bay Sands and the Helix Bridge illuminated at night in Singapore' },
 
-  { file: 'hotels/makkah-hotels.jpg',   id: 31339194, ...CARD, alt: 'Night view of the Kaaba and Masjid al-Haram in Makkah' },
-  { file: 'hotels/madinah-hotels.jpg',  id: 34642005, ...CARD, alt: 'The Green Dome and minaret of the Prophet’s Mosque in Madinah' },
-  { file: 'hotels/dubai-hotels.jpg',    id: 31033420, ...CARD, alt: 'Aerial view of Dubai Marina with its skyline and towers' },
-  { file: 'hotels/istanbul-hotels.jpg', id: 27634399, ...CARD, alt: 'The Blue Mosque and its gardens in Istanbul, Turkey' },
-  { file: 'hotels/baku-hotels.jpg',     id: 15236595, ...CARD, alt: 'A traditional street in Baku with the modern Flame Towers behind' },
-  { file: 'hotels/london-hotels.jpg',   id: 31147777, ...CARD, alt: 'Big Ben and London red buses on Westminster Bridge' },
-  { file: 'hotels/europe-hotels.jpg',   id: 19609871, ...CARD, alt: 'Panorama of Paris rooftops with the Eiffel Tower' },
-  { file: 'destinations/saudi-arabia.jpg', id: 6099936, ...CARD, alt: 'The courtyard of Al-Masjid an-Nabawi in Madinah, Saudi Arabia' },
+  { file: 'hotels/makkah-hotels.jpg',   id: 38546878, ...FEATURE, alt: 'Masjid al-Haram in Makkah seen from the air at sunset' },
+  { file: 'hotels/madinah-hotels.jpg',  id: 33169796, ...FEATURE, alt: 'Al-Masjid an-Nabawi in Madinah' },
+  { file: 'hotels/dubai-hotels.jpg',    id: 31033420, ...FEATURE, alt: 'Aerial view of Dubai Marina with its skyline and towers' },
+  { file: 'hotels/istanbul-hotels.jpg', id: 7487202,  ...FEATURE, alt: 'Hagia Sophia in Istanbul in warm evening light' },
+  { file: 'hotels/baku-hotels.jpg',     id: 15236595, ...FEATURE, alt: 'A traditional street in Baku with the modern Flame Towers behind' },
+  { file: 'hotels/london-hotels.jpg',   id: 31147777, ...FEATURE, alt: 'Big Ben and London red buses on Westminster Bridge' },
+  { file: 'hotels/europe-hotels.jpg',   id: 19609871, ...FEATURE, alt: 'Panorama of Paris rooftops with the Eiffel Tower' },
+  { file: 'destinations/saudi-arabia.jpg', id: 6099936, ...FEATURE, alt: 'The courtyard of Al-Masjid an-Nabawi in Madinah, Saudi Arabia' },
   { file: 'corporate-travel.jpg',          id: 6050133, ...FEATURE, alt: 'A business traveller in a suit walking through an airport with luggage' },
-  { file: 'hotels/worldwide-hotels.jpg',   id: 695193,  ...CARD, alt: 'The spacious lobby of a luxury hotel' },
+  { file: 'hotels/worldwide-hotels.jpg',   id: 695193,  ...FEATURE, alt: 'The spacious lobby of a luxury hotel' },
   { file: 'guides/uk-visit-visa-guide-from-pakistan.jpg',            id: 4173219,  ...CARD, alt: 'A traveller with a suitcase and passport in an airport corridor' },
   { file: 'guides/international-travel-checklist-from-pakistan.jpg', id: 12717154, ...CARD, alt: 'Travellers checking the departure board in an airport terminal' },
 
@@ -128,9 +128,9 @@ const CURATED = [
   { file: 'guides/turkey-travel-guide-for-pakistani-tourists.jpg', id: 5700576,  ...CARD, alt: 'Hot air balloons rising over the rock formations of Cappadocia at sunrise' },
   { file: 'guides/dubai-visa-guide-from-pakistan.jpg',             id: 18069692, ...CARD, alt: 'Panoramic view of Dubai from the Burj Khalifa' },
 
-  { file: 'destinations/georgia.jpg',   id: 31773992, ...CARD, alt: 'Sunset over the Tbilisi cityscape in Georgia' },
-  { file: 'destinations/sri-lanka.jpg', id: 4769075,  ...CARD, alt: 'A train crossing the Nine Arch Bridge at Ella, Sri Lanka' },
-  { file: 'destinations/uzbekistan.jpg', id: 19439173, ...CARD, alt: 'The tiled domes and mosaic facades of Shah-i-Zinda in Samarkand, Uzbekistan' },
+  { file: 'destinations/georgia.jpg',   id: 31773992, ...FEATURE, alt: 'Sunset over the Tbilisi cityscape in Georgia' },
+  { file: 'destinations/sri-lanka.jpg', id: 4769075,  ...FEATURE, alt: 'A train crossing the Nine Arch Bridge at Ella, Sri Lanka' },
+  { file: 'destinations/uzbekistan.jpg', id: 19439173, ...FEATURE, alt: 'The tiled domes and mosaic facades of Shah-i-Zinda in Samarkand, Uzbekistan' },
   { file: 'guides/how-to-prepare-for-your-umrah-journey.jpg',           id: 9186152,  ...CARD, alt: 'An open suitcase being packed with neatly folded clothes' },
   { file: 'guides/nadra-vaccination-certificate-umrah-hajj.jpg',        id: 20471645, ...CARD, alt: 'A vaccination being administered by a healthcare worker' },
   { file: 'guides/nusuk-registration-guide-for-umrah.jpg',              id: 7310015,  ...CARD, alt: 'A passport and travel tickets resting on a laptop' },
@@ -375,9 +375,14 @@ async function main() {
     await sleep(350);
   }
 
-  /* ---- auto ---- */
+  /* ---- auto ----
+     A file listed in both tables is already downloaded by the curated pass
+     above. Searching for it again is wasted work, and since Pexels began
+     answering its search pages with 403 it also reports a false failure for
+     a file that is sitting on disk. Curated always wins. */
+  const curatedFiles = new Set(CURATED.map((t) => t.file));
   console.log('\nSearched (scored against required keywords):');
-  for (const t of AUTO.filter(wanted)) {
+  for (const t of AUTO.filter(wanted).filter((a) => !curatedFiles.has(a.file))) {
     const dest = path.join(IMG, t.file);
     if (!FORCE && fs.existsSync(dest)) { skipped++; continue; }
     process.stdout.write(`  ${t.file.padEnd(52)}`);
