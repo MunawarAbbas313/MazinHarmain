@@ -44,17 +44,16 @@ const WA_HERO = 'Assalam o Alaikum, I would like to speak to a travel expert abo
    impression. These are decorative variations on the opening frame, which
    is why they carry an empty alt rather than four competing descriptions. */
 const HERO_SLIDES = [
-  /* Eight frames. Makkah and Madinah are back in the rotation at the
-     client's request — the original objection was that the Kaaba was the
-     ONLY thing the home page showed, not that it should be absent. Beside
-     Paris, Venice, Istanbul, Dubai and the Maldives, the agency reads as
-     both the Umrah specialist and the worldwide operator it is. */
-  { src: '/assets/img/hero-haram.jpg', wide: '/assets/img/hero-haram-2560.jpg' },
+  /* The client named these eight and this order: Kaaba, Masjid an-Nabawi,
+     UK, USA, Turkey, Azerbaijan, Paris, Maldives. Dubai and Venice are out.
+     The Kaaba leads and is therefore the eager LCP frame below, not part of
+     this lazily-attached list. */
   { src: '/assets/img/hero-nabawi.jpg', wide: '/assets/img/hero-nabawi-2560.jpg' },
-  { src: '/assets/img/hero-paris.jpg', wide: '/assets/img/hero-paris-2560.jpg' },
+  { src: '/assets/img/hero-london.jpg', wide: '/assets/img/hero-london-2560.jpg' },
+  { src: '/assets/img/hero-newyork.jpg', wide: '/assets/img/hero-newyork-2560.jpg' },
   { src: '/assets/img/hero-istanbul.jpg', wide: '/assets/img/hero-istanbul-2560.jpg' },
-  { src: '/assets/img/hero-dubai.jpg', wide: '/assets/img/hero-dubai-2560.jpg' },
-  { src: '/assets/img/hero-europe.jpg', wide: '/assets/img/hero-europe-2560.jpg' },
+  { src: '/assets/img/hero-baku.jpg', wide: '/assets/img/hero-baku-2560.jpg' },
+  { src: '/assets/img/hero-paris.jpg', wide: '/assets/img/hero-paris-2560.jpg' },
   { src: '/assets/img/hero-maldives.jpg', wide: '/assets/img/hero-maldives-2560.jpg' },
 ];
 
@@ -67,12 +66,10 @@ function photo(src, alt, { w = 1200, h = 900, eager = false } = {}) {
 
 /* --------------------------------------------------------------- 1. Hero */
 function hero() {
-  const trust = [
-    { icon: 'kaaba',     label: 'Umrah Services',       url: '/umrah-packages/' },
-    { icon: 'passport',  label: 'Visa Assistance',      url: '/visa-services/' },
-    { icon: 'globe',     label: 'International Travel', url: '/destinations/' },
-    { icon: 'briefcase', label: 'Corporate Solutions',  url: '/corporate-travel/' },
-  ];
+  /* The Umrah / Visa / International / Corporate strip that used to sit under
+     the hero buttons has gone. The client asked for those four to live on the
+     search form's tab strip and nowhere else on the page — repeating them
+     immediately above the tabs made the tabs look like decoration. */
 
   return `
   <section class="hero">
@@ -83,14 +80,11 @@ function hero() {
             main.js attaches them once the page has finished loading. With
             JavaScript off this stays a single static hero. */ ''}
       <img class="hero__slide is-active"
-           src="/assets/img/hero-flight-1600.jpg"
-           srcset="/assets/img/hero-flight-768.jpg 768w,
-                   /assets/img/hero-flight-1200.jpg 1200w,
-                   /assets/img/hero-flight-1600.jpg 1600w,
-                   /assets/img/hero-flight.jpg 1920w,
-                   /assets/img/hero-flight-2560.jpg 2560w"
+           src="/assets/img/hero-haram.jpg"
+           srcset="/assets/img/hero-haram.jpg 1600w,
+                   /assets/img/hero-haram-2560.jpg 2560w"
            sizes="100vw"
-           alt="An airliner silhouetted against a sunset sky"
+           alt="Masjid al-Haram in Makkah seen from the air at sunset"
            width="1600" height="900" loading="eager" fetchpriority="high" decoding="async"
            onerror="this.onerror=null;this.srcset='';this.src='/assets/img/placeholder.svg'">
 ${each(HERO_SLIDES, (h) => `      <img class="hero__slide" data-src="${attr(h.src)}" data-srcset="${attr(h.src)} 1600w, ${attr(h.wide)} 2560w" sizes="100vw" alt="" width="1600" height="900" decoding="async" aria-hidden="true">`)}
@@ -107,9 +101,6 @@ ${each(HERO_SLIDES, (h) => `      <img class="hero__slide" data-src="${attr(h.sr
             <a class="btn btn--whatsapp btn--lg" href="${attr(site.waLink(WA_HERO))}" target="_blank" rel="noopener">${icon('whatsapp', { size: 17 })} WhatsApp an Expert</a>
             <a class="btn btn--outline-light btn--lg" href="/services/">Explore Our Services</a>
           </div>
-        </div>
-        <div class="hero__trustbar">
-          ${each(trust, (t) => `<a class="hero__trustbar-item" href="${attr(t.url)}">${icon(t.icon, { size: 17 })} ${esc(t.label)}</a>`)}
         </div>
       </div>
     </div>
@@ -229,8 +220,11 @@ function visaSection() {
           </div>
         </div>
         <div class="visa-split__media">
-          ${photo('/assets/img/visa-services.jpg',
-            'A passport with visa and departure stamps, a compass and a travel planner on a world map')}
+          ${/* Not visa-services.jpg — that is the Visa Services card's photo
+                further up the same page, and seeing it twice was why the two
+                visa blocks looked like the same block. */ ''}
+          ${photo('/assets/img/services/visa-services.jpg',
+            'European passports resting on a world map')}
         </div>
       </div>
     </div>
@@ -531,8 +525,9 @@ function mapSection() {
 function render() {
   const body = [
     hero(),
-    /* Opens on the first tab in the client's order. */
-    searchWidget({ active: 'umrah' }),
+    /* Opens on the first tab in the client's order, over the photograph the
+       client's reference design puts behind the form. */
+    searchWidget({ active: 'umrah', backdrop: true }),
     servicesSection(),
     umrahSection(),
     visaSection(),
@@ -558,12 +553,12 @@ function render() {
     bodyClass: 'page-home',
     ogImage: '/assets/img/hero-kaaba.jpg',
     ogImageAlt: 'Pilgrims performing tawaf around the Kaaba at Masjid al-Haram in Makkah',
-    preloadImage: '/assets/img/hero-kaaba-1600.jpg',
+    /* Must match the first hero frame exactly, or the preload fetches an
+       image the page never shows and the real LCP frame waits its turn. */
+    preloadImage: '/assets/img/hero-haram.jpg',
     preloadImageSrcset:
-      '/assets/img/hero-kaaba-768.jpg 768w, ' +
-      '/assets/img/hero-kaaba-1200.jpg 1200w, ' +
-      '/assets/img/hero-kaaba-1600.jpg 1600w, ' +
-      '/assets/img/hero-kaaba.jpg 1920w',
+      '/assets/img/hero-haram.jpg 1600w, ' +
+      '/assets/img/hero-haram-2560.jpg 2560w',
     preloadImageSizes: '100vw',
     schema: [c.faqSchema(faqs.homepage)],
     waMessage: WA_HERO,

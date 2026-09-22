@@ -2,7 +2,7 @@
   "name": "mazin-haramain-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Mazin Haramain Tours & Travels \u2014 static website generator. Umrah, Hajj, visa, flights, hotels, tours and corporate travel, Islamabad.",
+  "description": "Mazin Haramain Tours & Travels — static website generator. Umrah, Hajj, visa, flights, hotels, tours and corporate travel, Islamabad.",
   "scripts": {
     "build": "node src/build.js",
     "qa": "node src/qa.js",
@@ -17,7 +17,8 @@
     "shoot": "node src/tools/shoot.js",
     "logo": "node src/tools/make-logo.js assets/img/logo-source.jpg",
     "audit": "node src/tools/audit.js",
-    "responsive": "node src/tools/responsive.js"
+    "responsive": "node src/tools/responsive.js",
+    "backdrop": "node src/tools/make-search-backdrop.js"
   },
   "engines": {
     "node": ">=18"

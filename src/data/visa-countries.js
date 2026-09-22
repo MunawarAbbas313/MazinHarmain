@@ -649,8 +649,17 @@ const otherCountries = countries
    order, with the rest following. */
 const byPriority = [...countries].sort((a, b) => a.order - b.order);
 
+/* The twenty-one countries the client named for the visa-appointment
+   dropdown, in the client's own order. They carry order 1-21; everything the
+   agency merely handles carries 100+. The dropdown lists these and nothing
+   else — the client has now asked for it three times, and appending the other
+   twenty-six underneath was still not what was asked for. Free text is
+   accepted through the "Another country" option, so nothing is lost. */
+const appointmentCountries = byPriority.filter((c) => c.order < 100);
+
 module.exports = {
   countries: byPriority,
+  appointmentCountries,
   popularCountries,
   schengenCountries,
   otherCountries,

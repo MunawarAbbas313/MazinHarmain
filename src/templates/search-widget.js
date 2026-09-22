@@ -19,7 +19,8 @@ const { esc, attr, each } = require('../lib/html');
 const { AIRPORTS, HOTEL_PLACES, HOTEL_CATEGORIES } = require('../data/places');
 const umrah = require('../data/umrah');
 const visaTypes = require('../data/visa-types');
-const { countries } = require('../data/visa-countries');
+const { countries, appointmentCountries } = require('../data/visa-countries');
+const { asset } = require('../lib/assets');
 
 /* ---------------------------------------------------------------- Options */
 
@@ -245,7 +246,8 @@ function umrahPanel(hidden) {
 
 function appointmentsPanel(hidden) {
   const p = 'tsa';
-  const countryNames = [...countries.map((c) => c.name), 'Another country'];
+  /* The client's twenty-one, and nothing else. */
+  const countryNames = [...appointmentCountries.map((c) => c.name), 'Another country'];
   return `
         <form class="ts-panel" id="ts-panel-appointments" role="tabpanel" aria-labelledby="ts-tab-appointments"
               data-ts-panel="appointments" data-ts-kind="Appointment" novalidate${hidden ? ' hidden' : ''}>
@@ -381,11 +383,24 @@ const PANELS = {
  * @param {boolean} opts.overlap pull the card up over the hero above it
  * @param {string} opts.title    optional heading above the card
  */
-function searchWidget({ active = 'flights', overlap = true, title = '' } = {}) {
+function searchWidget({ active = 'flights', overlap = true, title = '', backdrop = false } = {}) {
   const panels = TABS.map((t) => PANELS[t.key](t.key !== active)).join('');
 
+  /* The client's reference design sits the form on a photograph rather than
+     on flat page colour. It is an <img>, not a CSS background, because
+     /assets/* is served immutable and only markup can carry the cache-
+     busting hash that asset() appends. */
+  const photo = backdrop ? `
+    <div class="ts__backdrop" aria-hidden="true">
+      <img src="${attr(asset('/assets/img/search-backdrop.jpg'))}"
+           srcset="${attr(asset('/assets/img/search-backdrop.jpg'))} 1600w,
+                   ${attr(asset('/assets/img/search-backdrop-2560.jpg'))} 2560w"
+           sizes="100vw" alt="" width="1600" height="900" decoding="async" fetchpriority="low">
+    </div>` : '';
+
   return `
-  <div class="ts${overlap ? ' ts--overlap' : ''}">
+  <div class="ts${overlap ? ' ts--overlap' : ''}${backdrop ? ' ts--photo' : ''}">
+    ${photo}
     <div class="container">
       ${title ? `<h2 class="ts__title">${esc(title)}</h2>` : ''}
       ${/* The tab strip sits OUTSIDE the card, so the tabs read as tabs —

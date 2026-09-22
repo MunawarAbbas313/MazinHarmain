@@ -177,28 +177,9 @@ button, input, select, textarea { font: inherit; }
 }
 .hero .btn-row { gap: .75rem; }
 
-/* Trust strip along the bottom of the hero */
-.hero__trustbar {
-  position: relative;
-  display: flex; flex-wrap: wrap;
-  margin-top: clamp(2.25rem, 4vw, 3.5rem);
-  background: rgba(3, 24, 18, .52);
-  border: 1px solid rgba(255, 255, 255, .13);
-  border-radius: 8px 8px 0 0;
-  border-bottom: 0;
-  backdrop-filter: blur(3px);
-  overflow: hidden;
-}
-.hero__trustbar-item {
-  display: inline-flex; align-items: center; gap: .6rem;
-  padding: .95rem 1.4rem;
-  font-size: .8125rem; font-weight: 500; color: #d6e6dd;
-  border-right: 1px solid rgba(255, 255, 255, .11);
-  flex: 1 1 auto; min-width: max-content;
-}
-.hero__trustbar-item:last-child { border-right: 0; }
-.hero__trustbar-item svg { width: 17px; height: 17px; color: var(--gold-400); flex-shrink: 0; }
-a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+/* The hero trust strip (Umrah / Visa / International / Corporate) was removed
+   at the client's request — those four belong on the search form's tabs and
+   nowhere else on the page. Its rules went with it. */
 
 /* --------------------------------------------------------------------------
    3. QUICK INQUIRY — white card overlapping the hero
@@ -442,9 +423,6 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   .hero__media::after {
     background: linear-gradient(180deg, rgba(5,32,25,.95) 0%, rgba(6,40,31,.9) 45%, rgba(7,47,38,.8) 100%);
   }
-  .hero__trustbar { margin-top: 1.75rem; }
-  .hero__trustbar-item { flex: 1 1 50%; min-width: 0; padding: .8rem 1rem; font-size: .75rem; }
-  .hero__trustbar-item:nth-child(2) { border-right: 0; }
   .hero .btn-row .btn { width: 100%; }
   .quickbar { margin-top: -1.5rem; }
   .quickbar__options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -473,7 +451,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 }
 
 @media print {
-  .hero__media, .hero__trustbar, .quickbar { display: none !important; }
+  .hero__media, .quickbar { display: none !important; }
   .hero h1, .hero h1 .accent, .hero__text, .hero__eyebrow { color: #000 !important; }
   .hero { background: #fff; }
   .dest-row, .guide-row, .why-row, .trust-row { grid-template-columns: repeat(2, 1fr); }
@@ -1859,3 +1837,78 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 }
 .lang-switch a[lang="ur"] { font-family: 'Noto Nastaliq Urdu', serif; line-height: 2.2; }
 .lang-switch a:hover { border-color: var(--green-500); background: var(--green-100); }
+
+/* ==========================================================================
+   28. The search panel's backdrop
+
+   The client's reference design does not put the form on flat page colour —
+   it puts it on a photograph. The photo is an <img> inside .ts__backdrop
+   rather than a CSS background-image, because /assets/* is served with
+   immutable caching and only markup can carry the hash asset() appends; a
+   url() in this file would have gone stale on the next photo change.
+
+   The wash over it is warm and light, not the dark green we tried first. The
+   client's reference is a pastel sunset banner: a dark green scrim over it
+   turned the sky into a murky slab and the aeroplane disappeared. A cream
+   wash keeps the photograph light and still separates it from the white card.
+
+   The band is separated from the hero by a margin — in the reference the
+   photograph is its own panel, not a continuation of the hero.
+   ========================================================================== */
+.ts--photo {
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+  /* The strip above the tabs is what lets the aircraft be seen, and it has to
+     be a PERCENTAGE, not a clamp in rem: the photograph scales with the
+     viewport width, so a fixed cap lets the aircraft slide down behind the
+     card on a wide screen. The aircraft's underside sits at 36% of the
+     photograph's height, which is 0.2025 x viewport width; 19% plus the tab
+     strip clears it from 320px to 2560px. */
+  padding: 19% 0 clamp(3rem, 6vw, 5rem);
+  isolation: isolate;
+}
+
+.ts__backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+.ts__backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Anchored to the top: the crop already places the aircraft where it needs
+     to be, and any other anchor slides it down behind the card as the band
+     grows. */
+  object-position: center top;
+}
+/* Deep at the edges, lighter behind the card, so the photograph still reads
+   as a photograph instead of as a tint. */
+.ts__backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* Light at the top, where the aircraft is and must stay readable;
+       stronger at the bottom, where the band has to hand over cleanly to the
+       cream section below it. */
+    linear-gradient(180deg, rgba(253, 248, 238, 0.10) 0%, rgba(253, 248, 238, 0.22) 45%, rgba(250, 243, 230, 0.72) 100%);
+}
+
+/* The band is light, so a title over it stays dark. */
+.ts--photo .ts__title { color: var(--green-800); }
+
+/* Inactive tabs sit on a light photograph, so they need a near-solid plate and
+   a hairline to hold their edge. :not(.is-active) matters — without it this
+   rule came later in the file at equal specificity and quietly repainted the
+   selected tab white, which is exactly the "it is underline now" the client
+   had already asked us to fix. */
+.ts--photo .ts__tab:not(.is-active) {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(6, 46, 33, 0.08);
+}
+.ts--photo .ts__card { box-shadow: 0 26px 60px rgba(17, 40, 31, 0.18); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .ts--photo .ts__backdrop img { will-change: auto; }
+}

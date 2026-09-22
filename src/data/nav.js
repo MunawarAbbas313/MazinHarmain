@@ -4,6 +4,17 @@
    desktop dropdowns and the mobile drawer from one definition.
    ========================================================================== */
 
+const { appointmentCountries } = require('./visa-countries');
+
+/* The client named twenty-one countries and has asked three times for them to
+   be the country list. Hand-typing them here is how the menu drifted out of
+   step with the data in the first place — it still showed an eight-country
+   list in a different order — so it is generated. */
+const countryLinks = appointmentCountries.map((c) => ({
+  label: `${c.short || c.name} Visa`,
+  url: `/visa-services/${c.slug}/`,
+}));
+
 const nav = [
   { label: 'Home', url: '/' },
   {
@@ -62,16 +73,8 @@ const nav = [
       { label: 'Visit Visa', url: '/visa-services/visit-visa/' },
       { label: 'Tourist Visa', url: '/visa-services/tourist-visa/' },
       { label: 'Business Visa', url: '/visa-services/business-visa/' },
-      /* Mirrors the client's own list in src/data/visa-countries.js. */
-      { head: 'Popular Countries' },
-      { label: 'Italy Visa', url: '/visa-services/italy-visa/' },
-      { label: 'Spain Visa', url: '/visa-services/spain-visa/' },
-      { label: 'France Visa', url: '/visa-services/france-visa/' },
-      { label: 'Germany Visa', url: '/visa-services/germany-visa/' },
-      { label: 'UK Visa', url: '/visa-services/uk-visa/' },
-      { label: 'USA Visa', url: '/visa-services/usa-visa/' },
-      { label: 'Canada Visa', url: '/visa-services/canada-visa/' },
-      { label: 'Schengen Visa', url: '/visa-services/schengen-visa/' },
+      { head: 'Countries' },
+      ...countryLinks,
       { label: 'Visa Appointment Booking', url: '/services/visa-appointment-booking/' },
     ],
   },

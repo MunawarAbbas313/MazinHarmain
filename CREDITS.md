@@ -7,8 +7,8 @@ permitted, no attribution required, no permission needed**.
 Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
-- Images: **65**
-- Total weight: **18280 KB**
+- Images: **79**
+- Total weight: **22026 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -59,6 +59,8 @@ npm run images -- --force           # everything
 | `guides/turkey-travel-guide-for-pakistani-tourists.jpg` | 1200×900 | 110 KB | [#5700576](https://www.pexels.com/photo/5700576/) |
 | `guides/uk-visit-visa-guide-from-pakistan.jpg` | 1200×900 | 136 KB | [#4173219](https://www.pexels.com/photo/4173219/) |
 | `guides/umrah-guide-for-pakistani-travellers.jpg` | 1200×900 | 269 KB | [#4118058](https://www.pexels.com/photo/4118058/) |
+| `hero-baku-2560.jpg` | 2560×1440 | 292 KB | [#18291079](https://www.pexels.com/photo/18291079/) |
+| `hero-baku.jpg` | 1600×900 | 129 KB | [#18291079](https://www.pexels.com/photo/18291079/) |
 | `hero-dubai-2560.jpg` | 2560×1440 | 914 KB | [#31084537](https://www.pexels.com/photo/31084537/) |
 | `hero-dubai.jpg` | 1600×900 | 431 KB | [#31084537](https://www.pexels.com/photo/31084537/) |
 | `hero-europe-2560.jpg` | 2560×1440 | 619 KB | [#11279691](https://www.pexels.com/photo/11279691/) |
@@ -76,11 +78,15 @@ npm run images -- --force           # everything
 | `hero-kaaba-1600.jpg` | 1600×900 | 507 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba-768.jpg` | 768×432 | 125 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba.jpg` | 1920×1080 | 701 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
+| `hero-london-2560.jpg` | 2560×1440 | 353 KB | [#36156076](https://www.pexels.com/photo/36156076/) |
+| `hero-london.jpg` | 1600×900 | 161 KB | [#36156076](https://www.pexels.com/photo/36156076/) |
 | `hero-madinah.jpg` | 1920×1080 | 190 KB | [#34246953](https://www.pexels.com/photo/34246953/) |
 | `hero-maldives-2560.jpg` | 2560×1440 | 298 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
 | `hero-maldives.jpg` | 1600×900 | 125 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
 | `hero-nabawi-2560.jpg` | 2560×1440 | 286 KB | [#33169796](https://www.pexels.com/photo/33169796/) |
 | `hero-nabawi.jpg` | 1600×900 | 123 KB | [#33169796](https://www.pexels.com/photo/33169796/) |
+| `hero-newyork-2560.jpg` | 2560×1440 | 516 KB | [#33619969](https://www.pexels.com/photo/33619969/) |
+| `hero-newyork.jpg` | 1600×900 | 230 KB | [#33619969](https://www.pexels.com/photo/33619969/) |
 | `hero-paris-2560.jpg` | 2560×1440 | 506 KB | [#30133212](https://www.pexels.com/photo/30133212/) |
 | `hero-paris.jpg` | 1600×900 | 224 KB | [#30133212](https://www.pexels.com/photo/30133212/) |
 | `hero-umrah.jpg` | 1600×900 | 373 KB | [#4118058](https://www.pexels.com/photo/4118058/) |
@@ -92,8 +98,16 @@ npm run images -- --force           # everything
 | `hotels/madinah-hotels.jpg` | 1600×1200 | 169 KB | [#33169796](https://www.pexels.com/photo/33169796/) |
 | `hotels/makkah-hotels.jpg` | 1600×1200 | 548 KB | [#38546878](https://www.pexels.com/photo/38546878/) |
 | `hotels/worldwide-hotels.jpg` | 1600×1200 | 275 KB | [#695193](https://www.pexels.com/photo/695193/) |
-| `services/air-ticketing.jpg` | 1600×1200 | 351 KB | [#6544058](https://www.pexels.com/photo/6544058/) |
+| `search-backdrop-2560.jpg` | 2560×1440 | 335 KB | [#23508916](https://www.pexels.com/photo/23508916/) |
+| `search-backdrop.jpg` | 1600×900 | 102 KB | [#23508916](https://www.pexels.com/photo/23508916/) |
+| `services/air-ticketing.jpg` | 1600×1200 | 163 KB | [#4530195](https://www.pexels.com/photo/4530195/) |
 | `services/apostille.jpg` | 1600×1200 | 114 KB | [#9858904](https://www.pexels.com/photo/9858904/) |
 | `services/attestation.jpg` | 1600×1200 | 160 KB | [#7654118](https://www.pexels.com/photo/7654118/) |
+| `services/car-rental.jpg` | 1600×1200 | 247 KB | [#36437212](https://www.pexels.com/photo/36437212/) |
+| `services/international-tours.jpg` | 1600×1200 | 224 KB | [#38487586](https://www.pexels.com/photo/38487586/) |
 | `services/power-of-attorney.jpg` | 1600×1200 | 157 KB | [#8730998](https://www.pexels.com/photo/8730998/) |
+| `services/umrah-packages.jpg` | 1600×1200 | 287 KB | [#35269078](https://www.pexels.com/photo/35269078/) |
+| `services/visa-appointments.jpg` | 1600×1200 | 461 KB | [#29251397](https://www.pexels.com/photo/29251397/) |
+| `services/visa-services.jpg` | 1600×1200 | 374 KB | [#29402986](https://www.pexels.com/photo/29402986/) |
+| `services/ziyarat-tours.jpg` | 1600×1200 | 222 KB | [#20735113](https://www.pexels.com/photo/20735113/) |
 | `visa-services.jpg` | 1600×1200 | 237 KB | [#28574518](https://www.pexels.com/photo/28574518/) |

@@ -81,6 +81,14 @@ const CURATED = [
   { file: 'hero-maldives.jpg',    id: 28843924, ...WIDE, alt: 'An island resort with overwater villas in the Maldives' },
   { file: 'hero-paris.jpg',       id: 30133212, ...WIDE, alt: 'The Paris skyline with the Eiffel Tower seen from above' },
 
+  /* The client named the eight the home page must show: Kaaba, Masjid
+     an-Nabawi, UK, USA, Turkey, Azerbaijan, Paris, Maldives. Dubai and
+     Venice drop out of the rotation to make room; their cuts stay on disk
+     because the destination pages still use them. */
+  { file: 'hero-london.jpg',      id: 36156076, ...WIDE, alt: 'Big Ben and Westminster Bridge over the Thames at sunset' },
+  { file: 'hero-newyork.jpg',     id: 33619969, ...WIDE, alt: 'The Brooklyn Bridge and the Manhattan skyline at sunset' },
+  { file: 'hero-baku.jpg',        id: 18291079, ...WIDE, alt: "Baku's illuminated skyline and the Flame Towers at night" },
+
   /* Makkah and Madinah rejoin the rotation. The original complaint was that
      the Kaaba was the ONLY thing the home page showed, not that it should be
      absent — with seven other frames alongside it, the agency reads as both
@@ -98,11 +106,29 @@ const CURATED = [
   { file: 'hero-europe-2560.jpg',   id: 11279691, ...HERO_2X, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives-2560.jpg', id: 28843924, ...HERO_2X, alt: 'An island resort with overwater villas in the Maldives' },
   { file: 'hero-paris-2560.jpg',    id: 30133212, ...HERO_2X, alt: 'The Paris skyline with the Eiffel Tower seen from above' },
+  { file: 'hero-london-2560.jpg',   id: 36156076, ...HERO_2X, alt: 'Big Ben and Westminster Bridge over the Thames at sunset' },
+  { file: 'hero-newyork-2560.jpg',  id: 33619969, ...HERO_2X, alt: 'The Brooklyn Bridge and the Manhattan skyline at sunset' },
+  { file: 'hero-baku-2560.jpg',     id: 18291079, ...HERO_2X, alt: "Baku's illuminated skyline and the Flame Towers at night" },
   { file: 'hero-haram-2560.jpg',    id: 38546878, ...HERO_2X, alt: 'Masjid al-Haram in Makkah seen from the air at sunset' },
   { file: 'hero-nabawi-2560.jpg',   id: 33169796, ...HERO_2X, alt: 'Al-Masjid an-Nabawi in Madinah' },
 
   /* Service card photography, at FEATURE size so the cards stay sharp. */
-  { file: 'services/air-ticketing.jpg', id: 6544058,  ...FEATURE, alt: 'Travellers moving past the departure screens in an airport terminal' },
+  { file: 'services/air-ticketing.jpg', id: 4530195,  ...FEATURE, alt: 'An airliner on stand at dusk, seen from inside the terminal' },
+
+  /* ---- One photograph per home-page card -------------------------------
+     Every service card used to borrow a photograph from the section further
+     down the page, so the same picture appeared twice on one screen and the
+     two visa cards read as the same card. These nine are the cards' own. */
+  { file: 'services/umrah-packages.jpg',     id: 35269078, ...FEATURE, alt: 'Pilgrims in ihram before the Kaaba at Masjid al-Haram' },
+  { file: 'services/visa-appointments.jpg',  id: 29251397, ...FEATURE, alt: 'The gilded gate of a European consulate' },
+  { file: 'services/visa-services.jpg',      id: 29402986, ...FEATURE, alt: 'European passports resting on a world map' },
+  { file: 'services/international-tours.jpg',id: 38487586, ...FEATURE, alt: 'Sunset over the windmills and white houses of Oia, Santorini' },
+  { file: 'services/car-rental.jpg',         id: 36437212, ...FEATURE, alt: 'A silver luxury SUV on a cobbled European street' },
+  { file: 'services/ziyarat-tours.jpg',      id: 20735113, ...FEATURE, alt: 'The green and white domes of Al-Masjid an-Nabawi in Madinah' },
+
+  /* The backdrop behind the search panel is NOT fetched here: it needs an
+     off-centre crop so the aircraft clears the form. See
+     src/tools/make-search-backdrop.js (npm run backdrop). */
   { file: 'services/attestation.jpg',   id: 7654118, ...FEATURE, alt: 'A clerk stamping documents at an office desk' },
   { file: 'services/apostille.jpg',     id: 9858904, ...FEATURE, alt: 'A stamp resting on a legal document' },
   { file: 'services/power-of-attorney.jpg', id: 8730998, ...FEATURE, alt: 'A person signing legal documents at a desk' },

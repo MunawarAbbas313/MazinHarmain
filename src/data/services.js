@@ -118,8 +118,8 @@ const services = [
   /* ---------------------------------------------- Visa appointment (NEW) */
   {
     slug: 'visa-appointment-booking',
-    heroImage: '/assets/img/guides/schengen-visa-guide-from-pakistan.jpg',
-    heroImageAlt: 'A travel diary open at a dated page beside a passport stamped VISA APPROVED',
+    heroImage: '/assets/img/services/visa-appointments.jpg',
+    heroImageAlt: 'The gilded gate of a European consulate',
     url: '/services/visa-appointment-booking/',
     icon: 'calendar',
     title: 'Visa Appointment Booking',
@@ -173,8 +173,8 @@ const services = [
   /* -------------------------------------------------------- Ziyarat (NEW) */
   {
     slug: 'ziyarat-tours',
-    heroImage: '/assets/img/hotels/madinah-hotels.jpg',
-    heroImageAlt: 'The Green Dome of Al-Masjid an-Nabawi in Madinah',
+    heroImage: '/assets/img/services/ziyarat-tours.jpg',
+    heroImageAlt: 'The green and white domes of Al-Masjid an-Nabawi in Madinah',
     url: '/services/ziyarat-tours/',
     icon: 'mosque',
     title: 'Ziyarat Tours',
@@ -336,6 +336,10 @@ const services = [
     slug: 'car-rental',
     heroImage: '/assets/img/car-rental.jpg',
     heroImageAlt: 'A black Range Rover Sport photographed at dusk',
+    /* The section further down the home page uses heroImage. If the card used
+       it too the same car appeared twice on one screen. */
+    cardImage: '/assets/img/services/car-rental.jpg',
+    cardImageAlt: 'A silver luxury SUV on a cobbled European street',
     url: '/services/car-rental/',
     icon: 'car',
     title: 'Car Rental',
@@ -629,8 +633,8 @@ const services = [
   {
     slug: 'umrah-packages', url: '/umrah-packages/', icon: 'kaaba', hub: true,
     title: 'Umrah Packages', blurb: 'Economy to Premium & VIP',
-    cardImage: '/assets/img/hotels/makkah-hotels.jpg',
-    cardImageAlt: 'Masjid al-Haram and the Makkah skyline at night',
+    cardImage: '/assets/img/services/umrah-packages.jpg',
+    cardImageAlt: 'Pilgrims in ihram before the Kaaba at Masjid al-Haram',
   },
   {
     slug: 'visa-services', url: '/visa-services/', icon: 'passport', hub: true,
@@ -647,8 +651,8 @@ const services = [
   {
     slug: 'international-tours', url: '/destinations/', icon: 'globe', hub: true,
     title: 'International Tours', blurb: 'Customized & group tours',
-    cardImage: '/assets/img/destinations/europe.jpg',
-    cardImageAlt: 'A European city street in warm evening light',
+    cardImage: '/assets/img/services/international-tours.jpg',
+    cardImageAlt: 'Sunset over the windmills and white houses of Oia, Santorini',
   },
   {
     slug: 'corporate-travel', url: '/corporate-travel/', icon: 'briefcase', hub: true,
