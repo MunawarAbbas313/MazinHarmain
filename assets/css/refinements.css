@@ -130,14 +130,25 @@ button, input, select, textarea { font: inherit; }
 }
 .hero__inner { position: relative; padding-block: clamp(3rem, 6vw, 5.25rem) 0; }
 .hero__content { max-width: 620px; }
-/* The agency name above the headline. Enlarged and set to full bold at the
-   client's request (Sept 2026) — at 12px/600 it read as a caption rather
-   than as the company. Tracking eases off as the size climbs, otherwise
-   wide letter-spacing at bold weight starts to come apart. */
+/* The agency name above the headline. The client asked twice for this to be
+   bigger and "highlighted", so it is now a bordered gold plate rather than
+   loose text — at 12px/600 it read as a caption instead of as the company.
+   Tracking eases off as the size climbs, because wide letter-spacing at
+   bold weight starts to come apart. */
 .hero__eyebrow {
-  display: block; color: var(--gold-400);
-  font-size: clamp(.875rem, 1.35vw, 1.0625rem); font-weight: 700;
-  letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1.15rem;
+  display: inline-block;
+  color: var(--gold-400);
+  font-size: clamp(.9375rem, 1.5vw, 1.1875rem);
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  margin-bottom: 1.3rem;
+  padding: .55rem 1.15rem;
+  background: rgba(199, 154, 62, .16);
+  border: 1px solid rgba(221, 184, 101, .42);
+  border-left: 3px solid var(--gold-500);
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
 }
 .hero h1 {
   color: #fff; font-size: clamp(2.35rem, 4.4vw, 3.75rem);
@@ -206,19 +217,8 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
    4. SERVICES — 4 x 2 card grid on cream
    -------------------------------------------------------------------------- */
 .home-services { background: var(--cream); }
-.services-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
-.services-grid .service-card {
-  align-items: center; gap: .9rem;
-  padding: 1.15rem 1.15rem;
-  border-radius: 8px;
-}
-.services-grid .card__icon {
-  width: 40px; height: 40px; margin: 0; flex-shrink: 0;
-  background: var(--green-50); border-radius: 7px;
-}
-.services-grid .card__icon svg { width: 20px; height: 20px; }
-.services-grid h3 { font-size: .9375rem; margin-bottom: .15rem; letter-spacing: -.01em; }
-.services-grid p { font-size: .75rem; line-height: 1.5; margin: 0; color: var(--muted); }
+/* .services-grid was the old 4x2 run of icon rows. Replaced by .svc-grid in
+   section 21 — see the note there. */
 
 /* --------------------------------------------------------------------------
    5. UMRAH — centre panel flanked by Makkah photography
@@ -394,7 +394,6 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
    12. Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 1199px) {
-  .services-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .why-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.25rem; }
   .trust-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .guide-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -434,7 +433,6 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   .hero .btn-row .btn { width: 100%; }
   .quickbar { margin-top: -1.5rem; }
   .quickbar__options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .umrah-tiers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .visa-flags { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .dest-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -448,7 +446,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 
 @media (max-width: 479px) {
   .header__actions > .btn { display: none; }
-  .services-grid, .guide-row { grid-template-columns: 1fr; }
+  .guide-row { grid-template-columns: 1fr; }
   .visa-flags { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .why-row { grid-template-columns: 1fr; }
   .hero h1 { font-size: clamp(2rem, 8.5vw, 2.6rem); }
@@ -463,7 +461,7 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
   .hero__media, .hero__trustbar, .quickbar { display: none !important; }
   .hero h1, .hero h1 .accent, .hero__text, .hero__eyebrow { color: #000 !important; }
   .hero { background: #fff; }
-  .services-grid, .dest-row, .guide-row, .why-row, .trust-row { grid-template-columns: repeat(2, 1fr); }
+  .dest-row, .guide-row, .why-row, .trust-row { grid-template-columns: repeat(2, 1fr); }
   .corporate-band, .corporate-band__body h2 { background: #fff; color: #000; }
 }
 
@@ -1441,3 +1439,115 @@ a.hero__trustbar-item:hover { background: rgba(255, 255, 255, .06); color: #fff;
 .footer__partner strong { color: var(--gold-400); font-weight: 600; }
 .footer__partner a { color: #dcebe4; text-decoration: underline; text-underline-offset: 2px; }
 .footer__partner a:hover { color: #fff; }
+
+/* --------------------------------------------------------------------------
+   21. Service cards — the home-page grid, rebuilt
+
+   Replaces the 4x2 run of icon rows the client called "average": those were
+   40px icons with 15px titles and 12px body, which read as a list rather
+   than as nine things worth clicking. Now nine image-led cards, three
+   across, so the grid fills exactly and each card gets room to breathe.
+   -------------------------------------------------------------------------- */
+.svc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-5);
+  margin-top: var(--sp-8);
+}
+
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: var(--shadow-xs);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+}
+.svc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: var(--gold-400);
+}
+.svc-card:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 3px; }
+
+/* ---- Photograph ---- */
+.svc-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: var(--green-900);
+  overflow: hidden;
+}
+.svc-card__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s var(--ease);
+}
+.svc-card:hover .svc-card__media img { transform: scale(1.045); }
+/* A green wash bottom-up, so the icon badge below always has contrast to
+   sit against whatever the photograph happens to be doing. */
+.svc-card__media::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(6, 47, 38, .55) 0%, rgba(6, 47, 38, .08) 45%, transparent 75%);
+}
+
+/* ---- Text ---- */
+.svc-card__body {
+  position: relative;
+  display: block;
+  padding: var(--sp-5);
+  padding-top: calc(var(--sp-5) + 14px);
+  flex: 1 1 auto;
+}
+.svc-card__icon {
+  position: absolute;
+  top: calc(-1 * 24px);
+  left: var(--sp-5);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--green-700);
+  box-shadow: var(--shadow-sm);
+  transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
+}
+.svc-card:hover .svc-card__icon {
+  background: var(--gold-500);
+  border-color: var(--gold-500);
+  color: #fff;
+}
+
+.svc-card h3 {
+  font-size: var(--fs-lg);
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  color: var(--ink);
+  margin: 0 0 var(--sp-2);
+}
+.svc-card p {
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0;
+}
+.svc-card__go {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--sp-4);
+  color: var(--gold-700);
+  transition: transform .25s var(--ease);
+}
+.svc-card:hover .svc-card__go { transform: translateX(5px); }
+
+@media (min-width: 600px) {
+  .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 992px) {
+  /* Three across: nine cards fill the grid exactly. */
+  .svc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-6); }
+}

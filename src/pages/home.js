@@ -43,10 +43,10 @@ const WA_HERO = 'Assalam o Alaikum, I would like to speak to a travel expert abo
    impression. These are decorative variations on the opening frame, which
    is why they carry an empty alt rather than four competing descriptions. */
 const HERO_SLIDES = [
-  '/assets/img/hero-dubai.jpg',
-  '/assets/img/hero-istanbul.jpg',
-  '/assets/img/hero-europe.jpg',
-  '/assets/img/hero-maldives.jpg',
+  { src: '/assets/img/hero-dubai.jpg', wide: '/assets/img/hero-dubai-2560.jpg' },
+  { src: '/assets/img/hero-istanbul.jpg', wide: '/assets/img/hero-istanbul-2560.jpg' },
+  { src: '/assets/img/hero-europe.jpg', wide: '/assets/img/hero-europe-2560.jpg' },
+  { src: '/assets/img/hero-maldives.jpg', wide: '/assets/img/hero-maldives-2560.jpg' },
 ];
 
 /** Photo with the branded placeholder as an automatic fallback. */
@@ -78,12 +78,13 @@ function hero() {
            srcset="/assets/img/hero-flight-768.jpg 768w,
                    /assets/img/hero-flight-1200.jpg 1200w,
                    /assets/img/hero-flight-1600.jpg 1600w,
-                   /assets/img/hero-flight.jpg 1920w"
+                   /assets/img/hero-flight.jpg 1920w,
+                   /assets/img/hero-flight-2560.jpg 2560w"
            sizes="100vw"
            alt="An airliner silhouetted against a sunset sky"
            width="1600" height="900" loading="eager" fetchpriority="high" decoding="async"
            onerror="this.onerror=null;this.srcset='';this.src='/assets/img/placeholder.svg'">
-${each(HERO_SLIDES, (h) => `      <img class="hero__slide" data-src="${attr(h)}" alt="" width="1600" height="900" decoding="async" aria-hidden="true">`)}
+${each(HERO_SLIDES, (h) => `      <img class="hero__slide" data-src="${attr(h.src)}" data-srcset="${attr(h.src)} 1600w, ${attr(h.wide)} 2560w" sizes="100vw" alt="" width="1600" height="900" decoding="async" aria-hidden="true">`)}
     </div>
     <div class="container">
       <div class="hero__inner">
@@ -110,13 +111,20 @@ ${each(HERO_SLIDES, (h) => `      <img class="hero__slide" data-src="${attr(h)}"
 function servicesSection() {
   const cards = homepageServiceOrder.map((slug) => {
     const s = bySlug(slug);
+    const img = s.cardImage || s.heroImage;
+    const alt = s.cardImageAlt || s.heroImageAlt || s.title;
     return `
-        <a class="card service-card" href="${attr(s.url)}">
-          <span class="card__icon">${icon(s.icon, { size: 20 })}</span>
-          <div class="service-card__text">
+        <a class="svc-card" href="${attr(s.url)}">
+          <span class="svc-card__media">
+            <img src="${attr(img)}" alt="${attr(alt)}" width="640" height="420" loading="lazy" decoding="async"
+                 onerror="this.onerror=null;this.src='/assets/img/placeholder.svg'">
+          </span>
+          <span class="svc-card__body">
+            <span class="svc-card__icon">${icon(s.icon, { size: 19 })}</span>
             <h3>${esc(s.title)}</h3>
             <p>${esc(s.blurb)}</p>
-          </div>
+            <span class="svc-card__go">${icon('arrowRight', { size: 15 })}</span>
+          </span>
         </a>`;
   });
 
@@ -128,7 +136,7 @@ function servicesSection() {
         title: 'Complete Travel Solutions Under One Roof',
         text: 'From planning your journey to reaching your destination, our team is here to assist you at every step.',
       })}
-      <div class="services-grid reveal">
+      <div class="svc-grid reveal">
         ${cards.join('')}
       </div>
       <div class="btn-row btn-row--center" style="margin-top:var(--sp-8)">

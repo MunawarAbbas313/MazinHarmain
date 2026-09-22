@@ -7,8 +7,8 @@ permitted, no attribution required, no permission needed**.
 Credits are recorded here anyway so the agency has a full provenance trail for
 every file, and can check or replace any image later.
 
-- Images: **50**
-- Total weight: **9129 KB**
+- Images: **56**
+- Total weight: **11574 KB**
 - Machine-readable record: `src/data/image-credits.json`
 
 ## Replacing an image
@@ -32,8 +32,8 @@ npm run images -- --force           # everything
 
 | File | Dimensions | Size | Pexels source |
 |---|---|---|---|
-| `car-rental.jpg` | 1200×900 | 154 KB | [#116675](https://www.pexels.com/photo/116675/) |
-| `corporate-travel.jpg` | 1200×900 | 116 KB | [#6050133](https://www.pexels.com/photo/6050133/) |
+| `car-rental.jpg` | 1600×1200 | 245 KB | [#116675](https://www.pexels.com/photo/116675/) |
+| `corporate-travel.jpg` | 1600×1200 | 181 KB | [#6050133](https://www.pexels.com/photo/6050133/) |
 | `destinations/azerbaijan.jpg` | 1200×900 | 91 KB | [#17857195](https://www.pexels.com/photo/17857195/) |
 | `destinations/dubai.jpg` | 1200×900 | 127 KB | [#17865557](https://www.pexels.com/photo/17865557/) |
 | `destinations/europe.jpg` | 1200×900 | 172 KB | [#15452274](https://www.pexels.com/photo/15452274/) |
@@ -59,18 +59,23 @@ npm run images -- --force           # everything
 | `guides/turkey-travel-guide-for-pakistani-tourists.jpg` | 1200×900 | 110 KB | [#5700576](https://www.pexels.com/photo/5700576/) |
 | `guides/uk-visit-visa-guide-from-pakistan.jpg` | 1200×900 | 136 KB | [#4173219](https://www.pexels.com/photo/4173219/) |
 | `guides/umrah-guide-for-pakistani-travellers.jpg` | 1200×900 | 269 KB | [#4118058](https://www.pexels.com/photo/4118058/) |
+| `hero-dubai-2560.jpg` | 2560×1440 | 405 KB | [#17865557](https://www.pexels.com/photo/17865557/) |
 | `hero-dubai.jpg` | 1600×900 | 165 KB | [#17865557](https://www.pexels.com/photo/17865557/) |
+| `hero-europe-2560.jpg` | 2560×1440 | 619 KB | [#11279691](https://www.pexels.com/photo/11279691/) |
 | `hero-europe.jpg` | 1600×900 | 239 KB | [#11279691](https://www.pexels.com/photo/11279691/) |
 | `hero-flight-1200.jpg` | 1200×675 | 41 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
 | `hero-flight-1600.jpg` | 1600×900 | 68 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
+| `hero-flight-2560.jpg` | 2560×1440 | 209 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
 | `hero-flight-768.jpg` | 768×432 | 21 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
 | `hero-flight.jpg` | 1920×1080 | 99 KB | [#1911388](https://www.pexels.com/photo/1911388/) |
+| `hero-istanbul-2560.jpg` | 2560×1440 | 530 KB | [#18165242](https://www.pexels.com/photo/18165242/) |
 | `hero-istanbul.jpg` | 1600×900 | 216 KB | [#18165242](https://www.pexels.com/photo/18165242/) |
 | `hero-kaaba-1200.jpg` | 1200×675 | 289 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba-1600.jpg` | 1600×900 | 507 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba-768.jpg` | 768×432 | 125 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-kaaba.jpg` | 1920×1080 | 701 KB | [#14440333](https://www.pexels.com/photo/14440333/) |
 | `hero-madinah.jpg` | 1920×1080 | 190 KB | [#34246953](https://www.pexels.com/photo/34246953/) |
+| `hero-maldives-2560.jpg` | 2560×1440 | 298 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
 | `hero-maldives.jpg` | 1600×900 | 125 KB | [#28843924](https://www.pexels.com/photo/28843924/) |
 | `hero-umrah.jpg` | 1600×900 | 373 KB | [#4118058](https://www.pexels.com/photo/4118058/) |
 | `hotels/baku-hotels.jpg` | 1200×900 | 123 KB | [#15236595](https://www.pexels.com/photo/15236595/) |
@@ -81,4 +86,5 @@ npm run images -- --force           # everything
 | `hotels/madinah-hotels.jpg` | 1200×900 | 122 KB | [#34642005](https://www.pexels.com/photo/34642005/) |
 | `hotels/makkah-hotels.jpg` | 1200×900 | 177 KB | [#31339194](https://www.pexels.com/photo/31339194/) |
 | `hotels/worldwide-hotels.jpg` | 1200×900 | 163 KB | [#695193](https://www.pexels.com/photo/695193/) |
-| `visa-services.jpg` | 1200×900 | 154 KB | [#7235894](https://www.pexels.com/photo/7235894/) |
+| `services/air-ticketing.jpg` | 1600×1200 | 121 KB | [#10062411](https://www.pexels.com/photo/10062411/) |
+| `visa-services.jpg` | 1600×1200 | 262 KB | [#7235894](https://www.pexels.com/photo/7235894/) |

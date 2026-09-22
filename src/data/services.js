@@ -10,7 +10,7 @@ const services = [
   /* ---------------------------------------------------------------- Air */
   {
     slug: 'air-ticketing',
-    heroImage: '/assets/img/guides/international-travel-checklist-from-pakistan.jpg',
+    heroImage: '/assets/img/services/air-ticketing.jpg',
     heroImageAlt: 'Departure board in an airport terminal',
     url: '/services/air-ticketing/',
     icon: 'plane',
@@ -64,7 +64,7 @@ const services = [
   /* --------------------------------------------------------------- Hajj */
   {
     slug: 'hajj-services',
-    heroImage: '/assets/img/hotels/makkah-hotels.jpg',
+    heroImage: '/assets/img/hero-kaaba-1600.jpg',
     heroImageAlt: 'Masjid al-Haram in Makkah at night',
     url: '/services/hajj-services/',
     icon: 'kaaba',
@@ -118,8 +118,8 @@ const services = [
   /* ---------------------------------------------- Visa appointment (NEW) */
   {
     slug: 'visa-appointment-booking',
-    heroImage: '/assets/img/visa-services.jpg',
-    heroImageAlt: 'A passport, compass and travel planner on a world map',
+    heroImage: '/assets/img/guides/schengen-visa-guide-from-pakistan.jpg',
+    heroImageAlt: 'A travel diary open at a dated page beside a passport stamped VISA APPROVED',
     url: '/services/visa-appointment-booking/',
     icon: 'calendar',
     title: 'Visa Appointment Booking',
@@ -339,7 +339,7 @@ const services = [
     url: '/services/car-rental/',
     icon: 'car',
     title: 'Car Rental',
-    blurb: 'Rent a car with a driver — airport runs, city meetings, weddings and the northern areas, through our sister company MyCab.',
+    blurb: 'With a driver, through MyCab',
     h1: 'Car Rental With a Driver, in Islamabad and Across Pakistan',
     metaTitle: 'Rent a Car With Driver in Islamabad | Car Rental — Mazin Haramain',
     metaDescription:
@@ -405,29 +405,50 @@ const services = [
   {
     slug: 'umrah-packages', url: '/umrah-packages/', icon: 'kaaba', hub: true,
     title: 'Umrah Packages', blurb: 'Economy to Premium & VIP',
+    cardImage: '/assets/img/hotels/makkah-hotels.jpg',
+    cardImageAlt: 'Masjid al-Haram and the Makkah skyline at night',
   },
   {
     slug: 'visa-services', url: '/visa-services/', icon: 'passport', hub: true,
     title: 'Visa Services', blurb: 'Visit, Tourist & Business',
+    cardImage: '/assets/img/visa-services.jpg',
+    cardImageAlt: 'A passport, compass and travel planner laid out on a world map',
   },
   {
     slug: 'hotel-reservations', url: '/hotels/', icon: 'hotel', hub: true,
     title: 'Hotel Reservations', blurb: 'Worldwide accommodation',
+    cardImage: '/assets/img/hotels/worldwide-hotels.jpg',
+    cardImageAlt: 'The lobby of a luxury hotel',
   },
   {
     slug: 'international-tours', url: '/destinations/', icon: 'globe', hub: true,
     title: 'International Tours', blurb: 'Customized & group tours',
+    cardImage: '/assets/img/destinations/europe.jpg',
+    cardImageAlt: 'A European city street in warm evening light',
   },
   {
     slug: 'corporate-travel', url: '/corporate-travel/', icon: 'briefcase', hub: true,
     title: 'Corporate Travel', blurb: 'Business travel management',
+    cardImage: '/assets/img/corporate-travel.jpg',
+    cardImageAlt: 'A business traveller walking through an airport terminal with luggage',
   },
 ];
 
 /** The eight cards shown on the homepage, in the order the brief specifies. */
 const homepageServiceOrder = [
-  'air-ticketing', 'umrah-packages', 'visa-services', 'hotel-reservations',
-  'international-tours', 'corporate-travel', 'hajj-services', 'travel-insurance',
+  /* Nine, three across — the grid fills exactly, so every card can be a
+     proper image card instead of the cramped icon rows the client called
+     "average". Travel insurance came off the home page to make room; it
+     keeps its place in the Services menu, the services hub and the footer. */
+  'air-ticketing',
+  'umrah-packages',
+  'visa-services',
+  'visa-appointment-booking',
+  'hotel-reservations',
+  'international-tours',
+  'corporate-travel',
+  'car-rental',
+  'hajj-services',
 ];
 
 const bySlug = (slug) => services.find((s) => s.slug === slug);

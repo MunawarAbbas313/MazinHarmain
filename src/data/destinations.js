@@ -6,7 +6,7 @@
 
 const destinations = [
   {
-    slug: 'turkey', name: 'Turkey', flag: '🇹🇷', region: 'Europe / Asia', order: 1, featured: true,
+    slug: 'turkey', name: 'Turkey', flag: '🇹🇷', region: 'Europe / Asia', order: 3, featured: true,
     tagline: 'Istanbul, Cappadocia and the Turquoise Coast',
     metaTitle: 'Turkey Tour Packages from Pakistan | Istanbul & Cappadocia Tours',
     metaDescription:
@@ -33,7 +33,7 @@ const destinations = [
     ],
   },
   {
-    slug: 'azerbaijan', name: 'Azerbaijan', flag: '🇦🇿', region: 'Caucasus', order: 2, featured: true,
+    slug: 'azerbaijan', name: 'Azerbaijan', flag: '🇦🇿', region: 'Caucasus', order: 5, featured: true,
     tagline: 'Baku, Gabala and the Caucasus mountains',
     metaTitle: 'Azerbaijan Tour Packages from Pakistan | Baku Tours & e-Visa',
     metaDescription:
@@ -60,7 +60,7 @@ const destinations = [
     ],
   },
   {
-    slug: 'dubai', name: 'Dubai & UAE', flag: '🇦🇪', region: 'Middle East', order: 3, featured: true,
+    slug: 'dubai', name: 'Dubai & UAE', flag: '🇦🇪', region: 'Middle East', order: 4, featured: true,
     tagline: 'Burj Khalifa, desert safari and the Gulf coast',
     metaTitle: 'Dubai Tour Packages from Pakistan | UAE Holidays & Visa',
     metaDescription:
@@ -87,7 +87,7 @@ const destinations = [
     ],
   },
   {
-    slug: 'malaysia', name: 'Malaysia', flag: '🇲🇾', region: 'Southeast Asia', order: 4, featured: true,
+    slug: 'malaysia', name: 'Malaysia', flag: '🇲🇾', region: 'Southeast Asia', order: 8, featured: true,
     tagline: 'Kuala Lumpur, Langkawi and Penang',
     metaTitle: 'Malaysia Tour Packages from Pakistan | Kuala Lumpur & Langkawi',
     metaDescription:
@@ -114,7 +114,7 @@ const destinations = [
     ],
   },
   {
-    slug: 'thailand', name: 'Thailand', flag: '🇹🇭', region: 'Southeast Asia', order: 5, featured: true,
+    slug: 'thailand', name: 'Thailand', flag: '🇹🇭', region: 'Southeast Asia', order: 7, featured: true,
     tagline: 'Bangkok, Phuket and Krabi',
     metaTitle: 'Thailand Tour Packages from Pakistan | Bangkok, Phuket & Krabi',
     metaDescription:
@@ -168,7 +168,7 @@ const destinations = [
     ],
   },
   {
-    slug: 'united-kingdom', name: 'United Kingdom', flag: '🇬🇧', region: 'Europe', order: 7, featured: true,
+    slug: 'united-kingdom', name: 'United Kingdom', flag: '🇬🇧', region: 'Europe', order: 2, featured: true,
     tagline: 'London, Manchester and the Scottish Highlands',
     metaTitle: 'UK Tour Packages from Pakistan | London & Scotland Holidays',
     metaDescription:
@@ -195,7 +195,7 @@ const destinations = [
     ],
   },
   {
-    slug: 'europe', name: 'Europe', flag: '🇪🇺', region: 'Europe', order: 8, featured: true,
+    slug: 'europe', name: 'Europe', flag: '🇪🇺', region: 'Europe', order: 1, featured: true,
     tagline: 'Multi-country Schengen itineraries',
     metaTitle: 'Europe Tour Packages from Pakistan | Multi-Country Schengen Tours',
     metaDescription:
@@ -354,6 +354,13 @@ const destinations = [
   },
 ];
 
-const featured = destinations.filter((d) => d.featured);
+/* Sorted, not just filtered: the array is still in its original authoring
+   order but `order` now reflects the client's priority markets (Sept 2026),
+   with Europe and the UK first. */
+const featured = destinations.filter((d) => d.featured).sort((a, b) => a.order - b.order);
 
-module.exports = { destinations, featured };
+/* Exported in priority order so every listing — the hub grid, the sidebar
+   and the nav dropdown — leads with the markets the client actually sells. */
+const byPriority = [...destinations].sort((a, b) => a.order - b.order);
+
+module.exports = { destinations: byPriority, featured };

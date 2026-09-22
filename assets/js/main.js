@@ -967,6 +967,10 @@
       slides.forEach(function (img) {
         var src = img.getAttribute('data-src');
         if (!src) return;
+        /* srcset before src, so the browser picks the retina copy on a
+           high-DPI screen rather than fetching the 1600 first. */
+        var set = img.getAttribute('data-srcset');
+        if (set) { img.srcset = set; img.removeAttribute('data-srcset'); }
         img.src = src;
         img.removeAttribute('data-src');
       });

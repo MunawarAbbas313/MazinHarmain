@@ -73,23 +73,25 @@ const nav = [
     label: 'Destinations',
     url: '/destinations/',
     children: [
+      /* Priority order, matching src/data/destinations.js. */
       { label: 'All Destinations', url: '/destinations/' },
+      { label: 'Europe', url: '/destinations/europe/' },
+      { label: 'United Kingdom', url: '/destinations/united-kingdom/' },
       { label: 'Turkey', url: '/destinations/turkey/' },
-      { label: 'Azerbaijan', url: '/destinations/azerbaijan/' },
       { label: 'Dubai & UAE', url: '/destinations/dubai/' },
+      { label: 'Azerbaijan', url: '/destinations/azerbaijan/' },
+      { label: 'Maldives', url: '/destinations/maldives/' },
       { label: 'Thailand', url: '/destinations/thailand/' },
       { label: 'Malaysia', url: '/destinations/malaysia/' },
-      { label: 'Maldives', url: '/destinations/maldives/' },
-      { label: 'United Kingdom', url: '/destinations/united-kingdom/' },
-      { label: 'Europe', url: '/destinations/europe/' },
       { label: 'Saudi Arabia', url: '/destinations/saudi-arabia/' },
     ],
   },
   /* Promoted out of the Services dropdown to top level — the client's most
      requested service and the one they felt the site hid. */
   { label: 'Visa Appointments', url: '/services/visa-appointment-booking/' },
-  { label: 'Corporate', url: '/corporate-travel/' },
-  { label: 'Travel Guides', url: '/travel-guides/' },
+  /* Corporate and Travel Guides came off the top row: ten items crowded the
+     header and the client asked for fewer. Both keep their place in the
+     Services dropdown and the footer, so nothing is unreachable. */
   /* About Us sits at the end at the client's request (Sept 2026): the
      services are what visitors arrive looking for. */
   { label: 'About Us', url: '/about/' },

@@ -37,11 +37,19 @@ const pathFor = require('path');
 const ASSET_DIR = pathFor.join(__dirname, '..', '..', 'assets', 'img');
 const hasAsset = (name) => fsFor.existsSync(pathFor.join(ASSET_DIR, name));
 
-const HAS_MARK = hasAsset('logo-mark.png');
-const HAS_FOOTER_LOGO = hasAsset('logo-full-reverse.png') || hasAsset('logo-full.png');
-const FOOTER_LOGO_SRC = hasAsset('logo-full-reverse.png')
-  ? '/assets/img/logo-full-reverse.png'   // brand green reversed to white for the dark footer
-  : '/assets/img/logo-full.png';
+/* The redrawn vector mark wins wherever it exists: it is sharp at every
+   size, and it is the version with the religious elements removed. The old
+   rasters stay on disk as a fallback but are no longer reached while the
+   SVG is present.
+
+   The stacked PNG lockup is deliberately NOT used any more. That artwork
+   still carries the arch, crescent, Kaaba and dome the client asked to
+   remove, so the footer now composes the new mark with the typeset
+   wordmark instead of shipping the old picture. */
+const MARK_SRC = hasAsset('logo-mark.svg')
+  ? '/assets/img/logo-mark.svg'
+  : (hasAsset('logo-mark.png') ? '/assets/img/logo-mark.png' : '');
+const HAS_MARK = Boolean(MARK_SRC);
 
 /* The wordmark, set in the brand's display face. Paired with the real
    monogram in the header, because the full stacked lockup is unreadable at
@@ -55,14 +63,12 @@ const wordmark = `
 function logo(linked = true, variant = 'header') {
   let inner;
 
-  if (variant === 'footer' && HAS_FOOTER_LOGO) {
-    /* The footer has room for the full artwork. */
-    inner = `<img class="logo__img logo__img--footer" src="${FOOTER_LOGO_SRC}" ` +
-      `alt="${attr(site.name)}" width="560" height="484" loading="lazy" decoding="async">`;
-  } else if (HAS_MARK) {
-    /* Real monogram + typeset wordmark. */
-    inner = `<img class="logo__mark logo__mark--img" src="/assets/img/logo-mark.png" ` +
-      `alt="" width="260" height="199" ` +
+  if (HAS_MARK) {
+    /* Monogram + typeset wordmark, in the header and the footer alike. The
+       wordmark is live text in the real display face, which beats any
+       rasterised lockup for sharpness and for screen readers. */
+    inner = `<img class="logo__mark logo__mark--img" src="${MARK_SRC}" ` +
+      `alt="" width="120" height="120" ` +
       `loading="${variant === 'header' ? 'eager' : 'lazy'}" decoding="async">${wordmark}`;
   } else {
     /* Placeholder until the artwork is supplied. */

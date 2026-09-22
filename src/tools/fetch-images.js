@@ -40,6 +40,8 @@ const UA =
   '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 
 const HERO = { w: 1920, h: 1080 };
+const HERO_2X = { w: 2560, h: 1440 };   /* full-bleed heroes on a 2x display */
+const FEATURE = { w: 1600, h: 1200 };   /* half-width section photographs */
 const CARD = { w: 1200, h: 900 };
 const WIDE = { w: 1600, h: 900 };
 
@@ -55,7 +57,7 @@ const CURATED = [
   { file: 'hero-kaaba-1600.jpg',  id: 14440333, w: 1600, h: 900, alt: 'Pilgrims performing tawaf around the Kaaba at Masjid al-Haram in Makkah' },
   { file: 'hero-madinah.jpg',     id: 34246953, ...HERO, alt: 'Al-Masjid an-Nabawi in Madinah illuminated at twilight' },
   { file: 'hero-umrah.jpg',       id: 4118058,  ...WIDE, alt: 'Pilgrims gathered around the Kaaba at night during Umrah' },
-  { file: 'visa-services.jpg',    id: 7235894,  ...CARD, alt: 'A passport, compass and travel planner laid out on a world map' },
+  { file: 'visa-services.jpg',    id: 7235894,  ...FEATURE, alt: 'A passport, compass and travel planner laid out on a world map' },
 
   /* ---- Home hero rotation ------------------------------------------------
      The client asked the home page to stop leading on the Kaaba: the agency
@@ -78,8 +80,21 @@ const CURATED = [
   { file: 'hero-europe.jpg',      id: 11279691, ...WIDE, alt: 'The Grand Canal in Venice, Italy' },
   { file: 'hero-maldives.jpg',    id: 28843924, ...WIDE, alt: 'An island resort with overwater villas in the Maldives' },
 
+  /* 2560-wide copies of every hero frame. A 1920 image on a 1440px viewport
+     at devicePixelRatio 2 needs 2880 to look sharp, so 1920 was rendering
+     soft on most modern laptops and phones — which is exactly the
+     "losing its pixels" the client reported. */
+  { file: 'hero-flight-2560.jpg',   id: 1911388,  ...HERO_2X, alt: 'An airliner silhouetted against a sunset sky' },
+  { file: 'hero-dubai-2560.jpg',    id: 17865557, ...HERO_2X, alt: 'The Dubai skyline with the Burj Khalifa, United Arab Emirates' },
+  { file: 'hero-istanbul-2560.jpg', id: 18165242, ...HERO_2X, alt: 'Istanbul seen from above the Bosphorus' },
+  { file: 'hero-europe-2560.jpg',   id: 11279691, ...HERO_2X, alt: 'The Grand Canal in Venice, Italy' },
+  { file: 'hero-maldives-2560.jpg', id: 28843924, ...HERO_2X, alt: 'An island resort with overwater villas in the Maldives' },
+
+  /* Service card photography, at FEATURE size so the cards stay sharp. */
+  { file: 'services/air-ticketing.jpg', id: 10062411, ...FEATURE, alt: 'An aircraft parked at an airport gate, seen through the terminal window' },
+
   /* Car rental, for the MyCab sister-company section and its service page. */
-  { file: 'car-rental.jpg',       id: 116675,   ...CARD, alt: 'A white Range Rover parked on a driveway' },
+  { file: 'car-rental.jpg',       id: 116675,   ...FEATURE, alt: 'A white Range Rover parked on a driveway' },
 
   { file: 'destinations/turkey.jpg',         id: 13337127, ...CARD, alt: 'The Blue Mosque silhouetted against a sunset in Istanbul, Turkey' },
   { file: 'destinations/azerbaijan.jpg',     id: 17857195, ...CARD, alt: 'The Flame Towers and Baku cityscape at sunset, Azerbaijan' },
@@ -99,7 +114,7 @@ const CURATED = [
   { file: 'hotels/london-hotels.jpg',   id: 31147777, ...CARD, alt: 'Big Ben and London red buses on Westminster Bridge' },
   { file: 'hotels/europe-hotels.jpg',   id: 19609871, ...CARD, alt: 'Panorama of Paris rooftops with the Eiffel Tower' },
   { file: 'destinations/saudi-arabia.jpg', id: 6099936, ...CARD, alt: 'The courtyard of Al-Masjid an-Nabawi in Madinah, Saudi Arabia' },
-  { file: 'corporate-travel.jpg',          id: 6050133, ...CARD, alt: 'A business traveller in a suit walking through an airport with luggage' },
+  { file: 'corporate-travel.jpg',          id: 6050133, ...FEATURE, alt: 'A business traveller in a suit walking through an airport with luggage' },
   { file: 'hotels/worldwide-hotels.jpg',   id: 695193,  ...CARD, alt: 'The spacious lobby of a luxury hotel' },
   { file: 'guides/uk-visit-visa-guide-from-pakistan.jpg',            id: 4173219,  ...CARD, alt: 'A traveller with a suitcase and passport in an airport corridor' },
   { file: 'guides/international-travel-checklist-from-pakistan.jpg', id: 12717154, ...CARD, alt: 'Travellers checking the departure board in an airport terminal' },
@@ -126,11 +141,9 @@ const CURATED = [
    `avoid`: rejects a candidate outright.
    -------------------------------------------------------------------------- */
 const AUTO = [
-  { file: 'corporate-travel.jpg', ...CARD,
-    query: 'business traveler airport terminal',
-    must: ['airport', 'business', 'terminal', 'traveler', 'traveller', 'suit', 'luggage'],
-    avoid: ['woman in bikini', 'beach'],
-    alt: 'A business traveller walking through an airport terminal' },
+  /* corporate-travel.jpg is a curated id above — it used to be listed here
+     too, which meant a pointless second search that now 403s and reports a
+     false failure for a file that had already downloaded fine. */
 
   { file: 'about-office.jpg', ...CARD,
     query: 'travel agency office team meeting',
