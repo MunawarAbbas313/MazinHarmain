@@ -323,7 +323,7 @@ const services = [
     faqs: [
       { q: 'What happens if my flight is delayed?', a: '<p>We track the flight. Your driver\'s timing is adjusted to the actual arrival, and waiting time within the standard allowance is included. For very long delays or diversions, contact us on WhatsApp and we will re-coordinate.</p>' },
       { q: 'Should I take a car or the train between Makkah and Madinah?', a: '<p>Both work. The Haramain High Speed Railway is fast and comfortable but runs to a fixed schedule and requires transfers at each end. A private vehicle is door to door and easier with a lot of luggage or elderly travellers, but the journey takes longer. We will recommend based on your group and timing.</p>' },
-      { q: 'Can you provide a vehicle for the whole stay?', a: '<p>Yes. Vehicles can be booked with a driver on an hourly, daily or full-stay basis — useful for larger family groups, corporate visits and ziyarat combined with general movement.</p>' },
+      { q: 'Can you provide a vehicle for the whole stay?', a: '<p>Yes. Vehicles can be booked with or without a driver on an hourly, daily or full-stay basis — useful for larger family groups, corporate visits and ziyarat combined with general movement.</p>' },
       { q: 'Are transfers included in Umrah packages?', a: '<p>Yes, all our Umrah packages include the airport and intercity transfers for the standard Jeddah–Makkah–Madinah routing. Additional or private movement can be added.</p>' },
     ],
     related: ['/umrah-packages/', '/services/ziyarat-tours/', '/hotels/', '/destinations/dubai/'],
@@ -343,14 +343,15 @@ const services = [
     url: '/services/car-rental/',
     icon: 'car',
     title: 'Car Rental',
-    blurb: 'With a driver, through MyCab',
-    h1: 'Car Rental With a Driver, in Islamabad and Across Pakistan',
-    metaTitle: 'Rent a Car With Driver in Islamabad | Car Rental — Mazin Haramain',
+    blurb: 'With or without a driver',
+    h1: 'Car Rental in Islamabad and Across Pakistan, With or Without a Driver',
+    metaTitle: 'Rent a Car in Islamabad, With or Without Driver — Mazin Haramain',
     metaDescription:
-      'Car rental with a driver in Islamabad and across Pakistan — airport transfers, city meetings, wedding cars, northern-areas tours. Economy to Land Cruiser and Mercedes, arranged with MyCab Pakistan.',
-    lead: 'A car on its own is rarely what you need. A car, a driver who knows the route, and a phone number that answers — that is the whole job.',
+      'Car rental in Islamabad and across Pakistan, self-drive or with a driver — airport transfers, city meetings, wedding cars, northern-areas tours. Economy to Land Cruiser and Mercedes, arranged with MyCab Pakistan.',
+    lead: 'Take the keys and drive it yourself, or take a driver who knows the route. Both are available on the same fleet, and a phone number that answers comes with either.',
     intro: [
-      'Car rental in Pakistan is almost always rental <em>with</em> a driver, and that is deliberate. Road conditions, city traffic and the mountain routes north all reward someone who drives them every week, and the cost difference against self-drive is small enough that very few visitors choose otherwise.',
+      'Both are fully available: self-drive, where you take the keys, and chauffeur-driven, where a driver comes with the car. The whole fleet can be booked either way — the choice is yours, not a limitation of what we can arrange.',
+      'Which one suits you is worth a minute\'s thought. Self-drive is the cheaper daily rate and gives you the car on your own terms. A driver is worth having for the mountain routes north, for city traffic you do not know, and for any day where you would rather arrive able to work or talk than having spent three hours behind the wheel.',
       'The vehicles come from <strong>MyCab Pakistan</strong>, which operates from this same office in Safdar Mansion and answers the same landline. That is the practical point of mentioning them at all: a car can be attached to a booking we are already making for you, and one conversation covers both.',
       'Airport pickups are the most common request — a driver in arrivals, tracking the flight, with the luggage space actually booked rather than hoped for. After that it is city meetings, wedding cars, and the Islamabad-to-Hunza or Skardu run, where the vehicle class matters far more than most people expect.',
     ],
@@ -383,11 +384,11 @@ const services = [
     faqs: [
       {
         q: 'Can I rent a car without a driver in Pakistan?',
-        a: '<p>Self-drive is possible but uncommon, and the conditions are stricter: a larger security deposit, a longer list of documents, and restrictions on where the vehicle may be taken. For visitors in particular, hire with a driver is usually cheaper once the deposit and the risk are counted, and considerably less stressful in city traffic. Tell us which you want and we will quote both.</p>',
+        a: '<p>Yes — self-drive is fully available across the fleet. You will need a valid licence, CNIC or passport, and a security deposit, and the daily rate is lower than the same car with a driver. Tell us which you want and we will quote both so you can compare.</p>',
       },
       {
         q: 'Is the driver included in the price?',
-        a: '<p>Yes. Quoted rates are for the vehicle with a driver. What varies is the fuel policy and whether the driver\'s meals and overnight accommodation are included on multi-day trips outside the city — both are stated explicitly in your written quote rather than left to be settled on the road.</p>',
+        a: '<p>Every quote says which of the two it is for, because the rates differ. On a chauffeur-driven booking what varies is the fuel policy and whether the driver\'s meals and overnight accommodation are included on multi-day trips outside the city; on self-drive it is the fuel policy, the deposit and the mileage allowance. All of it is stated in writing rather than left to be settled on the road.</p>',
       },
       {
         q: 'Which vehicle do I need for Hunza or Skardu?',

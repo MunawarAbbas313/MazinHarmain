@@ -72,27 +72,42 @@ const site = {
   openingHoursText: 'Monday – Saturday, 9:30 AM – 6:30 PM (PKT)',
 
   /* ---- Social ------------------------------------------------------------
-     Handles supplied by the client, September 2026.
+     Only profiles that actually exist. A dead link in the footer is worse
+     than no link, and these also feed the schema's sameAs, which Google uses
+     to decide which accounts ARE this business — pointing it at pages that
+     404 is worse than telling it nothing.
 
-     Instagram and TikTok were confirmed live — both URLs return 200. The
-     other three could not be verified from here and are built from the names
-     given, so they are the ones to check before launch:
+     Verified 23 September 2026, each against a known-good and a known-bad
+     control so the test itself was proven to tell them apart:
 
-       X        the handle is deterministic, but x.com answers 404 to any
-                request without a browser session, so a 404 from a script
-                proves nothing either way.
-       Facebook a page's URL is a slug or a numeric id and cannot be derived
-                from its display name. This is a guess.
-       LinkedIn same: the company slug is not the company name.
+       Instagram  @mazinharamain            LIVE — the page renders as
+                  "Mazin Haramain Tours & Travels (@mazinharamain)".
+       TikTok     @mazinharamaintravels     LIVE — renders as that account;
+                  @mazinharamain on TikTok returns "Couldn't find this
+                  account", which is how the check was proven to work.
 
-     Paste the real address over any that does not open the right profile —
-     this list is the only place they appear. */
+     These three were supplied but do not resolve. Six spellings of each were
+     tried:
+
+       X          @mazinharamain and five variants all 404 on x.com's oembed
+                  endpoint, which returned 200 for @jack and 404 for a
+                  nonsense handle in the same run.
+       Facebook   six page slugs, every one "This content isn't available at
+                  the moment". A page's URL is a slug or a numeric id and
+                  cannot be worked out from its display name.
+       LinkedIn   six company slugs, all 404.
+
+     They are almost certainly real accounts whose URLs are simply not what
+     the display names suggest. To add one back, open the profile in a browser
+     and paste the address from the bar:
+
+       { name: 'Facebook', url: 'PASTE HERE', icon: 'facebook' },
+       { name: 'X',        url: 'PASTE HERE', icon: 'x' },
+       { name: 'LinkedIn', url: 'PASTE HERE', icon: 'linkedin' },
+  */
   social: [
-    { name: 'Facebook', url: 'https://www.facebook.com/MazinHaramainTourTravels', icon: 'facebook' },
     { name: 'Instagram', url: 'https://www.instagram.com/mazinharamain/', icon: 'instagram' },
-    { name: 'X', url: 'https://x.com/mazinharamain', icon: 'x' },
     { name: 'TikTok', url: 'https://www.tiktok.com/@mazinharamaintravels', icon: 'tiktok' },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/company/mazin-haramain-travels/', icon: 'linkedin' },
   ],
 
   /* ---- Analytics (paste real IDs at launch) ----------------------------- */
@@ -146,16 +161,16 @@ const site = {
     name: 'MyCab Pakistan',
     shortName: 'MyCab',
     url: 'https://mycabpakistan.com/',
-    tagline: 'Rent a car with a driver, across Pakistan.',
+    tagline: 'Rent a car across Pakistan, with or without a driver.',
     /* The car-rental line, supplied by the client September 2026. Car rental
        is MyCab's service run from the same office, so the car-rental page
        reaches this number rather than the agency's ticketing landline. */
     uan: { label: '0311-111-2234', tel: '+923111112234', wa: '923111112234' },
     email: 'mycabpakistan@gmail.com',
     blurb:
-      'Dedicated vehicles with a driver — airport pickups, city meetings, ' +
+      'Self-drive or with a driver — airport pickups, city meetings, ' +
       'wedding cars and the northern-areas run. Not a ride-hailing app: one ' +
-      'car, one driver, for as long as you need it.',
+      'car, yours for as long as you need it.',
     fleet: [
       { tier: 'Economy', cars: 'Suzuki Alto, Toyota Vitz, Daihatsu Move' },
       { tier: 'Sedan', cars: 'Toyota Corolla, Honda City, Toyota Yaris, Suzuki Swift' },
