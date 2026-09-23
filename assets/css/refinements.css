@@ -1929,6 +1929,11 @@ button, input, select, textarea { font: inherit; }
      width. Above 901px the title block takes over that job and this drops to
      almost nothing, so the name starts at the top of the band rather than
      after a screenful of empty sky. */
+  /* The aircraft's underside sits at 25% of the photograph's height, which is
+     0.141 x the viewport width. 15% clears it at every width from 320 to
+     2560. It used to be this below 901px and almost nothing above, because
+     the banner title took over the job of holding the strip open up there —
+     the title has gone, so this does the whole job again. */
   padding: 15% 0 clamp(2rem, 4vw, 3rem);
   isolation: isolate;
 }
@@ -1989,6 +1994,20 @@ button, input, select, textarea { font: inherit; }
 /* The band is light, so a title over it stays dark. */
 .ts--photo .ts__title { color: var(--green-800); }
 
+/* The card takes its colour from the sky behind it rather than sitting on it
+   as a flat white slab: a touch of the photograph shows through and the blur
+   picks up whatever the rotation is currently showing. The inputs inside stay
+   solid white, so nothing anyone has to read or type loses contrast. Browsers
+   without backdrop-filter get the tint alone, which still sits closer to the
+   photograph than pure white did. */
+.ts--photo .ts__card {
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(14px) saturate(115%);
+  backdrop-filter: blur(14px) saturate(115%);
+}
+.ts--photo .ts__card .ts-input,
+.ts--photo .ts__card .textarea { background: #fff; }
+
 /* Inactive tabs sit on a light photograph, so they need a near-solid plate and
    a hairline to hold their edge. :not(.is-active) matters — without it this
    rule came later in the file at equal specificity and quietly repainted the
@@ -2004,53 +2023,7 @@ button, input, select, textarea { font: inherit; }
   .ts--photo .ts__backdrop img { will-change: auto; }
 }
 
-/* ---- The banner title on the search backdrop ---------------------------
-   The client's reference puts the agency's name on the left of the banner
-   with the aircraft to its right. It sits in the photograph's top strip —
-   the same strip the aircraft needs — so it is constrained to the left half
-   and hidden below 900px, where that strip is too short to hold both and the
-   header lockup is only a scroll away in any case. */
-.ts__banner {
-  /* Held to the left half so it sits BESIDE the aircraft rather than under
-     it — stacking the two was what made the band so tall. */
-  max-width: min(34rem, 46%);
-  margin-bottom: clamp(0.9rem, 2vw, 1.5rem);
-  color: var(--green-900);
-}
-.ts__banner-eyebrow {
-  display: block;
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  /* Gold on a sunlit cloud is gold on gold. Even --gold-700 only reaches
-     about 3.3:1 against the brightest cloud behind it, so this line uses a
-     darker step of its own rather than the token. */
-  color: #6b4f14;
-}
-.ts__banner-name {
-  margin: 0.35rem 0 0.2rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3.6vw, 2.75rem);
-  font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  color: var(--green-900);
-}
-.ts__banner-tagline {
-  display: block;
-  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-  font-style: italic;
-  color: var(--green-800);
-}
-
-/* Below 901px the banner is dropped altogether — photograph and title both.
-   At 390px the strip is 55px tall: too short to show the aircraft, too short
-   to show the name, so all it contributed was a band of smeared sky above the
-   form. The name is already in the hero directly above on those widths. The
-   form gets the space instead. */
 @media (max-width: 900px) {
-  .ts__banner { display: none; }
   .ts--photo {
     padding: 0;
     background: none;
@@ -2059,21 +2032,6 @@ button, input, select, textarea { font: inherit; }
   .ts--photo .ts__card { box-shadow: var(--shadow-lg); }
 }
 
-/* Above 901px the band opens on the name, not on sky. The top padding drops
-   to almost nothing and the title block is given the aircraft's height with
-   the words centred inside it, so the strip above the tabs is exactly as tall
-   as the aircraft needs and not a pixel more. 13vw covers the aircraft's
-   underside (0.141 x width) together with the small top padding. */
-@media (min-width: 901px) {
-  .ts--photo { padding-top: clamp(1.25rem, 1.8vw, 2.25rem); }
-  .ts__banner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 13vw;
-    margin-bottom: clamp(0.75rem, 1.4vw, 1.25rem);
-  }
-}
 
 /* ---- The tab strip on a phone --------------------------------------------
    Five tabs will not fit across 390px, so the strip scrolled sideways — and
@@ -2166,37 +2124,97 @@ button, input, select, textarea { font: inherit; }
 .ts-field--other[hidden] { display: none !important; }
 
 /* ---- Countries inside a regional destination page ------------------------
-   The Europe page is about a region; these are the countries it means. Chips
-   rather than a list, because there are eighteen of them and a column of
-   eighteen links reads as an index, not as a set. */
-.country-chips {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-2);
-}
-.country-chips li { margin: 0; }
-.country-chips a {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
-  min-height: 44px;
-  padding: 0 var(--sp-4);
+   Europe is a region; these are the countries it means. This began as plain
+   text pills and read as a tag cloud — the client's word was that it needed
+   glorifying. It is a card each: the real flag (an SVG, not an emoji, which
+   Windows renders as two letters), the country, and whether one Schengen
+   application covers it or it needs a national visa of its own. That last
+   line is the first thing anyone planning a multi-country trip needs.
+   -------------------------------------------------------------------------- */
+.country-band {
+  margin-top: var(--sp-10);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
   border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(15, 85, 64, .05) 0%, rgba(15, 85, 64, 0) 60%),
+    var(--cream);
+}
+.country-band__head h2 { margin: var(--sp-2) 0 0; }
+.country-band__head p {
+  margin: var(--sp-3) 0 0;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+
+.country-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 72px;
+  padding: var(--sp-3) var(--sp-4);
   background: #fff;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--green-800);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   text-decoration: none;
-  transition: border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease), transform .2s var(--ease);
 }
-.country-chips a:hover {
+.country-card:hover {
   border-color: var(--green-500);
-  background: var(--green-50);
-  color: var(--green-700);
+  box-shadow: 0 10px 24px rgba(7, 48, 34, .12);
+  transform: translateY(-2px);
 }
-.country-chips a:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
-.country-chips__flag { font-size: 1.05rem; line-height: 1; }
+.country-card:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
+
+.country-card__flag {
+  display: flex;
+  flex-shrink: 0;
+  width: 44px;
+  height: 33px;
+  border-radius: 4px;
+  overflow: hidden;
+  /* A hairline, because several of these flags are mostly white and would
+     otherwise dissolve into the card. */
+  box-shadow: 0 0 0 1px rgba(7, 48, 34, .12), 0 1px 3px rgba(7, 48, 34, .12);
+}
+.country-card__flag .flag { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.country-card__body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.country-card__name {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.country-card__type {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.country-card--all .country-card__type { color: var(--gold-700); }
+
+.country-card__go {
+  margin-left: auto;
+  display: flex;
+  color: var(--muted-2);
+  transition: color .2s var(--ease), transform .2s var(--ease);
+}
+.country-card:hover .country-card__go { color: var(--green-600); transform: translateX(3px); }
+
+@media (max-width: 520px) {
+  .country-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+  .country-card { min-height: 64px; padding: var(--sp-2) var(--sp-3); gap: var(--sp-2); }
+  .country-card__flag { width: 34px; height: 26px; }
+  .country-card__name { font-size: .9375rem; }
+  .country-card__go { display: none; }
+}

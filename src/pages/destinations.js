@@ -8,6 +8,7 @@ const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
 const { destinations } = require('../data/destinations');
 const { countries } = require('../data/visa-countries');
+const { visaFlagCodes, flagImg } = require('../data/flags');
 
 const BASE = '/destinations/';
 
@@ -162,13 +163,40 @@ ${c.pageHero({
           ${(() => {
             const inRegion = regionCountries(d.slug);
             if (!inRegion.length) return '';
+
+            /* Schengen is the reason most of these are on one page at all, so
+               each card says whether it is covered by that single application
+               or needs its own national visa. That is the first thing anyone
+               planning a multi-country trip needs to know. */
+            const card = (co) => `
+            <a class="country-card" href="/visa-services/${attr(co.slug)}/">
+              <span class="country-card__flag">${flagImg(visaFlagCodes[co.slug], co.name, 44)}</span>
+              <span class="country-card__body">
+                <span class="country-card__name">${esc(co.short || co.name)}</span>
+                <span class="country-card__type">${co.schengen ? 'Schengen visa' : 'National visa'}</span>
+              </span>
+              <span class="country-card__go" aria-hidden="true">${icon('arrowRight', { size: 15 })}</span>
+            </a>`;
+
             return `
-          <h2 style="margin-top:var(--sp-10)">Countries We Cover in ${esc(d.name)}</h2>
-          <p style="margin-top:var(--sp-3);color:var(--muted)">A Schengen visa covers most of these on one application. Tap a country for its own requirements, processing time and documents.</p>
-          <ul class="country-chips" style="margin-top:var(--sp-5)">
-            ${each(inRegion, (co) => `<li><a href="/visa-services/${attr(co.slug)}/"><span class="country-chips__flag" aria-hidden="true">${co.flag}</span>${esc(co.name)}</a></li>`)}
-            <li><a href="/visa-services/schengen-visa/"><span class="country-chips__flag" aria-hidden="true">🇪🇺</span>Schengen Area</a></li>
-          </ul>`;
+          <div class="country-band">
+            <div class="country-band__head">
+              <span class="eyebrow">${esc(d.name)} &mdash; ${inRegion.length + 1} destinations</span>
+              <h2>Countries We Cover in ${esc(d.name)}</h2>
+              <p>One Schengen application covers most of these. Open a country for its own requirements, documents and realistic processing time.</p>
+            </div>
+            <div class="country-grid">
+              ${each(inRegion, card)}
+              <a class="country-card country-card--all" href="/visa-services/schengen-visa/">
+                <span class="country-card__flag">${flagImg('eu', 'Schengen Area', 44)}</span>
+                <span class="country-card__body">
+                  <span class="country-card__name">Schengen Area</span>
+                  <span class="country-card__type">One visa, 29 countries</span>
+                </span>
+                <span class="country-card__go" aria-hidden="true">${icon('arrowRight', { size: 15 })}</span>
+              </a>
+            </div>
+          </div>`;
           })()}
 
           <h2 style="margin-top:var(--sp-10)">Highlights</h2>

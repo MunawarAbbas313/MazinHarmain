@@ -97,43 +97,23 @@ const APPOINTMENT_CITIES = [
    — but the appointment desk still secures a slot at the centre whatever the
    category, so they belong here and nowhere else. The visa tab keeps the
    three services in src/data/visa-types.js. */
-/* The client's twenty-one lead the list; every other country follows under
-   its own heading. Asking for "the complete country list, not just one" and
-   asking for the twenty-one to be the list are the same request read at
-   different moments — an optgroup satisfies both. */
-function countryOptions(lead) {
+/* The country type-ahead's suggestions. The client's twenty-one lead it,
+   every other country follows, and the field is a text input rather than a
+   <select> — two hundred countries in a dropdown is a scroll, not a choice.
+   Typing "ger", "neth" or "uae" finds the row; anything typed that is not on
+   the list is still accepted, which is what the old "Another country" option
+   and its follow-up box existed to do. */
+function countrySuggestions(lead) {
   const leadNames = lead.map((c) => c.name);
   const seen = new Set(leadNames.map((n) => n.toLowerCase()));
   const rest = WORLD_COUNTRIES.filter((c) => !seen.has(c.toLowerCase())).sort();
-  return [
-    { group: 'Most requested', items: leadNames },
-    { group: 'All countries', items: rest },
-    { group: ' ', items: ['Another country'] },
-  ];
+  return [...leadNames, ...rest];
 }
 
 const APPOINTMENT_VISA_TYPES = [
   'Visit Visa', 'Tourist Visa', 'Business Visa',
   'Work Visa', 'Study Visa', 'Family Reunion Visa',
 ];
-
-/* The follow-up to "Another country". The dropdown above it carries the
-   twenty-one the client named; anyone else was submitting the literal words
-   "Another country" and waiting for us to write back and ask which. This is a
-   type-ahead over every sovereign state, hidden until it is needed. */
-function otherCountryField(p) {
-  return field({
-    id: `${p}-othercountry`, label: 'Which country?', icon: 'globe', combo: true,
-    cls: 'ts-field--other', required: true,
-    errorFor: 'otherCountry', error: 'Please type the country.',
-    control: input({
-      id: `${p}-othercountry`, name: 'otherCountry',
-      placeholder: 'Start typing a country…',
-      list: 'ts-world-countries',
-      extra: `${comboAttrs(`${p}-othercountry`)} disabled`,
-    }),
-  });
-}
 
 /* ------------------------------------------------------------- Field bits */
 
@@ -377,17 +357,15 @@ function umrahPanel(hidden) {
 function appointmentsPanel(hidden) {
   const p = 'tsa';
   /* The client's twenty-one, and nothing else. */
-  const countryNames = countryOptions(appointmentCountries);
   return `
         <form class="ts-panel" id="ts-panel-appointments" role="tabpanel" aria-labelledby="ts-tab-appointments"
               data-ts-panel="appointments" data-ts-kind="Appointment" novalidate${hidden ? ' hidden' : ''}>
           <div class="ts-row ts-row--4">
             ${field({
-              id: `${p}-country`, label: 'Destination Country', icon: 'globe', required: true,
+              id: `${p}-country`, label: 'Destination Country', icon: 'globe', required: true, combo: true,
               errorFor: 'country', error: 'Which country is the appointment for?',
-              control: select({ id: `${p}-country`, name: 'country', list: countryNames, placeholder: 'Select a country', extra: 'data-ts-country' }),
+              control: input({ id: `${p}-country`, name: 'country', placeholder: 'Type a country…', list: 'ts-countries', extra: comboAttrs(`${p}-country`) }),
             })}
-            ${otherCountryField(p)}
             ${field({
               id: `${p}-type`, label: 'Visa Type', icon: 'passport',
               control: select({ id: `${p}-type`, name: 'visaType', list: APPOINTMENT_VISA_TYPES, placeholder: 'Select a visa type' }),
@@ -424,17 +402,15 @@ function appointmentsPanel(hidden) {
 
 function visaPanel(hidden) {
   const p = 'tsv';
-  const countryNames = countryOptions(countries);
   return `
         <form class="ts-panel" id="ts-panel-visa" role="tabpanel" aria-labelledby="ts-tab-visa"
               data-ts-panel="visa" data-ts-kind="Visa" novalidate${hidden ? ' hidden' : ''}>
           <div class="ts-row ts-row--3">
             ${field({
-              id: `${p}-country`, label: 'Destination Country', icon: 'globe', required: true,
+              id: `${p}-country`, label: 'Destination Country', icon: 'globe', required: true, combo: true,
               errorFor: 'country', error: 'Please choose a destination country.',
-              control: select({ id: `${p}-country`, name: 'country', list: countryNames, placeholder: 'Select a country', extra: 'data-ts-country' }),
+              control: input({ id: `${p}-country`, name: 'country', placeholder: 'Type a country…', list: 'ts-countries', extra: comboAttrs(`${p}-country`) }),
             })}
-            ${otherCountryField(p)}
             ${field({
               id: `${p}-type`, label: 'Visa Type', icon: 'passport', required: true,
               errorFor: 'visaType', error: 'Please choose a visa type.',
@@ -547,17 +523,6 @@ function searchWidget({ active = 'flights', overlap = true, title = '', backdrop
            sizes="100vw" alt="" width="1600" height="900" decoding="async" fetchpriority="low">
     </div>` : '';
 
-  /* The client's reference banner carries a title beside the aircraft. It is
-     live text, not baked into the JPEG, so it stays selectable, translatable
-     and readable to a screen reader, and so the agency's name is never a
-     picture of its name. */
-  const banner = backdrop ? `
-      <div class="ts__banner">
-        <span class="ts__banner-eyebrow">Explore the world with</span>
-        <p class="ts__banner-name">${esc(site.name)}</p>
-        <span class="ts__banner-tagline">Your journey, our commitment.</span>
-      </div>` : '';
-
   return `
   ${/* data-ts lives on the OUTER block, not on the card. The tab strip sits
         outside the card, and main.js scopes its tab lookup to the data-ts
@@ -566,7 +531,6 @@ function searchWidget({ active = 'flights', overlap = true, title = '', backdrop
   <div class="ts${overlap ? ' ts--overlap' : ''}${backdrop ? ' ts--photo' : ''}" data-ts data-ts-active="${attr(active)}">
     ${photo}
     <div class="container">
-      ${banner}
       ${title ? `<h2 class="ts__title">${esc(title)}</h2>` : ''}
       ${/* The tab strip sits OUTSIDE the card, so the tabs read as tabs —
             attached to the panel, with the page showing between and beside
@@ -588,7 +552,7 @@ function searchWidget({ active = 'flights', overlap = true, title = '', backdrop
     <datalist id="ts-hotel-cities">${each(HOTEL_PLACES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
     <datalist id="ts-hotel-categories">${each(HOTEL_CATEGORIES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
     <datalist id="ts-centres">${each(APPOINTMENT_CITIES, (h) => `<option value="${attr(h)}"></option>`)}</datalist>
-    <datalist id="ts-world-countries">${each(WORLD_COUNTRIES, (c) => `<option value="${attr(c)}"></option>`)}</datalist>
+    <datalist id="ts-countries">${each(countrySuggestions(appointmentCountries), (c) => `<option value="${attr(c)}"></option>`)}</datalist>
   </div>`;
 }
 

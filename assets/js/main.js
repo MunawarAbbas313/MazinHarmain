@@ -804,23 +804,6 @@
       trips.forEach(function (t) { t.addEventListener('change', applyTrip); });
       if (trips.length) applyTrip();
 
-      /* "Another country" opens a type-ahead for the one they actually want.
-         The field is disabled rather than merely hidden, so a browser never
-         submits it and it never takes a tab stop while it is out of the way. */
-      var countrySel = $('[data-ts-country]', form);
-      var otherField = $('.ts-field--other', form);
-      var otherInput = otherField ? $('input', otherField) : null;
-      if (countrySel && otherField && otherInput) {
-        var applyOther = function () {
-          var on = countrySel.value === 'Another country';
-          otherField.hidden = !on;
-          otherInput.disabled = !on;
-          if (!on) { otherInput.value = ''; setError(otherInput, false); }
-        };
-        countrySel.addEventListener('change', applyOther);
-        applyOther();
-      }
-
       $$('[data-ts-combo]', form).forEach(initCombo);
 
       // Clear a field's error as soon as the visitor touches it.
@@ -880,13 +863,6 @@
         var v = String(el.value || '').trim();
         if (v) data[name] = DATE_KEYS[name] ? prettyDate(v) : v;
       });
-      /* "Another country" is the prompt, not the answer. When the follow-up
-         type-ahead carries the real destination, that is what the desk needs
-         to read. */
-      if (data.otherCountry) {
-        data.country = data.otherCountry;
-        delete data.otherCountry;
-      }
       return data;
     }
 
