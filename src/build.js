@@ -67,18 +67,49 @@ function outputPathFor(page) {
    ------------------------------------------------------------------------ */
 const ASSET_URL = /(["'(])(\/assets\/[A-Za-z0-9._\/-]+?\.(?:jpg|jpeg|png|gif|svg|webp|avif|ico|css|js|woff2?|mp4|webm|json|txt|xml|pdf))(?=["')\s])/g;
 const ABSOLUTE_ASSET_URL = /(["'(])(https?:\/\/[^"'()\s]+?)(\/assets\/[A-Za-z0-9._\/-]+?\.(?:jpg|jpeg|png|gif|svg|webp|avif|ico|css|js|woff2?|mp4|webm|json|txt|xml|pdf))(?=["')\s])/g;
+const SRCSET_ATTR = /\b(srcset|imagesrcset|data-srcset)="([^"]*)"/g;
 
 function versionAssets(html) {
-  /* Two passes. Root-relative URLs are what the templates emit; absolute ones
-     come from og:image and the schema, which write the full origin. A
-     root-relative-only rule left the sharing image without a hash, so a
-     replaced OG picture would have stuck in every scraper's cache. */
+  /* Three passes, and the third is the one that matters most.
+
+     A srcset holds several URLs separated by commas:
+
+       srcset="/assets/img/hero.jpg 1600w, /assets/img/hero-2560.jpg 2560w"
+
+     The first sits right after a quote and was versioned. Every one after it
+     follows a comma and a space, and was NOT — so the large cut of every
+     photograph on the site kept a bare, unversioned URL. /assets/* is served
+     immutable for a year, so the CDN and every browser went on serving the
+     OLD file at that URL to anyone whose screen was big enough to pick it.
+     Phones took the versioned small cut and saw the new photograph; retina
+     laptops took the 2560 and saw last week's. Replacing a hero image
+     therefore appeared to work on some devices and not others, which is
+     exactly what it did through the September 2026 review.
+
+     So: srcset attributes are rewritten candidate by candidate. */
   const origin = site.url;
   return html
+    .replace(SRCSET_ATTR, (m, attrName, value) =>
+      `${attrName}="${value.split(',').map((candidate) => {
+        const part = candidate.trim();
+        if (!part) return '';
+        const bits = part.split(/\s+/);
+        bits[0] = versionOne(bits[0], origin);
+        return bits.join(' ');
+      }).filter(Boolean).join(', ')}"`)
     .replace(ASSET_URL, (m, open, url) => open + asset(url))
     .replace(ABSOLUTE_ASSET_URL, (m, open, host, url) =>
       (host === origin ? open + host + asset(url) : m));
 }
+
+/** One URL from a srcset candidate, hashed if it is one of ours. */
+function versionOne(url, origin) {
+  if (/\?v=[a-f0-9]+$/.test(url)) return url;
+  if (url.startsWith('/assets/')) return asset(url);
+  if (url.startsWith(origin + '/assets/')) return origin + asset(url.slice(origin.length));
+  return url;
+}
+
 
 function writePage(page) {
   const file = outputPathFor(page);

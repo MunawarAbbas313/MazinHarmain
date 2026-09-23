@@ -219,6 +219,15 @@ function phoneField(p) {
 }
 
 /** Honeypot + status box + submit row, shared by all four panels. */
+/* Every panel ends with the same button saying the same thing.
+
+   It used to be "Request Packages", "Request Fares", "Check Availability",
+   "Check Eligibility", "Request Hotel Rates" — five labels for one action, so
+   the same form looked like five different things depending on the tab. The
+   button opens WhatsApp, so it says so, and it carries WhatsApp's own mark
+   rather than a magnifying glass, which promised a search this has never
+   done. The per-panel label is kept in the signature and ignored, because it
+   still reads as documentation of what each tab is for. */
 function panelFoot({ p, label, note }) {
   return `
           <div class="hp-field" aria-hidden="true">
@@ -227,7 +236,7 @@ function panelFoot({ p, label, note }) {
           </div>
           <div class="ts-foot">
             <p class="ts-note">${note}</p>
-            <button class="btn btn--gold btn--lg ts-submit" type="submit">${icon('search', { size: 16 })} ${esc(label)}</button>
+            <button class="btn btn--whatsapp btn--lg ts-submit" type="submit">${icon('whatsapp', { size: 17 })} Send on WhatsApp</button>
           </div>
           <div class="form-status" role="status" aria-live="polite" data-form-status></div>`;
 }

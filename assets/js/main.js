@@ -941,18 +941,20 @@
            the link rather than a dead button. */
         status(
           form, 'ok',
-          '<strong>Your request is ready.</strong> Your browser blocked the ' +
-          'WhatsApp window — open it here:<br><br>' +
+          '<strong>Your browser blocked the WhatsApp window.</strong> ' +
+          'Open it here to send your request:<br><br>' +
           '<a class="btn btn--whatsapp btn--sm" href="' + waUrl + '" target="_blank" rel="noopener">Send on WhatsApp</a> ' +
           '<a class="btn btn--ghost btn--sm" href="' + mailUrl + '">Send by Email</a>'
         );
       } else {
+        /* Deliberately not "sent". Nothing has been sent until they press
+           send inside WhatsApp, and telling them otherwise is how a request
+           gets abandoned in a draft nobody reads. */
         status(
           form, 'ok',
-          '<strong>Opening WhatsApp…</strong> Press send there and we will come ' +
-          'back with options. Not opened? ' +
-          '<a href="' + waUrl + '" target="_blank" rel="noopener">Open WhatsApp</a> ' +
-          'or <a href="' + mailUrl + '">send by email</a> instead.'
+          '<strong>WhatsApp is open in a new tab.</strong> Press send there to reach our desk. ' +
+          'Nothing opened? <a href="' + waUrl + '" target="_blank" rel="noopener">Open WhatsApp</a> ' +
+          'or <a href="' + mailUrl + '">send by email</a>.'
         );
       }
 
