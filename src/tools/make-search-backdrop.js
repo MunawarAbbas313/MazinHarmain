@@ -41,18 +41,27 @@ const SKY_ID = 35558117;
 const cdn = (id, w) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
-/* Where the aircraft sits in the finished frame, as fractions of it. The
-   form and the aircraft sit side by side — form left, aircraft right — so
-   this is pushed well right and centred vertically against the form rather
-   than tucked into the top corner above it. Anything further left and the
-   card covers the fuselage. */
-const PLANE_HEIGHT = 0.20;
-const PLANE_CENTRE = { x: 0.82, y: 0.34 };
+/* The aircraft is NO LONGER composited into the sky.
+
+   It was, and the whole band then had to be one 16:9 photograph stretched to
+   whatever height the form happened to be. On a wide screen with a short form
+   that meant scaling the picture far past 1:1: the clouds went soft and the
+   aeroplane came out enormous, which is the "stretched out" the client saw.
+
+   So the two ship separately. The sky is a background texture — stretching a
+   cloudscape is invisible — and the aeroplane is its own element, sized by
+   CSS against the band rather than against the photograph. It stays crisp and
+   in proportion at every width, and it can be told exactly where to sit
+   relative to the form. */
 
 const OUTPUTS = [
-  { file: 'search-backdrop.jpg', w: 1600, h: 900 },
-  { file: 'search-backdrop-2560.jpg', w: 2560, h: 1440 },
+  { file: 'search-sky.jpg', w: 1600, h: 900 },
+  { file: 'search-sky-2560.jpg', w: 2560, h: 1440 },
 ];
+
+/* The cut-out, at a size that stays sharp on a 2x display at the largest the
+   CSS ever draws it. */
+const PLANE_OUT = { file: 'search-plane.png', width: 1400 };
 
 function download(url) {
   return new Promise((resolve, reject) => {
@@ -207,24 +216,27 @@ async function cutOutPlane(buf) {
   const plane = await cutOutPlane(planeSrc);
   console.log(`  aircraft keyed: ${plane.box.width}x${plane.box.height}, ${plane.pixels} px`);
 
+  await sharp(plane.png)
+    .resize({ width: PLANE_OUT.width, withoutEnlargement: true })
+    /* Quantised. A photographic cut-out in full-colour PNG is about 700KB,
+       which is absurd for one decorative aeroplane; a 128-colour palette with
+       dithering is visually identical against the sky at a tenth of that. */
+    .png({ palette: true, colours: 128, dither: 0.6, compressionLevel: 9, effort: 10 })
+    .toFile(path.join(IMG, PLANE_OUT.file));
+  const planeBytes = fs.statSync(path.join(IMG, PLANE_OUT.file)).size;
+  console.log(`  ${PLANE_OUT.file.padEnd(28)} ${PLANE_OUT.width}w  ${Math.round(planeBytes / 1024)}KB`);
+
   for (const out of OUTPUTS) {
-    const planeH = Math.round(out.h * PLANE_HEIGHT);
-    const planeW = Math.round((plane.box.width / plane.box.height) * planeH);
-    const scaled = await sharp(plane.png).resize(planeW, planeH).toBuffer();
-
-    const left = Math.round(out.w * PLANE_CENTRE.x - planeW / 2);
-    const top = Math.round(out.h * PLANE_CENTRE.y - planeH / 2);
-
     await sharp(skySrc)
       .resize(out.w, out.h, { fit: 'cover', position: 'centre' })
-      .composite([{ input: scaled, left, top }])
-      /* A light warm lift so the sky and the aircraft read as one exposure. */
+      /* A light warm lift, so the sky and the aircraft over it read as one
+         exposure even though they are two photographs. */
       .modulate({ brightness: 1.03, saturation: 1.06 })
       .jpeg({ quality: 82, progressive: true, mozjpeg: true })
       .toFile(path.join(IMG, out.file));
 
     const size = fs.statSync(path.join(IMG, out.file)).size;
-    console.log(`  ${out.file.padEnd(34)} ${out.w}x${out.h}  ${Math.round(size / 1024)}KB`);
+    console.log(`  ${out.file.padEnd(28)} ${out.w}x${out.h}  ${Math.round(size / 1024)}KB`);
   }
 
   console.log(`\n  Aircraft: Pexels ${PLANE_ID}. Sky: Pexels ${SKY_ID}.`);

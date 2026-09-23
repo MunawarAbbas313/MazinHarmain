@@ -1929,11 +1929,10 @@ button, input, select, textarea { font: inherit; }
      width. Above 901px the title block takes over that job and this drops to
      almost nothing, so the name starts at the top of the band rather than
      after a screenful of empty sky. */
-  /* Between 901 and 1099px the form still sits UNDER the aircraft, so the top
-     padding has to clear it: the underside is at 44% of the photograph's
-     height, ie 0.2475 x the viewport width. Above 1100px the two go side by
-     side and this drops away — see the rule further down. */
-  padding: 25% 0 clamp(2rem, 4vw, 3rem);
+  /* Ordinary padding at every width now. The aircraft is positioned against
+     the band rather than living inside the photograph, so nothing has to hold
+     a strip of sky open above the form to keep it from being cut in half. */
+  padding: clamp(2.5rem, 4vw, 4rem) 0 clamp(2.5rem, 4vw, 4rem);
   isolation: isolate;
 }
 
@@ -1948,9 +1947,11 @@ button, input, select, textarea { font: inherit; }
    64% is measured against the aircraft: its tail reaches 0.669 of the
    viewport width, so a form wider than this starts covering the fuselage. */
 @media (min-width: 1100px) {
-  .ts--photo { padding: clamp(2.5rem, 3.5vw, 4rem) 0 clamp(2.5rem, 3.5vw, 4rem); }
+  /* 60% leaves the aircraft the right-hand two fifths. Both are sized against
+     the same band, so they stay in proportion to each other at every width
+     instead of one stretching while the other stays put. */
   .ts--photo .ts__tabs,
-  .ts--photo .ts__card { max-width: 64%; }
+  .ts--photo .ts__card { max-width: 60%; }
 
   /* The card is two thirds of its old width, so the five-across rows it
      inherits from the full-width layout squeeze every control to about 140px
@@ -1977,34 +1978,35 @@ button, input, select, textarea { font: inherit; }
   overflow: hidden;
   z-index: -1;
 }
-.ts__backdrop img {
+.ts__backdrop img,
+.ts__sky {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Anchored to the top: the crop already places the aircraft where it needs
-     to be, and any other anchor slides it down behind the card as the band
-     grows. */
-  object-position: center top;
-  /* The dissolve. The photograph has no top or bottom edge — it comes up out
-     of the page and goes back into it, so the aircraft and the name are the
-     prominent part and the rest of the sky simply disappears. This is what
-     stops a full-width photograph reading as a slab wedged under the hero.
-     Browsers without mask-image just get the whole photograph, which is the
-     old behaviour and still fine. */
-  -webkit-mask-image: linear-gradient(180deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.55) 7%,
-    #000 20%,
-    #000 52%,
-    rgba(0, 0, 0, 0.45) 78%,
-    transparent 94%);
-  mask-image: linear-gradient(180deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.55) 7%,
-    #000 20%,
-    #000 52%,
-    rgba(0, 0, 0, 0.45) 78%,
-    transparent 94%);
+  object-position: center center;
+  /* The dissolve that used to be here existed to hide the photograph's hard
+     top and bottom edges. The band's own gradient wash does that now, and a
+     mask on a cloud texture only cost fill rate. */
+}
+
+/* The aircraft: its own element, sized against the BAND rather than baked
+   into the sky at whatever scale the band happened to stretch the photograph
+   to. Width is clamped in viewport units so it grows with the page but never
+   runs away with it, and it is anchored to the right so the form owns the
+   left. Vertically centred against the card beside it. */
+.ts__plane {
+  position: absolute;
+  /* Flush to the viewport edge, never past it: a negative offset here bled
+     the aircraft outside the document and produced a horizontal scrollbar at
+     1440. */
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(360px, 38vw, 660px);
+  height: auto;
+  z-index: -1;
+  pointer-events: none;
+  filter: drop-shadow(0 18px 30px rgba(20, 30, 45, .22));
 }
 /* Deep at the edges, lighter behind the card, so the photograph still reads
    as a photograph instead of as a tint. */
@@ -2056,12 +2058,30 @@ button, input, select, textarea { font: inherit; }
   .ts--photo .ts__backdrop img { will-change: auto; }
 }
 
+/* Between 901 and 1099px there is not the width for both side by side, so the
+   aircraft moves above the form and shrinks, and the band opens a strip for
+   it — but a strip sized in viewport units, not a crop of a stretched
+   photograph. */
+@media (max-width: 1099px) {
+  /* The aircraft sits 3% of the band down and is 26vw wide at its own 2.69:1,
+     so its underside lands near 0.03 x band + 0.097 x viewport — about 121px
+     at 901 and 128 at 1099. 14vw clears that at every width in this range
+     without leaving a hand's width of spare sky above the tabs. */
+  .ts--photo { padding-top: clamp(7.5rem, 14vw, 11rem); }
+  .ts__plane {
+    top: 3%;
+    transform: none;
+    width: clamp(260px, 26vw, 420px);
+  }
+}
+
 @media (max-width: 900px) {
   .ts--photo {
     padding: 0;
     background: none;
   }
-  .ts--photo .ts__backdrop { display: none; }
+  .ts--photo .ts__backdrop,
+  .ts--photo .ts__plane { display: none; }
   .ts--photo .ts__card { box-shadow: var(--shadow-lg); }
 }
 

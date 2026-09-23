@@ -515,13 +515,23 @@ function searchWidget({ active = 'flights', overlap = true, title = '', backdrop
      on flat page colour. It is an <img>, not a CSS background, because
      /assets/* is served immutable and only markup can carry the cache-
      busting hash that asset() appends. */
+  /* Two elements, not one photograph.
+
+     The aircraft used to be composited into the sky, so the band was a single
+     16:9 image stretched to whatever height the form happened to be — on a
+     wide screen that scaled it far past 1:1 and the aeroplane came out
+     enormous. The sky is now a background texture, where stretching is
+     invisible, and the aircraft is its own element sized by CSS against the
+     band. It stays in proportion at every width. */
   const photo = backdrop ? `
     <div class="ts__backdrop" aria-hidden="true">
-      <img src="${attr(asset('/assets/img/search-backdrop.jpg'))}"
-           srcset="${attr(asset('/assets/img/search-backdrop.jpg'))} 1600w,
-                   ${attr(asset('/assets/img/search-backdrop-2560.jpg'))} 2560w"
+      <img class="ts__sky" src="${attr(asset('/assets/img/search-sky.jpg'))}"
+           srcset="${attr(asset('/assets/img/search-sky.jpg'))} 1600w,
+                   ${attr(asset('/assets/img/search-sky-2560.jpg'))} 2560w"
            sizes="100vw" alt="" width="1600" height="900" decoding="async" fetchpriority="low">
-    </div>` : '';
+    </div>
+    <img class="ts__plane" src="${attr(asset('/assets/img/search-plane.png'))}"
+         alt="" width="1400" height="520" decoding="async" fetchpriority="low" aria-hidden="true">` : '';
 
   return `
   ${/* data-ts lives on the OUTER block, not on the card. The tab strip sits
