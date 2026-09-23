@@ -216,7 +216,13 @@ function panelFoot({ p, label, note }) {
           </div>
           <div class="ts-foot">
             <p class="ts-note">${note}</p>
-            <button class="btn btn--whatsapp btn--lg ts-submit" type="submit">${icon('whatsapp', { size: 17 })} Send on WhatsApp</button>
+            <div class="ts-send">
+              <button class="btn btn--whatsapp btn--lg ts-submit" type="submit">${icon('whatsapp', { size: 17 })} Send on WhatsApp</button>
+              ${/* Not everyone wants to hand over a WhatsApp number, and some
+                    offices browse on a desktop with no WhatsApp on it. Same
+                    answers, same validation, different channel. */ ''}
+              <button class="btn btn--outline btn--lg ts-submit-alt" type="button" data-ts-email>${icon('mail', { size: 17 })} Send by Email</button>
+            </div>
           </div>
           <div class="form-status" role="status" aria-live="polite" data-form-status></div>`;
 }

@@ -65,6 +65,20 @@ button, input, select, textarea { font: inherit; }
 /* Empty social containers collapse rather than leaving a gap */
 .topbar__socials:empty, .footer__socials:empty { display: none; }
 
+/* The topbar's icons must not shrink. They are flex items in a row that also
+   carries the phone number and the WhatsApp number, and on a narrow screen
+   the row squeezed each icon to nothing — a 4px-wide link with a 44px hit
+   area, which is a tap target only in theory. */
+.topbar__socials a { flex-shrink: 0; min-width: 24px; justify-content: center; }
+.topbar__socials svg { flex-shrink: 0; }
+
+/* Below 600px there is not room for the numbers AND five icons. The numbers
+   are what someone on a phone actually wants; the footer carries the icons
+   on every page. */
+@media (max-width: 599px) {
+  .topbar__socials { display: none; }
+}
+
 /* Navigation needs more room than 992px once every menu item is present */
 .logo__name { font-size: 1.05rem; letter-spacing: .02em; }
 .logo__sub { font-size: .6875rem; letter-spacing: .2em; margin-top: 3px; }
@@ -2288,4 +2302,26 @@ button, input, select, textarea { font: inherit; }
   .country-card__flag { width: 34px; height: 26px; }
   .country-card__name { font-size: .9375rem; }
   .country-card__go { display: none; }
+}
+
+/* The two send buttons. WhatsApp leads because that is how almost every
+   enquiry actually arrives; email sits beside it for the people who will not
+   give a WhatsApp number or are on a desktop without it. They stack on a
+   phone, where two full-width buttons are easier to hit than two half ones. */
+.ts-send {
+  display: flex;
+  gap: var(--sp-3);
+  /* nowrap and shrink-0: the footer is a flex row with the note beside it, and
+     with wrap allowed the pair broke onto two lines the moment the note ran
+     long. The note is the thing that should give way, not the buttons. */
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+.ts-send .btn { flex: 0 0 auto; white-space: nowrap; }
+.ts-submit-alt { min-height: 46px; }
+.ts-foot .ts-note { flex: 1 1 auto; min-width: 0; }
+
+@media (max-width: 639px) {
+  .ts-send { width: 100%; flex-direction: column; }
+  .ts-send .btn { width: 100%; }
 }

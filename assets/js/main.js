@@ -814,8 +814,13 @@
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        submit(form);
+        submit(form, 'whatsapp');
       });
+
+      var emailBtn = $('[data-ts-email]', form);
+      if (emailBtn) {
+        emailBtn.addEventListener('click', function () { submit(form, 'email'); });
+      }
     }
 
     /* ---- Validation ----------------------------------------------------- */
@@ -878,7 +883,7 @@
     }
 
     /* ---- Submit ---------------------------------------------------------- */
-    function submit(form) {
+    function submit(form, channel) {
       var hp = form.querySelector('[name="company"]');
       if (hp && hp.value) return; // honeypot: a bot filled the hidden field
 
@@ -898,6 +903,22 @@
       var mailUrl = 'mailto:' + EMAIL +
         '?subject=' + encodeURIComponent((HEADINGS[kind] || 'Travel Inquiry') + ' — Website') +
         '&body=' + encodeURIComponent(text.replace(/\*/g, ''));
+
+      if (channel === 'email') {
+        /* mailto opens the visitor's own mail client with everything already
+           written. Assigning location rather than window.open, because a
+           mailto in a new tab leaves an empty tab behind on most desktops. */
+        window.location.href = mailUrl;
+        status(
+          form, 'ok',
+          '<strong>Your email is ready to send.</strong> It should have opened in your ' +
+          'mail app with the details filled in. Nothing opened? ' +
+          '<a href="' + mailUrl + '">Open it here</a> or ' +
+          '<a href="' + waUrl + '" target="_blank" rel="noopener">send on WhatsApp</a> instead.'
+        );
+        if (window.gtag) window.gtag('event', 'generate_lead', { event_label: kind + ' (email)' });
+        return;
+      }
 
       /* Straight to WhatsApp.
 

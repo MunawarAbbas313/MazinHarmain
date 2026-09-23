@@ -932,9 +932,12 @@ body.no-scroll { overflow: hidden; }
 .footer__contact li { display: flex; align-items: flex-start; gap: var(--sp-3); margin-bottom: var(--sp-4); }
 .footer__contact svg { width: 16px; height: 16px; color: var(--gold-500); flex-shrink: 0; margin-top: 3px; }
 .footer__socials { display: flex; gap: var(--sp-3); margin-top: var(--sp-5); }
+/* 44px, not 36. These were never flagged while the social list was empty and
+   nothing rendered; with five real profiles in it they are the smallest tap
+   targets on the site, and 36 is below the minimum anyone can reliably hit. */
 .footer__socials a {
   display: flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: 50%;
+  width: 44px; height: 44px; border-radius: 50%;
   background: rgba(255,255,255,0.07); color: #c2d8ce; transition: all 0.2s var(--ease);
 }
 .footer__socials a:hover { background: var(--gold-500); color: var(--green-900); transform: translateY(-2px); }

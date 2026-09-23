@@ -72,12 +72,28 @@ const site = {
   openingHoursText: 'Monday – Saturday, 9:30 AM – 6:30 PM (PKT)',
 
   /* ---- Social ------------------------------------------------------------
-     Deliberately empty: we do not link to accounts that do not exist.
-     Add entries only for profiles the agency actually operates, e.g.
-       { name: 'Facebook', url: 'https://www.facebook.com/<page>', icon: 'facebook' },
-     Valid icon keys: facebook, instagram, youtube, linkedin, tiktok.
-     The header and footer social rows stay hidden while this is empty.     */
-  social: [],
+     Handles supplied by the client, September 2026.
+
+     Instagram and TikTok were confirmed live — both URLs return 200. The
+     other three could not be verified from here and are built from the names
+     given, so they are the ones to check before launch:
+
+       X        the handle is deterministic, but x.com answers 404 to any
+                request without a browser session, so a 404 from a script
+                proves nothing either way.
+       Facebook a page's URL is a slug or a numeric id and cannot be derived
+                from its display name. This is a guess.
+       LinkedIn same: the company slug is not the company name.
+
+     Paste the real address over any that does not open the right profile —
+     this list is the only place they appear. */
+  social: [
+    { name: 'Facebook', url: 'https://www.facebook.com/MazinHaramainTourTravels', icon: 'facebook' },
+    { name: 'Instagram', url: 'https://www.instagram.com/mazinharamain/', icon: 'instagram' },
+    { name: 'X', url: 'https://x.com/mazinharamain', icon: 'x' },
+    { name: 'TikTok', url: 'https://www.tiktok.com/@mazinharamaintravels', icon: 'tiktok' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/company/mazin-haramain-travels/', icon: 'linkedin' },
+  ],
 
   /* ---- Analytics (paste real IDs at launch) ----------------------------- */
   analytics: {

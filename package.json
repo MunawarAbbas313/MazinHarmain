@@ -18,7 +18,8 @@
     "logo": "node src/tools/make-logo.js assets/img/logo-source.jpg",
     "audit": "node src/tools/audit.js",
     "responsive": "node src/tools/responsive.js",
-    "backdrop": "node src/tools/make-search-backdrop.js"
+    "backdrop": "node src/tools/make-search-backdrop.js",
+    "qr": "node src/tools/make-qr.js"
   },
   "engines": {
     "node": ">=18"
@@ -36,6 +37,7 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "playwright": "^1.63.0",
-    "sharp": "^0.35.4"
+    "sharp": "^0.35.4",
+    "qrcode": "^1.5.4"
   }
 }

@@ -56,6 +56,10 @@ const raw = {
   youtube: '<path d="M22.5 6.9a2.8 2.8 0 0 0-2-2C18.8 4.5 12 4.5 12 4.5s-6.8 0-8.5.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1.1 12a29 29 0 0 0 .4 5.1 2.8 2.8 0 0 0 2 2c1.7.4 8.5.4 8.5.4s6.8 0 8.5-.4a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .4-5.1 29 29 0 0 0-.4-5.1z"/><polygon points="9.8 15.3 15.5 12 9.8 8.7" fill="currentColor" stroke="none"/>',
   linkedin: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
   tiktok: '<path d="M21 8.5a6.5 6.5 0 0 1-5-2.3V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.2a2.8 2.8 0 1 0 2 2.7V2h3a6.5 6.5 0 0 0 5 5.5z"/>',
+  /* X, not the old bird: the mark changed in 2023 and a bird now reads as a
+     dead account. Drawn as two strokes so it inherits the same stroke weight
+     as its neighbours instead of sitting heavier than all of them. */
+  x: '<path d="M3 3l7.5 9.6L3.4 21h2.3l6-6.8 5.3 6.8H21l-7.9-10.1L20.4 3h-2.3l-5.5 6.3L7.6 3z"/>',
 };
 
 /**
