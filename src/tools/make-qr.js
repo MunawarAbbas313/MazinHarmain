@@ -71,6 +71,9 @@ async function main() {
   const W = 1000;
   const H = 1320;
   const label = URL.replace(/^https?:\/\//, '');
+  /* The WhatsApp number, not the landline. A card like this gets photographed
+     and forwarded, and the person holding it wants the number they can
+     message — which is also the number every enquiry on the site goes to. */
   const card = Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
       <rect width="${W}" height="${H}" fill="#faf8f3"/>
@@ -82,7 +85,7 @@ async function main() {
       <text x="${W / 2}" y="${H - 148}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif"
             font-size="40" font-weight="700" fill="${GREEN}">${label}</text>
       <text x="${W / 2}" y="${H - 96}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif"
-            font-size="26" fill="#5b6b64">${site.phonePrimary.label} &#183; ${site.address.city}</text>
+            font-size="26" fill="#5b6b64">${site.whatsapp.display} &#183; ${site.address.city}</text>
     </svg>`
   );
 
