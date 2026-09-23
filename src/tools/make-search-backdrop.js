@@ -32,9 +32,13 @@ const sharp = require('sharp');
 
 const IMG = path.join(__dirname, '..', '..', 'assets', 'img');
 
-/* Pexels 23508916 — a white airliner in warm low sun, banking towards the
-   viewer. The nearest match to the aircraft in the client's banner. */
-const PLANE_ID = 23508916;
+/* Pexels 38565459 — an unbranded white airliner on approach, nose to the
+   LEFT. Direction matters: the aircraft sits to the right of the form, so one
+   facing right flies away from the page and leads the eye off the edge. This
+   one looks back across the form. It also carries no airline livery, which
+   the previous shot did — another carrier's titles on a travel agency's own
+   banner is not a good look. */
+const PLANE_ID = 38565459;
 /* Pexels 35558117 — gold-lit cloud over blue, the client's palette. */
 const SKY_ID = 35558117;
 
