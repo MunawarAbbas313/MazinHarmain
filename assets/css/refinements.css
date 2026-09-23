@@ -1951,7 +1951,7 @@ button, input, select, textarea { font: inherit; }
      the same band, so they stay in proportion to each other at every width
      instead of one stretching while the other stays put. */
   .ts--photo .ts__tabs,
-  .ts--photo .ts__card { max-width: 56%; }
+  .ts--photo .ts__card { max-width: 78%; }
 
   /* The five tabs were laid out for a full-width card and need 777px. The
      card here is 636-764, so "Hotels" was sliding under the card's right edge
@@ -1974,14 +1974,8 @@ button, input, select, textarea { font: inherit; }
   .ts--photo .ts-row--4,
   .ts--photo .ts-row--hotels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
-  /* Under 1300 the card is around 645px and three columns leave each control
-     about 195px — enough for the box, not for "Select a package" inside it,
-     which the browser then clips without telling anyone. Two columns. */
-  @media (max-width: 1299px) {
-    .ts--photo .ts-row--3,
-    .ts--photo .ts-row--4,
-    .ts--photo .ts-row--hotels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
+  /* The two-column fallback that used to sit here was sized for a 645px card.
+     At 78% there is room for three at every width in this range. */
 
   /* "City or area" spans two columns in the full-width layout, which is right
      when the row is four across. In a three-across grid it left a hole beside
@@ -2022,9 +2016,11 @@ button, input, select, textarea { font: inherit; }
      the aircraft outside the document and produced a horizontal scrollbar at
      1440. */
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(420px, 44vw, 820px);
+  /* Tucked into the top-right corner. The form is what this band is for; the
+     aircraft sets the scene and gets out of its way. */
+  top: 5%;
+  transform: none;
+  width: clamp(230px, 22vw, 440px);
   height: auto;
   z-index: -1;
   pointer-events: none;
