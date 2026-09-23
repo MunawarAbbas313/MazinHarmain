@@ -2164,3 +2164,39 @@ button, input, select, textarea { font: inherit; }
    hidden via the attribute, so it collapses out of the grid row rather than
    leaving a gap. */
 .ts-field--other[hidden] { display: none !important; }
+
+/* ---- Countries inside a regional destination page ------------------------
+   The Europe page is about a region; these are the countries it means. Chips
+   rather than a list, because there are eighteen of them and a column of
+   eighteen links reads as an index, not as a set. */
+.country-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.country-chips li { margin: 0; }
+.country-chips a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--green-800);
+  text-decoration: none;
+  transition: border-color .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+}
+.country-chips a:hover {
+  border-color: var(--green-500);
+  background: var(--green-50);
+  color: var(--green-700);
+}
+.country-chips a:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }
+.country-chips__flag { font-size: 1.05rem; line-height: 1; }

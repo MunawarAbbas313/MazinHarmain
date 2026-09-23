@@ -918,51 +918,67 @@
       data.service = kind;
       var text = asText(data, kind);
 
-      var btn = form.querySelector('[type="submit"]');
-      var original = btn ? btn.innerHTML : '';
-      function restore() { if (btn) { btn.disabled = false; btn.innerHTML = original; } }
+      var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
+      var mailUrl = 'mailto:' + EMAIL +
+        '?subject=' + encodeURIComponent((HEADINGS[kind] || 'Travel Inquiry') + ' — Website') +
+        '&body=' + encodeURIComponent(text.replace(/\*/g, ''));
 
-      function handOver(endpointFailed) {
-        var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
-        var mailUrl = 'mailto:' + EMAIL +
-          '?subject=' + encodeURIComponent((HEADINGS[kind] || 'Travel Inquiry') + ' — Website') +
-          '&body=' + encodeURIComponent(text.replace(/\*/g, ''));
+      /* Straight to WhatsApp.
+
+         This used to hand the visitor a second panel — "your request is ready,
+         now send it" — with its own WhatsApp and email buttons. Two clicks to
+         do one thing, and the panel read as though the form had failed. The
+         button they pressed is the send.
+
+         window.open has to happen HERE, synchronously inside the click that
+         triggered the submit. Called from a .then() after the fetch below, a
+         pop-up blocker eats it and nothing happens at all. */
+      var win = window.open(waUrl, '_blank');
+      var blocked = !win || win.closed || typeof win.closed === 'undefined';
+
+      if (blocked) {
+        /* A blocker, or an in-app browser that refuses new windows. Give them
+           the link rather than a dead button. */
         status(
           form, 'ok',
-          '<strong>Your request is ready.</strong> ' +
-          (endpointFailed ? 'We could not confirm delivery through the form. ' : '') +
-          'It has not been sent yet — send it to our desk through WhatsApp or email and we will come back with options:<br><br>' +
+          '<strong>Your request is ready.</strong> Your browser blocked the ' +
+          'WhatsApp window — open it here:<br><br>' +
           '<a class="btn btn--whatsapp btn--sm" href="' + waUrl + '" target="_blank" rel="noopener">Send on WhatsApp</a> ' +
           '<a class="btn btn--ghost btn--sm" href="' + mailUrl + '">Send by Email</a>'
         );
-        restore();
+      } else {
+        status(
+          form, 'ok',
+          '<strong>Opening WhatsApp…</strong> Press send there and we will come ' +
+          'back with options. Not opened? ' +
+          '<a href="' + waUrl + '" target="_blank" rel="noopener">Open WhatsApp</a> ' +
+          'or <a href="' + mailUrl + '">send by email</a> instead.'
+        );
       }
 
-      if (btn) { btn.disabled = true; btn.textContent = 'Preparing…'; }
+      if (window.gtag) window.gtag('event', 'generate_lead', { event_label: kind });
 
-      if (!ENDPOINT) { handOver(false); return; }
+      /* A copy for the desk's own records, if an endpoint is configured. It
+         runs in the background and its outcome changes nothing the visitor
+         sees: they have already been handed to WhatsApp, and telling them a
+         silent background POST failed would only be confusing. */
+      if (ENDPOINT) {
+        var controller = new AbortController();
+        var timer = window.setTimeout(function () { controller.abort(); }, 15000);
+        fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+          signal: controller.signal,
+        })
+          .catch(function () { /* the visitor already has the message */ })
+          .finally(function () { window.clearTimeout(timer); });
+      }
 
-      var controller = new AbortController();
-      var timer = window.setTimeout(function () { controller.abort(); }, 15000);
-      fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(data),
-        signal: controller.signal,
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error('Bad response');
-          return res.status === 204 ? null : res.json();
-        })
-        .then(function (result) {
-          if (result && (result.success === false || result.ok === false || result.error)) {
-            throw new Error('Inquiry rejected');
-          }
-          if (window.gtag) window.gtag('event', 'generate_lead', { event_label: kind });
-          window.location.href = '/thank-you/';
-        })
-        .catch(function () { handOver(true); })
-        .finally(function () { window.clearTimeout(timer); });
+      /* The form stays usable. It used to disable its own button and leave it
+         disabled, so a visitor who wanted to ask about a second trip — or who
+         closed WhatsApp by mistake — had to reload the page to send anything
+         again. Nothing here is single-use. */
     }
 
     widgets.forEach(function (widget) {

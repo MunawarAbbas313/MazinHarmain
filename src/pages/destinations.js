@@ -7,8 +7,27 @@ const c = require('../templates/components');
 const icon = require('../lib/icons');
 const { esc, attr, each } = require('../lib/html');
 const { destinations } = require('../data/destinations');
+const { countries } = require('../data/visa-countries');
 
 const BASE = '/destinations/';
+
+/* Europe is a region, not a country, and the page never said which countries
+   it meant. A visitor looking for Italy or Poland had no way to see from the
+   Europe page that either is handled. These are the European destinations the
+   agency runs visas for, each linking to its own page.
+
+   Only regional destinations get this — a Turkey page listing "Turkey" would
+   be absurd. */
+const REGION_COUNTRIES = {
+  europe: (c) => c.region === 'Europe' && c.slug !== 'uk-visa' && c.slug !== 'schengen-visa',
+};
+
+function regionCountries(slug) {
+  const pick = REGION_COUNTRIES[slug];
+  if (!pick) return [];
+  return countries.filter(pick);
+}
+
 const crumbBase = { label: 'Destinations', url: BASE };
 
 function destSidebar(wa) {
@@ -139,6 +158,18 @@ ${c.pageHero({
           <div class="prose">
             ${d.intro.map((p) => `<p>${p}</p>`).join('\n            ')}
           </div>
+
+          ${(() => {
+            const inRegion = regionCountries(d.slug);
+            if (!inRegion.length) return '';
+            return `
+          <h2 style="margin-top:var(--sp-10)">Countries We Cover in ${esc(d.name)}</h2>
+          <p style="margin-top:var(--sp-3);color:var(--muted)">A Schengen visa covers most of these on one application. Tap a country for its own requirements, processing time and documents.</p>
+          <ul class="country-chips" style="margin-top:var(--sp-5)">
+            ${each(inRegion, (co) => `<li><a href="/visa-services/${attr(co.slug)}/"><span class="country-chips__flag" aria-hidden="true">${co.flag}</span>${esc(co.name)}</a></li>`)}
+            <li><a href="/visa-services/schengen-visa/"><span class="country-chips__flag" aria-hidden="true">🇪🇺</span>Schengen Area</a></li>
+          </ul>`;
+          })()}
 
           <h2 style="margin-top:var(--sp-10)">Highlights</h2>
           <ul class="tick-list tick-list--gold tick-list--2col" style="margin-top:var(--sp-5)">
