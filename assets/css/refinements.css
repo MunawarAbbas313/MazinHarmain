@@ -1951,7 +1951,20 @@ button, input, select, textarea { font: inherit; }
      the same band, so they stay in proportion to each other at every width
      instead of one stretching while the other stays put. */
   .ts--photo .ts__tabs,
-  .ts--photo .ts__card { max-width: 60%; }
+  .ts--photo .ts__card { max-width: 62%; }
+
+  /* The five tabs were laid out for a full-width card and need 777px. The
+     card here is 636-764, so "Hotels" was sliding under the card's right edge
+     with nothing to say it was there — the strip scrolls, and a scrolling
+     strip with no affordance just looks like a cut-off tab. Tighter padding
+     and a smaller cap bring the set inside the card at every width in this
+     range. */
+  .ts--photo .ts__tab {
+    padding: 0 clamp(0.6rem, 1.1vw, 1rem);
+    font-size: var(--fs-xs);
+    letter-spacing: .04em;
+  }
+  .ts--photo .ts__tab svg { width: 15px; height: 15px; }
 
   /* The card is two thirds of its old width, so the five-across rows it
      inherits from the full-width layout squeeze every control to about 140px
