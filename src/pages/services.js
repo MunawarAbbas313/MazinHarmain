@@ -108,7 +108,8 @@ function servicePage(s) {
      A visitor who taps WhatsApp or Call on that page wants the car desk, not
      ticketing, so those buttons carry the partner's number. Every other
      service page reaches the agency. */
-  const contact = s.slug === 'car-rental'
+  const isCarRental = s.slug === 'car-rental';
+  const contact = isCarRental
     ? { waNumber: site.partner.uan.wa, tel: site.partner.uan.tel, label: site.partner.uan.label }
     : c.DESK;
 
@@ -167,7 +168,10 @@ ${assuranceStrip(WIDGET_TAB[s.slug])}
         </div>
 
         <aside class="sidebar is-sticky">
-          ${c.contactSidebarCard(wa, contact)}
+          ${c.contactSidebarCard(wa, contact, isCarRental ? {
+            title: `Speak to ${site.partner.name}`,
+            text: `Cars come from ${site.partner.name}, our car-rental partner in the same office. These reach their desk directly — they confirm the vehicle, the driver and the rate.`,
+          } : {})}
           ${related.length ? c.linkListCard('Related Services', orderServiceLinks(related)) : ''}
           <div class="sidebar-card sidebar-card--cream">
             <h3>Office Hours</h3>

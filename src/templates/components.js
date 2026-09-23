@@ -468,11 +468,18 @@ ${
 /* -------------------------------------------------------------------------
    Sidebar building blocks
    ------------------------------------------------------------------------- */
-function contactSidebarCard(waMessage, contact = DESK) {
+/* The heading and the blurb move with the number. On the car-rental page the
+   buttons reach MyCab's own line, and a card still headed "Speak to a Travel
+   Consultant" above someone else's number reads as a mistake — the visitor
+   should know who is about to answer. */
+function contactSidebarCard(waMessage, contact = DESK, {
+  title = 'Speak to a Travel Consultant',
+  text = 'Our team can confirm current availability, pricing and documentation requirements for your travel dates.',
+} = {}) {
   return `
         <div class="sidebar-card sidebar-card--green">
-          <h3>Speak to a Travel Consultant</h3>
-          <p>Our team can confirm current availability, pricing and documentation requirements for your travel dates.</p>
+          <h3>${esc(title)}</h3>
+          <p>${esc(text)}</p>
           <div class="btn-row" style="margin-top:var(--sp-4)">
             <a class="btn btn--whatsapp btn--sm btn--block" href="${attr(waHref(waMessage, contact))}" target="_blank" rel="noopener">${icon('whatsapp', { size: 15 })} WhatsApp Us</a>
             <a class="btn btn--outline-light btn--sm btn--block" href="tel:${attr(contact.tel)}">${icon('phone', { size: 15 })} ${esc(contact.label)}</a>

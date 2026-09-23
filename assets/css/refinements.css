@@ -1929,14 +1929,47 @@ button, input, select, textarea { font: inherit; }
      width. Above 901px the title block takes over that job and this drops to
      almost nothing, so the name starts at the top of the band rather than
      after a screenful of empty sky. */
-  /* The aircraft's underside sits at 25% of the photograph's height, which is
-     0.141 x the viewport width. 15% clears it at every width from 320 to
-     2560. It used to be this below 901px and almost nothing above, because
-     the banner title took over the job of holding the strip open up there —
-     the title has gone, so this does the whole job again. */
-  padding: 15% 0 clamp(2rem, 4vw, 3rem);
+  /* Between 901 and 1099px the form still sits UNDER the aircraft, so the top
+     padding has to clear it: the underside is at 44% of the photograph's
+     height, ie 0.2475 x the viewport width. Above 1100px the two go side by
+     side and this drops away — see the rule further down. */
+  padding: 25% 0 clamp(2rem, 4vw, 3rem);
   isolation: isolate;
 }
+
+/* ---- Side by side, above 1100px ------------------------------------------
+   The aircraft used to sit above the form with the whole band's width of sky
+   either side of it, and the form below — a lot of empty photograph doing
+   nothing. They share the band instead: the form takes the left, the aircraft
+   flies in the right, and the strip of sky above collapses to ordinary
+   padding. Below 1100px there is not enough width for both, so the stacked
+   arrangement above still applies; below 901px the photograph goes entirely.
+
+   64% is measured against the aircraft: its tail reaches 0.669 of the
+   viewport width, so a form wider than this starts covering the fuselage. */
+@media (min-width: 1100px) {
+  .ts--photo { padding: clamp(2.5rem, 3.5vw, 4rem) 0 clamp(2.5rem, 3.5vw, 4rem); }
+  .ts--photo .ts__tabs,
+  .ts--photo .ts__card { max-width: 64%; }
+
+  /* The card is two thirds of its old width, so the five-across rows it
+     inherits from the full-width layout squeeze every control to about 140px
+     — "Select a package" came out as "Select a", "1 Passenger" as "1 Passen".
+     Three across, wrapping to a second line. */
+  .ts--photo .ts-row--3,
+  .ts--photo .ts-row--4,
+  .ts--photo .ts-row--hotels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  /* "City or area" spans two columns in the full-width layout, which is right
+     when the row is four across. In a three-across grid it left a hole beside
+     the first field and pushed everything after it out of alignment. */
+  .ts--photo .ts-row--hotels > .ts-field--wide { grid-column: auto; }
+
+  /* The submit button broke "Send on WhatsApp" across two lines once the card
+     narrowed, which made the whole footer taller than the note beside it. */
+  .ts--photo .ts-submit { min-width: 0; white-space: nowrap; }
+}
+
 
 .ts__backdrop {
   position: absolute;

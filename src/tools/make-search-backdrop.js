@@ -42,11 +42,12 @@ const cdn = (id, w) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
 /* Where the aircraft sits in the finished frame, as fractions of it. The
-   client wants it in the right-hand corner with the name starting at the very
-   top of the band and no spare sky anywhere, so it is smaller than the
-   reference's and pushed well right, clear of the name on the left. */
-const PLANE_HEIGHT = 0.19;
-const PLANE_CENTRE = { x: 0.82, y: 0.155 };
+   form and the aircraft sit side by side — form left, aircraft right — so
+   this is pushed well right and centred vertically against the form rather
+   than tucked into the top corner above it. Anything further left and the
+   card covers the fuselage. */
+const PLANE_HEIGHT = 0.20;
+const PLANE_CENTRE = { x: 0.82, y: 0.34 };
 
 const OUTPUTS = [
   { file: 'search-backdrop.jpg', w: 1600, h: 900 },

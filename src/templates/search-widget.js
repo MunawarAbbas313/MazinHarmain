@@ -451,7 +451,7 @@ function hotelsPanel(hidden) {
             ${field({
               id: `${p}-city`, label: 'City or Area', icon: 'pin', required: true, cls: 'ts-field--wide', combo: true,
               errorFor: 'city', error: 'Which city are you staying in?',
-              control: input({ id: `${p}-city`, name: 'city', placeholder: 'Search a city, area or hotel', list: 'ts-hotel-cities', extra: comboAttrs(`${p}-city`) }),
+              control: input({ id: `${p}-city`, name: 'city', placeholder: 'City, area or hotel', list: 'ts-hotel-cities', extra: comboAttrs(`${p}-city`) }),
             })}
             ${field({
               id: `${p}-in`, label: 'Check In', icon: 'calendar', required: true,
@@ -472,7 +472,7 @@ function hotelsPanel(hidden) {
             })}
             ${field({
               id: `${p}-cat`, label: 'Hotel Category', icon: 'star', combo: true,
-              control: input({ id: `${p}-cat`, name: 'category', placeholder: 'Any category — or type your own', list: 'ts-hotel-categories', extra: comboAttrs(`${p}-cat`) }),
+              control: input({ id: `${p}-cat`, name: 'category', placeholder: 'Any category', list: 'ts-hotel-categories', extra: comboAttrs(`${p}-cat`) }),
             })}
             ${nameField(p)}
             ${phoneField(p)}
