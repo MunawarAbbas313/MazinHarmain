@@ -2333,3 +2333,50 @@ button, input, select, textarea { font: inherit; }
   .ts-send { width: 100%; flex-direction: column; }
   .ts-send .btn { width: 100%; }
 }
+
+/* ---- Native dropdown lists -----------------------------------------------
+   The list a <select> opens is drawn by the operating system, not by the
+   page, so most of it cannot be styled at all. Two things can be, and
+   together they replace the OS blue with the brand green:
+
+     accent-color   Chrome 121+ and Edge use it for the highlight on the
+                    option under the cursor.
+     option:checked Firefox honours a background on the options themselves.
+
+   Anything older simply keeps its own blue, which is a perfectly good
+   dropdown — nothing here is required for the control to work. The custom
+   type-ahead lists below (.ts-combo__list) are ours and were already green;
+   this is only about the native ones.
+   -------------------------------------------------------------------------- */
+select,
+.select,
+.ts-input--select,
+.ts-mini {
+  accent-color: var(--green-700);
+}
+
+select option,
+.select option,
+.ts-input--select option,
+.ts-mini option {
+  background-color: #fff;
+  color: var(--ink);
+}
+
+select option:checked,
+select option:hover,
+.select option:checked,
+.ts-input--select option:checked,
+.ts-mini option:checked {
+  background: var(--green-700);
+  color: #fff;
+}
+
+/* An optgroup heading is a label, not a choice — it should not look like one
+   that happens to be unselectable. */
+select optgroup,
+.ts-input--select optgroup {
+  background-color: var(--cream);
+  color: var(--green-800);
+  font-weight: 700;
+}
