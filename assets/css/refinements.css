@@ -1933,7 +1933,9 @@ button, input, select, textarea { font: inherit; }
      because it has no edges: the photograph is masked so the sky dissolves
      into the page above and below, leaving the aircraft and the name as the
      only solid part of it. */
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  /* No gap. The band meets the hero directly — a strip of page colour between
+     two photographs read as a seam rather than as breathing room. */
+  margin-top: 0;
   background: var(--cream);
   /* Below 901px the banner title is hidden, so this padding alone has to
      clear the aircraft. It is a PERCENTAGE because the photograph scales with
@@ -2033,7 +2035,11 @@ button, input, select, textarea { font: inherit; }
   /* Tucked into the top-right corner. The form is what this band is for; the
      aircraft sets the scene and gets out of its way. */
   top: 5%;
-  transform: none;
+  /* Mirrored. The cut-out is of an aircraft on approach nose-left; flipped it
+     climbs away to the right, out of the corner it sits in. Safe to mirror
+     because the aircraft carries no livery — only a registration a few pixels
+     tall at this size — so nothing reads backwards. */
+  transform: scaleX(-1);
   width: clamp(230px, 22vw, 440px);
   height: auto;
   z-index: -1;
@@ -2102,7 +2108,9 @@ button, input, select, textarea { font: inherit; }
   .ts--photo { padding-top: clamp(7.5rem, 14vw, 11rem); }
   .ts__plane {
     top: 3%;
-    transform: none;
+    /* Mirrored here too, or the aircraft faces one way on a laptop and the
+       other on a tablet. */
+    transform: scaleX(-1);
     width: clamp(260px, 26vw, 420px);
   }
 }
