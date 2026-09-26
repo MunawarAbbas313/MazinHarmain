@@ -1970,7 +1970,10 @@ button, input, select, textarea { font: inherit; }
   /* Ordinary padding at every width now. The aircraft is positioned against
      the band rather than living inside the photograph, so nothing has to hold
      a strip of sky open above the form to keep it from being cut in half. */
-  padding: clamp(2.5rem, 4vw, 4rem) 0 clamp(2.5rem, 4vw, 4rem);
+  /* The strip above the form is sized to the aircraft over it: the cut-out is
+     2.5:1, so at 32vw it stands 0.128 x viewport tall, and 16% clears that
+     plus its 3% offset at every width from 1100 up. */
+  padding: 16% 0 clamp(2.5rem, 4vw, 4rem);
   isolation: isolate;
 }
 
@@ -2054,15 +2057,19 @@ button, input, select, textarea { font: inherit; }
      the aircraft outside the document and produced a horizontal scrollbar at
      1440. */
   right: 0;
-  /* Tucked into the top-right corner. The form is what this band is for; the
-     aircraft sets the scene and gets out of its way. */
-  top: 5%;
-  /* Mirrored. The cut-out is of an aircraft on approach nose-left; flipped it
-     climbs away to the right, out of the corner it sits in. Safe to mirror
-     because the aircraft carries no livery — only a registration a few pixels
-     tall at this size — so nothing reads backwards. */
+  /* Above the form and to the right, at the size the client's reference gives
+     it — not tucked into a corner. A large form AND a large aircraft can only
+     both fit if the aircraft is over the form rather than beside it, which is
+     how the reference is composed too.
+
+     Mirrored so it climbs away to the upper LEFT, as in the reference. The
+     fuselage carries a faint "AIRWAYS" which reverses with it; at the size
+     this is ever drawn that is a smudge, not lettering — checked by rendering
+     the mirrored cut-out at its maximum 440px and looking. */
+  top: 3%;
+  right: 4%;
   transform: scaleX(-1);
-  width: clamp(230px, 22vw, 440px);
+  width: clamp(300px, 32vw, 620px);
   height: auto;
   z-index: -1;
   pointer-events: none;

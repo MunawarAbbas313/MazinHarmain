@@ -32,13 +32,16 @@ const sharp = require('sharp');
 
 const IMG = path.join(__dirname, '..', '..', 'assets', 'img');
 
-/* Pexels 38565459 — an unbranded white airliner on approach, nose to the
-   LEFT. Direction matters: the aircraft sits to the right of the form, so one
-   facing right flies away from the page and leads the eye off the edge. This
-   one looks back across the form. It also carries no airline livery, which
-   the previous shot did — another carrier's titles on a travel agency's own
-   banner is not a good look. */
-const PLANE_ID = 38565459;
+/* Pexels 23508914 — a three-quarter view from below of an airliner climbing
+   away with the gear still down, nose to the left.
+
+   The pose is the point. The previous cut-out was a flat side-on profile,
+   which reads as a diagram; the client's reference is this angle — seen from
+   underneath, wings foreshortened, one engine nearer than the other — and
+   that is what makes it look like flight rather than an illustration. It
+   carries no airline titles either, so it can be mirrored if it ever needs
+   to be and nothing reads backwards. */
+const PLANE_ID = 23508914;
 /* Pexels 37426064 — clear blue at the top falling to a warm horizon over a
    sea of cloud. Chosen against the client's reference, which has exactly that
    structure: blue above, gold at the eye line, cloud below. */
