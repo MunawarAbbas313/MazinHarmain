@@ -39,8 +39,10 @@ const IMG = path.join(__dirname, '..', '..', 'assets', 'img');
    the previous shot did — another carrier's titles on a travel agency's own
    banner is not a good look. */
 const PLANE_ID = 38565459;
-/* Pexels 35558117 — gold-lit cloud over blue, the client's palette. */
-const SKY_ID = 35558117;
+/* Pexels 37426064 — clear blue at the top falling to a warm horizon over a
+   sea of cloud. Chosen against the client's reference, which has exactly that
+   structure: blue above, gold at the eye line, cloud below. */
+const SKY_ID = 37426064;
 
 const cdn = (id, w) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;

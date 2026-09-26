@@ -9,7 +9,9 @@
   /* ---- Config injected at build time ----------------------------------- */
   var CONFIG = window.MH_CONFIG || {};
   var WA_NUMBER = CONFIG.whatsapp || '923135500022';
-  var EMAIL = CONFIG.email || 'mazinharamain@gmail.com';
+  /* Both inboxes. A mailto takes a comma-separated list, so an enquiry does
+     not depend on which one is being watched that day. */
+  var EMAIL = [CONFIG.email, CONFIG.emailAlt].filter(Boolean).join(',') || 'info@mhtravel.pk';
   var ENDPOINT = CONFIG.formEndpoint || '';
 
   var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };

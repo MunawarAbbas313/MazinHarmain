@@ -33,7 +33,13 @@ const site = {
     display: '+92 313 5500022',
     local: '0313 5500022',
   },
-  email: 'mazinharamain@gmail.com',
+  /* The address on the company's own domain leads: it is the one that looks
+     like a business and the one that survives someone leaving. The gmail is
+     kept because it is what is already printed on things and already in
+     people's phones, and enquiries from the site go to BOTH so nothing
+     depends on which inbox is being watched. */
+  email: 'info@mhtravel.pk',
+  emailAlt: 'mazinharamain@gmail.com',
 
   address: {
     line1: 'Office # 14, Second Floor, Safdar Mansion',
@@ -72,42 +78,35 @@ const site = {
   openingHoursText: 'Monday – Saturday, 9:30 AM – 6:30 PM (PKT)',
 
   /* ---- Social ------------------------------------------------------------
-     Only profiles that actually exist. A dead link in the footer is worse
-     than no link, and these also feed the schema's sameAs, which Google uses
-     to decide which accounts ARE this business — pointing it at pages that
-     404 is worse than telling it nothing.
+     Only profiles that actually exist. These also feed the schema's sameAs,
+     which Google reads to decide which accounts ARE this business, so a dead
+     one there is worse than none.
 
-     Verified 23 September 2026, each against a known-good and a known-bad
-     control so the test itself was proven to tell them apart:
-
-       Instagram  @mazinharamain            LIVE — the page renders as
+       Instagram  @mazinharamain          verified 23 Sep — page renders as
                   "Mazin Haramain Tours & Travels (@mazinharamain)".
-       TikTok     @mazinharamaintravels     LIVE — renders as that account;
-                  @mazinharamain on TikTok returns "Couldn't find this
-                  account", which is how the check was proven to work.
+       TikTok     @mazinharamaintravels   verified 23 Sep — renders as that
+                  account, where @mazinharamain returns "Couldn't find this
+                  account", which is how the check was proved to work.
+       Facebook   profile.php?id=615945…  verified 26 Sep — renders as "Mazin
+                  Haramain Tour Travels | Facebook". A numeric profile id,
+                  which is why no amount of guessing at a name-shaped slug
+                  ever found it.
+       LinkedIn   /in/mazin-haramain-travels-356a93439
+                  NOT independently verified: LinkedIn answers 999 to every
+                  automated request, and returns the same 999 for a profile
+                  known not to exist, so the check cannot tell them apart.
+                  Taken on trust because the "-356a93439" suffix is an id
+                  LinkedIn generates itself — it is an address copied out of a
+                  browser, not a guess. Worth one click to confirm.
 
-     These three were supplied but do not resolve. Six spellings of each were
-     tried:
-
-       X          @mazinharamain and five variants all 404 on x.com's oembed
-                  endpoint, which returned 200 for @jack and 404 for a
-                  nonsense handle in the same run.
-       Facebook   six page slugs, every one "This content isn't available at
-                  the moment". A page's URL is a slug or a numeric id and
-                  cannot be worked out from its display name.
-       LinkedIn   six company slugs, all 404.
-
-     They are almost certainly real accounts whose URLs are simply not what
-     the display names suggest. To add one back, open the profile in a browser
-     and paste the address from the bar:
-
-       { name: 'Facebook', url: 'PASTE HERE', icon: 'facebook' },
-       { name: 'X',        url: 'PASTE HERE', icon: 'x' },
-       { name: 'LinkedIn', url: 'PASTE HERE', icon: 'linkedin' },
-  */
+     X was supplied but no handle resolves: @mazinharamain and five variants
+     all 404 on x.com's oembed endpoint, which answered 200 for @jack in the
+     same run. Add it here when the real handle is known. */
   social: [
+    { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61594535767401', icon: 'facebook' },
     { name: 'Instagram', url: 'https://www.instagram.com/mazinharamain/', icon: 'instagram' },
     { name: 'TikTok', url: 'https://www.tiktok.com/@mazinharamaintravels', icon: 'tiktok' },
+    { name: 'LinkedIn', url: 'https://pk.linkedin.com/in/mazin-haramain-travels-356a93439', icon: 'linkedin' },
   ],
 
   /* ---- Analytics (paste real IDs at launch) ----------------------------- */

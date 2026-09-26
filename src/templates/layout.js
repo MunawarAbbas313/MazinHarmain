@@ -583,6 +583,7 @@ ${floatingActions(p.waMessage)}
   <script>window.MH_CONFIG=${JSON.stringify({
     whatsapp: site.whatsapp.number,
     email: site.email,
+    emailAlt: site.emailAlt,
     formEndpoint: site.formEndpoint,
   })};</script>
   <script src="${asset('/assets/js/main.js')}" defer></script>

@@ -80,8 +80,26 @@ button, input, select, textarea { font: inherit; }
 }
 
 /* Navigation needs more room than 992px once every menu item is present */
-.logo__name { font-size: 1.05rem; letter-spacing: .02em; }
-.logo__sub { font-size: .6875rem; letter-spacing: .2em; margin-top: 3px; }
+/* The wordmark, bigger and darker.
+
+   It was 1.05rem in a mid green against white, beside a mark carrying most of
+   the visual weight, and it read as a caption rather than as the name of the
+   business. The name is the thing a first-time visitor has to come away
+   with. Up a size, to the darkest green in the palette, with the tracking
+   eased — uppercase serif at this size does not need .02em pushing it apart.
+   TOURS & TRAVELS follows it up and takes the gold one step darker so it is
+   legible rather than merely present. */
+.logo__name {
+  font-size: 1.3rem;
+  letter-spacing: .015em;
+  color: var(--green-900);
+}
+.logo__sub {
+  font-size: .75rem;
+  letter-spacing: .22em;
+  margin-top: 4px;
+  color: var(--gold-700);
+}
 .logo__mark { width: 42px; height: 42px; }
 .nav__list { gap: 0; }
 .nav__link { padding-inline: .6rem; font-size: .8125rem; }
@@ -109,10 +127,14 @@ button, input, select, textarea { font: inherit; }
 .header__actions .btn { white-space: nowrap; }
 
 @media (min-width: 1200px) { .nav { display: block; } .nav-toggle { display: none; } }
+/* 1200-1499 is where the full nav and the wordmark compete hardest for the
+   bar. The nav gives way first — tighter link padding and a smaller link size
+   buy the room — because the agency's name matters more than a few pixels of
+   space around "Destinations". The wordmark only steps down a little. */
 @media (min-width: 1200px) and (max-width: 1499px) {
-  .nav__link { padding-inline: .42rem; font-size: .78125rem; }
-  .logo__name { font-size: .95rem; }
-  .logo__sub { font-size: .625rem; letter-spacing: .16em; }
+  .nav__link { padding-inline: .34rem; font-size: .75rem; }
+  .logo__name { font-size: 1.15rem; }
+  .logo__sub { font-size: .6875rem; letter-spacing: .18em; }
   .logo__mark { width: 38px; height: 38px; }
 }
 @media (max-width: 1199px) {
