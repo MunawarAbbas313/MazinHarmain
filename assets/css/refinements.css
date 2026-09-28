@@ -2409,3 +2409,28 @@ select optgroup,
   color: var(--green-800);
   font-weight: 700;
 }
+
+/* The social row inside the mobile drawer. The footer carries these as well,
+   but on a phone that is the very bottom of a long page — someone who opens
+   the menu looking for the agency's Instagram should find it in the menu. */
+.mobile-nav__socials {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: center;
+  padding-top: var(--sp-4);
+  margin-top: var(--sp-2);
+  border-top: 1px solid var(--line);
+}
+.mobile-nav__socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--green-50);
+  color: var(--green-700);
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.mobile-nav__socials a:hover { background: var(--green-700); color: #fff; }
+.mobile-nav__socials a:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 2px; }

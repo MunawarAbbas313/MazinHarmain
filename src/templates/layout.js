@@ -209,6 +209,12 @@ function header(currentUrl) {
     <a class="btn btn--gold btn--block" href="/get-a-quote/">Get a Free Quote</a>
     <a class="btn btn--whatsapp btn--block" href="${attr(site.waLink('Assalam o Alaikum, I would like to enquire about your travel services.'))}" target="_blank" rel="noopener">${icon('whatsapp', { size: 17 })} WhatsApp an Expert</a>
     <a class="btn btn--outline btn--block" href="tel:${attr(site.phonePrimary.tel)}">${icon('phone', { size: 17 })} ${esc(site.phonePrimary.label)}</a>
+    ${/* The footer carries these too, but on a phone that is the very bottom
+          of a long page. Someone who opens the menu looking for the agency's
+          Instagram should find it there. */ ''}
+    ${site.social.length ? `<div class="mobile-nav__socials">
+      ${site.social.map((s) => `<a href="${attr(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="${attr(site.shortName)} on ${attr(s.name)}">${icon(s.icon, { size: 18 })}</a>`).join('\n      ')}
+    </div>` : ''}
   </div>
 </div>`;
 }
@@ -243,9 +249,13 @@ function footer() {
         <h3>Customer Support</h3>
         <ul class="footer__contact">
           <li>${icon('pin', { size: 16 })}<span>${esc(site.address.line1)},<br>${esc(site.address.line2)}, ${esc(site.address.city)}</span></li>
-          <li>${icon('phone', { size: 16 })}<span>${site.phones.map((p) => `<a href="tel:${attr(p.tel)}">${esc(p.label)}</a>`).join('<br>')}</span></li>
+${/* WhatsApp first. It is how nearly every enquiry actually arrives, and
+         on a phone it is the line someone will tap; the landlines follow for
+         anyone who would rather ring the office. */ ''}
           <li>${icon('whatsapp', { size: 16 })}<a href="${attr(site.waLink('Assalam o Alaikum, I would like to enquire about your travel services.'))}" target="_blank" rel="noopener">${esc(site.whatsapp.display)}</a></li>
-          <li>${icon('mail', { size: 16 })}<a href="mailto:${attr(site.email)}">${esc(site.email)}</a></li>
+          <li>${icon('phone', { size: 16 })}<span>${site.phones.map((p) => `<a href="tel:${attr(p.tel)}">${esc(p.label)}</a>`).join('<br>')}</span></li>
+          ${/* Both inboxes, because both are in use and printed on things. */ ''}
+          <li>${icon('mail', { size: 16 })}<span>${[site.email, site.emailAlt].filter(Boolean).map((e) => `<a href="mailto:${attr(e)}">${esc(e)}</a>`).join('<br>')}</span></li>
           <li>${icon('clock', { size: 16 })}<span>${esc(site.openingHoursText)}</span></li>
         </ul>
       </div>

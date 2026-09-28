@@ -78,33 +78,38 @@ const site = {
   openingHoursText: 'Monday – Saturday, 9:30 AM – 6:30 PM (PKT)',
 
   /* ---- Social ------------------------------------------------------------
-     Only profiles that actually exist. These also feed the schema's sameAs,
-     which Google reads to decide which accounts ARE this business, so a dead
-     one there is worse than none.
+     Only profiles that actually exist, and each one stored as its canonical
+     address rather than as the sharing link it arrived in. A share URL
+     carries a tracking token and is not guaranteed to keep working; the
+     address the platform itself settles on is.
 
-       Instagram  @mazinharamain          verified 23 Sep — page renders as
-                  "Mazin Haramain Tours & Travels (@mazinharamain)".
-       TikTok     @mazinharamaintravels   verified 23 Sep — renders as that
-                  account, where @mazinharamain returns "Couldn't find this
-                  account", which is how the check was proved to work.
-       Facebook   profile.php?id=615945…  verified 26 Sep — renders as "Mazin
-                  Haramain Tour Travels | Facebook". A numeric profile id,
-                  which is why no amount of guessing at a name-shaped slug
-                  ever found it.
-       LinkedIn   /in/mazin-haramain-travels-356a93439
-                  NOT independently verified: LinkedIn answers 999 to every
-                  automated request, and returns the same 999 for a profile
-                  known not to exist, so the check cannot tell them apart.
-                  Taken on trust because the "-356a93439" suffix is an id
-                  LinkedIn generates itself — it is an address copied out of a
-                  browser, not a guess. Worth one click to confirm.
+     Verified by loading each in a browser:
 
-     X was supplied but no handle resolves: @mazinharamain and five variants
+       Facebook   .../people/mazinharamaintravels/61594728303584/
+                  The share link facebook.com/share/1CepTWh8Pu/ redirects
+                  here and the page renders as "mazinharamaintravels |
+                  Facebook". Stored as the destination, not the redirect.
+       Instagram  @mazinharamaintravels — renders as "Mazin Haramain Tours &
+                  Travels (@mazinharamaintravels)". The ?stkn=... the link
+                  arrived with is a share token and is dropped: the bare
+                  profile URL loads the same page.
+                  NOTE this replaces @mazinharamain, a different and
+                  near-empty account that was on the site until now.
+       TikTok     @mazinharamaintravels — verified 23 Sep, where
+                  @mazinharamain returns "Couldn't find this account", which
+                  is how that check was proved to work.
+       LinkedIn   /in/mazin-haramain-travels-356a93439 — NOT independently
+                  verified. LinkedIn answers 999 to every automated request
+                  and returns the same 999 for a profile known not to exist,
+                  so no check can tell them apart. Trusted because the id
+                  suffix is one LinkedIn generates itself.
+
+     X was supplied but no handle resolves — @mazinharamain and five variants
      all 404 on x.com's oembed endpoint, which answered 200 for @jack in the
      same run. Add it here when the real handle is known. */
   social: [
-    { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61594535767401', icon: 'facebook' },
-    { name: 'Instagram', url: 'https://www.instagram.com/mazinharamain/', icon: 'instagram' },
+    { name: 'Facebook', url: 'https://www.facebook.com/people/mazinharamaintravels/61594728303584/', icon: 'facebook' },
+    { name: 'Instagram', url: 'https://www.instagram.com/mazinharamaintravels/', icon: 'instagram' },
     { name: 'TikTok', url: 'https://www.tiktok.com/@mazinharamaintravels', icon: 'tiktok' },
     { name: 'LinkedIn', url: 'https://pk.linkedin.com/in/mazin-haramain-travels-356a93439', icon: 'linkedin' },
   ],
